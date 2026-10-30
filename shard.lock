@@ -18,7 +18,7 @@ shards:
 
   pod5:
     git: https://github.com/kojix2/pod5.cr.git
-    version: 0.1.0+git.commit.ab463468ddf02a060bcef98be195ab279d33af5e
+    version: 0.1.0+git.commit.fdb26ebe7e0e0420c4e2f7ca98f4eb252c550917
 
   proto:
     git: https://github.com/kojix2/proto.git
@@ -27,3 +27,4 @@ shards:
   read_until:
     git: https://github.com/kojix2/read_until.git
     version: 0.1.0+git.commit.1fadfb5843a2f1fee5e4c67290523516a60e1c2b
+
