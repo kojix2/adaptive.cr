@@ -1,0 +1,5 @@
+Building libminimap2.a
+make: Entering directory '/workspace/scratch/c4ed305b7793/adaptive-latest/adaptive-cr/lib/minimap2/ext/minimap2'
+make: 'libminimap2.a' is up to date.
+make: Leaving directory '/workspace/scratch/c4ed305b7793/adaptive-latest/adaptive-cr/lib/minimap2/ext/minimap2'
+Linking /workspace/scratch/c4ed305b7793/adaptive-latest/adaptive-cr/lib/minimap2/ext/libminimap2.so

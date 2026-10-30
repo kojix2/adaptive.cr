@@ -1,0 +1,12 @@
+/bin/
+/dist/
+/lib/
+/.venv/
+/adaptive-cr-v*.tar.gz
+*.jsonl
+!examples/replay.jsonl
+!docs/integration-results.jsonl
+!docs/integration-v0.3.0.jsonl
+*.mmi
+__pycache__/
+*.pyc

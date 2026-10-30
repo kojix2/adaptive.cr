@@ -1,0 +1,14 @@
+Globs:
+  - src/**/*.cr
+  - spec/**/*.cr
+  - examples/**/*.cr
+
+# JSON-backed model fields use consistent noun accessors (replay, circular, etc.).
+Naming/QueryBoolMethods:
+  Enabled: false
+# Short mathematical and channel loop names are intentional in this codebase.
+Naming/BlockParameterName:
+  Enabled: false
+# Allow compact RPC dispatch/state machines; still reject oversized methods.
+Metrics/CyclomaticComplexity:
+  MaxComplexity: 20

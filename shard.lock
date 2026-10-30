@@ -1,0 +1,29 @@
+version: 2.0
+shards:
+  ameba:
+    git: https://github.com/crystal-ameba/ameba.git
+    version: 1.7.1-dev+git.commit.7590399af9837a072d6523c5a7f33f08c1588f38
+
+  grpc:
+    git: https://github.com/kojix2/grpc.git
+    version: 0.1.0+git.commit.867a084acf52ae6713522171097bd2a257bcc73c
+
+  minimap2:
+    git: https://github.com/kojix2/minimap2-cr.git
+    version: 0.1.0+git.commit.55cd0d55e0554ed881bdd13487cf6129858f11dc
+
+  minknow:
+    git: https://github.com/kojix2/minknow.git
+    version: 0.1.0+git.commit.e925e92487ca3627baa912a2c792abc207b4542e
+
+  pod5:
+    git: https://github.com/kojix2/pod5.cr.git
+    version: 0.1.0+git.commit.ab463468ddf02a060bcef98be195ab279d33af5e
+
+  proto:
+    git: https://github.com/kojix2/proto.git
+    version: 0.1.0+git.commit.675d91e11138e48aaeaa96e2325f42a8abe8a57e
+
+  read_until:
+    git: https://github.com/kojix2/read_until.git
+    version: 0.1.0+git.commit.1fadfb5843a2f1fee5e4c67290523516a60e1c2b

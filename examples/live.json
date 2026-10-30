@@ -1,0 +1,8 @@
+{
+  "reference": "examples/reference.fa",
+  "targets": [
+    "virus"
+  ],
+  "policy": "contig",
+  "quota": 1
+}

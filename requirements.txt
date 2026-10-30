@@ -1,0 +1,3 @@
+# Pin the tested ONT client. Match this to the installed server's compatibility.
+ont-pybasecall-client-lib==7.13.6
+numpy==2.3.5

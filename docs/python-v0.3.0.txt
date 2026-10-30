@@ -1,0 +1,18 @@
+test_bytes_sequences_are_decoded_and_invalid_results_rejected (test_bridge.BridgeTest.test_bytes_sequences_are_decoded_and_invalid_results_rejected) ... ok
+test_fixture_wire_protocol_and_empty_basecall (test_bridge.BridgeTest.test_fixture_wire_protocol_and_empty_basecall) ... ok
+test_invalid_calibration_and_signal_headers_are_rejected (test_bridge.BridgeTest.test_invalid_calibration_and_signal_headers_are_rejected) ... ok
+test_official_packaging_correlation_and_split_molecules (test_bridge.BridgeTest.test_official_packaging_correlation_and_split_molecules) ... ok
+test_queue_full_fails_immediately_without_resubmitting (test_bridge.BridgeTest.test_queue_full_fails_immediately_without_resubmitting) ... ok
+test_timeout_does_not_resubmit (test_bridge.BridgeTest.test_timeout_does_not_resubmit) ... ok
+test_truncated_and_oversized_requests_fail (test_bridge.BridgeTest.test_truncated_and_oversized_requests_fail) ... ok
+test_abnormal_startup_still_writes_end_event (test_cli.CliTest.test_abnormal_startup_still_writes_end_event) ... ok
+test_conflicting_modes_and_missing_metadata_fail (test_cli.CliTest.test_conflicting_modes_and_missing_metadata_fail) ... ok
+test_diagnostic_signal_uses_full_binary_adapter_path (test_cli.CliTest.test_diagnostic_signal_uses_full_binary_adapter_path) ... ok
+test_explicit_fixture_connects_without_minknow (test_cli.CliTest.test_explicit_fixture_connects_without_minknow) ... ok
+test_missing_target_is_detected_before_live_actions (test_cli.CliTest.test_missing_target_is_detected_before_live_actions) ... ok
+test_unavailable_official_server_fails_within_timeout (test_cli.CliTest.test_unavailable_official_server_fails_within_timeout) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.747s
+
+OK

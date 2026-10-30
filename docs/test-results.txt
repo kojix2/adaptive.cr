@@ -1,0 +1,51 @@
+adaptive-cr 0.2.0 validation: 2026-10-29 (Asia/Tokyo)
+Linux x86_64; Crystal 1.22.0; Python 3.12; ONT client 7.13.6; NumPy 2.3.5; minimap2 2.31
+GPU Dorado server and physical MinKNOW: NOT TESTED.
+Basecaller integration uses explicit synthetic fixtures.
+
+Inspecting 21 files
+
+.....................
+
+Finished in 153.14 milliseconds
+21 inspected, 0 failures
+....................
+
+Finished in 174.01 milliseconds
+20 examples, 0 failures, 0 errors, 0 pending
+test_bytes_sequences_are_decoded_and_invalid_results_rejected (test_bridge.BridgeTest.test_bytes_sequences_are_decoded_and_invalid_results_rejected) ... ok
+test_fixture_wire_protocol_and_empty_basecall (test_bridge.BridgeTest.test_fixture_wire_protocol_and_empty_basecall) ... ok
+test_invalid_calibration_and_signal_headers_are_rejected (test_bridge.BridgeTest.test_invalid_calibration_and_signal_headers_are_rejected) ... ok
+test_official_packaging_correlation_and_split_molecules (test_bridge.BridgeTest.test_official_packaging_correlation_and_split_molecules) ... ok
+test_queue_full_fails_immediately_without_resubmitting (test_bridge.BridgeTest.test_queue_full_fails_immediately_without_resubmitting) ... ok
+test_timeout_does_not_resubmit (test_bridge.BridgeTest.test_timeout_does_not_resubmit) ... ok
+test_truncated_and_oversized_requests_fail (test_bridge.BridgeTest.test_truncated_and_oversized_requests_fail) ... ok
+test_abnormal_startup_still_writes_end_event (test_cli.CliTest.test_abnormal_startup_still_writes_end_event) ... ok
+test_conflicting_modes_and_missing_metadata_fail (test_cli.CliTest.test_conflicting_modes_and_missing_metadata_fail) ... ok
+test_diagnostic_signal_uses_full_binary_adapter_path (test_cli.CliTest.test_diagnostic_signal_uses_full_binary_adapter_path) ... ok
+test_explicit_fixture_connects_without_minknow (test_cli.CliTest.test_explicit_fixture_connects_without_minknow) ... ok
+test_missing_target_is_detected_before_live_actions (test_cli.CliTest.test_missing_target_is_detected_before_live_actions) ... ok
+test_unavailable_official_server_fails_within_timeout (test_cli.CliTest.test_unavailable_official_server_fails_within_timeout) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.724s
+
+OK
+OK: 2 references, 4 workers
+{"id":"0","choice":"Reject","reason":"non_target","hits":1}
+{"id":"1","choice":"Accept","reason":"target","hits":1}
+{"id":"2","choice":"Reject","reason":"quota_full","hits":1}
+
+Moleflow integration (actual gRPC/TLS/minimap2; fixture basecaller)
+{"mode": "accept", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.071}
+{"mode": "reject", "channels": 16, "decisions": 80, "acks": 80, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.066}
+{"mode": "quota", "channels": 16, "decisions": 75, "acks": 75, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.047}
+{"mode": "observe", "channels": 16, "decisions": 16, "acks": 0, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.046}
+{"mode": "tls", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.066}
+{"mode": "deadline", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 16, "elapsed_s": 2.166}
+{"mode": "worker_error", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.047}
+{"mode": "shutdown", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 0.173}
+{"mode": "disconnect", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 0.172}
+{"mode": "quota", "channels": 512, "decisions": 2221, "acks": 2197, "unacknowledged": 24, "deadline_fallbacks": 0, "elapsed_s": 2.085}
+
+Release archive relocated to an independent temporary directory: version, validate, offline replay, custom executable, and fixture bridge connection PASS.

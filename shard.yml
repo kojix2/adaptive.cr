@@ -1,0 +1,32 @@
+name: adaptive
+version: 0.3.0
+crystal: ">= 1.22.0"
+license: MPL-2.0
+targets:
+  adaptive:
+    main: src/main.cr
+  adaptive-pod5:
+    main: src/pod5_main.cr
+dependencies:
+  pod5:
+    github: kojix2/pod5.cr
+    branch: main
+  grpc:
+    github: kojix2/grpc
+    branch: main
+  proto:
+    github: kojix2/proto
+    branch: main
+  minknow:
+    github: kojix2/minknow
+    branch: main
+  read_until:
+    github: kojix2/read_until
+    branch: main
+  minimap2:
+    github: kojix2/minimap2-cr
+    branch: main
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    branch: master

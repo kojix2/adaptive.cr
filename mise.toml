@@ -1,0 +1,3 @@
+[tools]
+crystal = "1.22.1"
+python = "3.12"
