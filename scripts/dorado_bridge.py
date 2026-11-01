@@ -47,15 +47,20 @@ def emit(value):
     sys.stdout.buffer.flush()
 
 
-def basecall(client, request, signal, timeout):
+def package_signal(request, signal):
+    """Keep the optional native ONT/NumPy dependencies at the packaging boundary."""
     import numpy as np
     from pybasecall_client_lib.helper_functions import package_read
 
-    read = package_read(
+    return package_read(
         read_id=request["id"], raw_data=np.frombuffer(signal, dtype="<i2").astype(np.int16, copy=False),
         daq_offset=request["offset"], daq_scaling=request["scale"],
         sampling_rate=request["sample_rate"], start_time=request["start_sample"],
     )
+
+
+def basecall(client, request, signal, timeout):
+    read = package_signal(request, signal)
     deadline = time.monotonic() + timeout
     # The pinned PyBasecallClient returns False for queue_full. Fail this job
     # immediately; the coordinator preserves the molecule. Do not retry here.

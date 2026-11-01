@@ -5,7 +5,6 @@ import subprocess
 import struct
 import tempfile
 import unittest
-import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,13 +22,6 @@ class CliTest(unittest.TestCase):
         result = self.run_check(allow_test_bridge=True, fixture_sequence='ACGT')
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('fixture', result.stdout)
-
-    def test_unavailable_official_server_fails_within_timeout(self):
-        result = self.run_check(dorado_address='ipc:///tmp/adaptive-absent-'+str(uuid.uuid4()),
-                                bridge_timeout_ms=1000, bridge_startup_timeout_ms=1000)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn('adaptive:', result.stderr)
-        self.assertNotIn('OK:', result.stdout)
 
     def test_diagnostic_signal_uses_full_binary_adapter_path(self):
         with tempfile.TemporaryDirectory() as directory:

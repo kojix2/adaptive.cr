@@ -13,7 +13,9 @@ scripts/build.sh
 PATH="$PWD/.venv/bin:$PATH" scripts/test.sh
 ```
 
-Pythonは3.12で検証済み。公式wheelのあるPython版を使います。Dorado Basecall Server 7.13.6と `ont-pybasecall-client-lib==7.13.6` が今回の組み合わせです。サーバーは別途導入し、その `--version` を確認してください。異なるサーバー版を使う場合はrequirementsも一致させ、その組み合わせで再検証します。Dorado CLI本体の版と混同しないでください。
+ライブ用のPythonには公式wheelのある版を使います。固定している `ont-pybasecall-client-lib==7.13.6` の [配布物](https://pypi.org/project/ont-pybasecall-client-lib/7.13.6/#files) はCPython 3.13までで、`requirements.txt` 全体では3.11〜3.13が対象です。`mise.toml` とCIは最新Pythonを使うため、ライブ用には対応するPythonで別途 `.venv` を作成します。標準ライブラリだけでオフラインreplayとfixture試験を実行でき、公式クライアント未導入なら専用の2試験は理由付きでskipします。導入後は同じ `scripts/test.sh` で追加実行されます。
+
+クライアント版はDorado Basecall Serverと一致させます。サーバーは別途導入し、その `--version` を確認してください。異なるサーバー版を使う場合はrequirementsも一致させ、その組み合わせで再検証します。Dorado CLI本体の版と混同しないでください。サーバー・GPU・実機を使用した検証は引き続き未実施です。
 
 GPU・モデル・参照indexは実際のrunに必要なものを事前に用意します。モデル名の例は5 kHz条件用で、使用するflow cell・kit・sample rateとの適合性を自動判定する機能はありません。
 

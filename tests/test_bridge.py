@@ -1,4 +1,4 @@
-"""Uses the actual ONT package_read serializer, without a Dorado GPU server."""
+"""Portable bridge protocol/decision tests; no native ONT client is required."""
 import importlib.util
 import json
 import math
@@ -7,7 +7,7 @@ import struct
 import subprocess
 import sys
 import unittest
-import numpy as np
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('bridge', ROOT / 'scripts/dorado_bridge.py')
@@ -35,20 +35,20 @@ def result(read_id, sequence):
 class BridgeTest(unittest.TestCase):
     def setUp(self):
         self.request = dict(id='current', offset=-12.5, scale=0.14, sample_rate=5000, start_sample=1234)
-        self.signal = np.array([-32768, -3, 0, 32767], dtype='<i2').tobytes()
+        self.signal = struct.pack('<4h', -32768, -3, 0, 32767)
+        # Only the external serializer is replaced. Correlation, queue handling,
+        # timeouts, and the subprocess wire protocol use production code.
+        self.packager = patch.object(bridge, 'package_signal', return_value={'read_id': 'current'})
+        self.package_signal = self.packager.start()
+        self.addCleanup(self.packager.stop)
 
-    def test_official_packaging_correlation_and_split_molecules(self):
+    def test_correlation_and_split_molecules(self):
         client = Client([[[result('stale', 'BAD')]],
                          [[result('current', 'ACG'), result('current', 'TTA')]]])
         sequences = bridge.basecall(client, self.request, self.signal, 1)
         self.assertEqual(sequences, ['ACG', 'TTA'])
-        self.assertEqual(len(client.passed), 1)
-        read = client.passed[0]
-        self.assertEqual(read['raw_data'].tolist(), [-32768, -3, 0, 32767])
-        self.assertEqual(read['daq_offset'], -12.5)
-        self.assertEqual(read['daq_scaling'], 0.14)
-        self.assertEqual(read['sampling_rate'], 5000)
-        self.assertEqual(read['start_time'], 1234)
+        self.package_signal.assert_called_once_with(self.request, self.signal)
+        self.assertEqual(client.passed, [{'read_id': 'current'}])
 
     def test_timeout_does_not_resubmit(self):
         client = Client([])

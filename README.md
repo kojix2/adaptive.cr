@@ -14,23 +14,32 @@ accuracy, and sustained throughput remain untested.
 
 ## Build
 
-Requires Crystal >= 1.22.0, Python >= 3.11 (tested with 3.12), C/C++20 build tools,
-and the native libraries below. With mise on Debian/Ubuntu:
+Requires Crystal >= 1.22.0, Python >= 3.11, C/C++20 build tools, and native libraries.
+On Debian/Ubuntu:
 
 ```sh
-sudo apt-get install build-essential pkg-config libnghttp2-dev libssl-dev zlib1g-dev libyaml-dev curl tar unzip patch
+sudo apt-get install build-essential pkg-config libnghttp2-dev libssl-dev zlib1g-dev libyaml-dev curl tar bzip2 unzip patch
+```
+
+On macOS (Apple Silicon, with Xcode Command Line Tools):
+
+```sh
+brew install pkg-config libnghttp2 openssl@3 libyaml
+export PKG_CONFIG_PATH="$(brew --prefix libnghttp2)/lib/pkgconfig:$(brew --prefix openssl@3)/lib/pkgconfig:$(brew --prefix libyaml)/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+export LIBRARY_PATH="$(brew --prefix libnghttp2)/lib:$(brew --prefix openssl@3)/lib:$(brew --prefix libyaml)/lib${LIBRARY_PATH:+:$LIBRARY_PATH}"
+```
+
+Then build with mise (latest Crystal and Python):
+
+```sh
 mise install
-mise exec -- shards install
-mise exec -- python -m venv .venv
-. .venv/bin/activate
-python3 -m pip install -r requirements.txt
 mise exec -- scripts/build.sh
 ```
 
 Initial setup downloads dependencies and builds native minimap2 and POD5 libraries.
-`shard.lock` records resolved commits. Install Dorado Basecall Server, models, and
-GPU drivers separately. The server is distinct from the `dorado basecaller` CLI;
-match its version to the Python client (`requirements.txt` pins 7.13.6).
+The build uses the commits in `shard.lock`. Offline replay and fixture tests need
+only Python's standard library. Native POD5 downloads support Linux x86_64/ARM64
+and macOS ARM64; Intel macOS requires building POD5 from source.
 
 ## Try offline
 
@@ -47,9 +56,16 @@ sequence JSONL, without Dorado or MinKNOW.
 
 ## Run live
 
-Start Dorado with a model matching your flow cell, kit, and sample rate. Save this
-as `run.json` and adapt it to your environment. Use the MinKNOW **position service
-port** and a single-part minimap2 index.
+Install Dorado Basecall Server, models, and GPU drivers separately. The server is
+distinct from the `dorado basecaller` CLI. Install `requirements.txt` in a virtual
+environment using a Python supported by the official client, and match the client
+to the server version. The pinned client 7.13.6 has wheels through Python 3.13,
+so latest Python is suitable for fixture tests but may not run this live client.
+See [operations](docs/operations.md) for setup.
+
+Start Dorado with a model matching your flow cell, kit, and sample rate. Adapt
+this `run.json` to your environment. Use the MinKNOW **position service port**
+and a single-part minimap2 index.
 
 ```json
 {
@@ -110,8 +126,12 @@ mise exec -- scripts/test.sh
 mise exec -- scripts/test.sh /absolute/path/moleflow/bin/moleflow
 ```
 
-The [validation record](docs/validation-v0.3.0.md) documents 23 Crystal specs,
-13 Python tests, and 10 integration scenarios on Linux x86_64 / Crystal 1.22.0.
+See the [current validation record](docs/validation-ci.md) and the
+[original v0.3.0 results](docs/validation-v0.3.0.md).
+The CI workflow targets `ubuntu-latest` and `macos-latest`, with latest Crystal
+and stable Python, covering builds, lint, specs, replay, Moleflow integration,
+and packaging. Official-client checks are explicitly skipped unless
+`requirements.txt` is installed; protocol, timeout, and fixture tests still run.
 Signal gaps, worker errors, and decision deadlines preserve the molecule. Stale
 results are discarded; action acknowledgment timeouts stop the run. Deadlines
 are not hard real-time guarantees, and signal memory limits do not bound RSS.

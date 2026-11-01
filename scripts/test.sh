@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
+for script in scripts/*.sh; do
+  bash -n "$script"
+done
 crystal tool format --check src spec examples
 bin/ameba --no-color
 sh lib/pod5/scripts/with_native.sh crystal spec

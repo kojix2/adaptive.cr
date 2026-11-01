@@ -1,0 +1,59 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential pkg-config libnghttp2-dev libssl-dev zlib1g-dev libyaml-dev curl tar bzip2 unzip patch
+
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        run: |
+          brew install pkg-config libnghttp2 openssl@3 libyaml
+          echo "$(brew --prefix openssl@3)/bin" >> "$GITHUB_PATH"
+          echo "PKG_CONFIG_PATH=$(brew --prefix libnghttp2)/lib/pkgconfig:$(brew --prefix openssl@3)/lib/pkgconfig:$(brew --prefix libyaml)/lib/pkgconfig" >> "$GITHUB_ENV"
+          echo "LIBRARY_PATH=$(brew --prefix libnghttp2)/lib:$(brew --prefix openssl@3)/lib:$(brew --prefix libyaml)/lib" >> "$GITHUB_ENV"
+
+      - uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: latest
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.x'
+          check-latest: true
+
+      - name: Build
+        run: scripts/build.sh
+
+      - name: Build Moleflow
+        run: |
+          git clone --depth 1 https://github.com/kojix2/moleflow.git "$RUNNER_TEMP/moleflow"
+          cd "$RUNNER_TEMP/moleflow"
+          sh scripts/build.sh
+
+      - name: Test including Moleflow integration
+        run: scripts/test.sh "$RUNNER_TEMP/moleflow/bin/moleflow"
+
+      - name: Package
+        run: scripts/package.sh
