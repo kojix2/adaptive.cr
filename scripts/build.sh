@@ -4,6 +4,7 @@ cd "$(dirname "$0")/.."
 shards update
 mkdir -p bin
 crystal build src/main.cr --release -o bin/adaptive
+crystal build src/gui_main.cr --release -o bin/adaptive-gui
 crystal build examples/custom.cr --release -o bin/adaptive-junction
 crystal build lib/ameba/src/cli.cr -o bin/ameba
 

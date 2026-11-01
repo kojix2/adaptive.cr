@@ -13,7 +13,7 @@ Requires Crystal >= 1.22, Shards and C/C++20 build tools. Run from the repositor
 
 ```sh
 # Ubuntu
-sudo apt-get install build-essential pkg-config libnghttp2-dev libssl-dev zlib1g-dev libyaml-dev curl tar bzip2 unzip patch
+sudo apt-get install libgtk-3-dev build-essential pkg-config libnghttp2-dev libssl-dev zlib1g-dev libyaml-dev curl tar bzip2 unzip patch
 # macOS: install Xcode Command Line Tools, then:
 brew install pkg-config libnghttp2 openssl@3 libyaml
 export PKG_CONFIG_PATH="$(brew --prefix libnghttp2)/lib/pkgconfig:$(brew --prefix openssl@3)/lib/pkgconfig:$(brew --prefix libyaml)/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
@@ -34,6 +34,21 @@ bin/adaptive --replay=examples/replay.jsonl
 
 Replay maps sequence JSONL without Dorado or MinKNOW. The example produces
 Reject / Accept / Reject, with the final rejection caused by the acceptance quota.
+
+## GUI
+
+```sh
+bin/adaptive-gui -c examples/live.json
+```
+
+Edit common settings in the form or all settings in the JSON tab. The native
+toolbar uses [Radix icons](https://github.com/kojix2/icon-radix) for open/save,
+settings, validation and start/stop; the log tab shows output. Relative paths use
+the displayed working directory. The GUI launches the sibling `adaptive` CLI;
+`--cli=PATH` selects another executable. Sequence replay works offline; live mode
+defaults to observe only.
+Ubuntu requires GTK 3; macOS uses native controls. GUI smoke tests:
+`sh scripts/test-gui.sh` (Linux also needs `xvfb` and `xauth`).
 
 ## Run live
 

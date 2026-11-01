@@ -5,6 +5,8 @@ Original adaptive-cr source is provided under MPL-2.0; see LICENSE.
 External Shards retain their upstream licenses and copyright notices:
 
 - kojix2/grpc, kojix2/proto, kojix2/minknow, kojix2/read_until, kojix2/minimap2-cr
+- kojix2/uing and libui-ng (MIT)
+- kojix2/icon-radix, radix-ui/icons and naqvis/crimage (MIT)
 - crystal-ameba/ameba
 - kojix2/pod5.cr (native POD5 licensing is described in its THIRD_PARTY.md)
 - lh3/minimap2 (downloaded by minimap2-cr)

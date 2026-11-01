@@ -7,7 +7,15 @@ targets:
     main: src/main.cr
   adaptive-pod5:
     main: src/pod5_main.cr
+  adaptive-gui:
+    main: src/gui_main.cr
 dependencies:
+  icon-radix:
+    github: kojix2/icon-radix
+    branch: main
+  uing:
+    github: kojix2/uing
+    branch: main
   pod5:
     github: kojix2/pod5.cr
     branch: main

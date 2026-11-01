@@ -4,27 +4,38 @@ shards:
     git: https://github.com/crystal-ameba/ameba.git
     version: 1.7.1-dev+git.commit.a099c01ca1c883a03f7431d2f8ab754bb9b1e3f7
 
+  crimage:
+    git: https://github.com/naqvis/crimage.git
+    version: 1.0.5+git.commit.7d3244a3850646e3d398cef071f7c3e3f52c7518
+
   grpc:
     git: https://github.com/kojix2/grpc.git
-    version: 0.1.0+git.commit.e7127510e1beccb80de8d9bd6ad85b61d3f2ddc9
+    version: 0.1.0+git.commit.e97f402bb8727b7acc7f5428069fdd44be1dad41
+
+  icon-radix:
+    git: https://github.com/kojix2/icon-radix.git
+    version: 0.1.0+git.commit.5164648388621b1d4cc40be241cb43089b5074ee
 
   minimap2:
     git: https://github.com/kojix2/minimap2-cr.git
-    version: 0.1.0+git.commit.55cd0d55e0554ed881bdd13487cf6129858f11dc
+    version: 0.1.0+git.commit.ee0ef7283df219ee7d820f20be150390b3e967a7
 
   minknow:
     git: https://github.com/kojix2/minknow.git
-    version: 0.1.0+git.commit.e925e92487ca3627baa912a2c792abc207b4542e
+    version: 0.1.0+git.commit.a9b4f3cbd9166e44a5f57dd681482e07a6e69dba
 
   pod5:
     git: https://github.com/kojix2/pod5.cr.git
-    version: 0.1.0+git.commit.fdb26ebe7e0e0420c4e2f7ca98f4eb252c550917
+    version: 0.1.0+git.commit.8c6febb111c76168d8afe207e133ff2688189ead
 
   proto:
     git: https://github.com/kojix2/proto.git
-    version: 0.1.0+git.commit.675d91e11138e48aaeaa96e2325f42a8abe8a57e
+    version: 0.1.0+git.commit.30ac879780cee807e39191f2c70df0476be9d4a3
 
   read_until:
     git: https://github.com/kojix2/read_until.git
-    version: 0.1.0+git.commit.1fadfb5843a2f1fee5e4c67290523516a60e1c2b
+    version: 0.1.0+git.commit.27ea1cd75ad406eb9925039c16a1aff91ee57475
 
+  uing:
+    git: https://github.com/kojix2/uing.git
+    version: 0.6.0+git.commit.4a89ccc269df389979b336d37e789461d4fe9c1a
