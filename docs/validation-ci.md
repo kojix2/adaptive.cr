@@ -4,6 +4,10 @@ Local validation on 2026-11-01: Linux x86_64, Crystal 1.22.1, Python 3.14.4,
 native POD5 0.3.49. An additional isolated Python 3.13.2 environment installed
 the unmodified packages in `requirements.txt` for the official-client checks.
 
+These results predate the development dependency policy change: application
+builds now run `shards update` and track runtime dependencies on `main`, rather
+than requiring the previously recorded lock commits.
+
 ## Checks performed
 
 - `scripts/build.sh`: built `adaptive`, `adaptive-junction`, `adaptive-pod5`,

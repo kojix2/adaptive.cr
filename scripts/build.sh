@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-shards install --frozen
+shards update
 mkdir -p bin
 crystal build src/main.cr --release -o bin/adaptive
 crystal build examples/custom.cr --release -o bin/adaptive-junction

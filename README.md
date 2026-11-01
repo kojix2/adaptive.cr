@@ -37,9 +37,11 @@ mise exec -- scripts/build.sh
 ```
 
 Initial setup downloads dependencies and builds native minimap2 and POD5 libraries.
-The build uses the commits in `shard.lock`. Offline replay and fixture tests need
-only Python's standard library. Native POD5 downloads support Linux x86_64/ARM64
-and macOS ARM64; Intel macOS requires building POD5 from source.
+Runtime dependencies track `main`. Development builds run `shards update` to use
+their latest commits; `shard.lock` records the most recent resolution. Offline
+replay and fixture tests need only Python's standard library. Native POD5 downloads
+support Linux x86_64/ARM64 and macOS ARM64; Intel macOS requires building POD5
+from source.
 
 ## Try offline
 

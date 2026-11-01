@@ -84,4 +84,6 @@ Crystal policyは信頼されたコンパイル時コードです。coordinator�
 
 `scripts/test.sh /absolute/path/moleflow/bin/moleflow` が結合試験を追加します。Moleflowは独立したプロジェクトです。試験データは人工配列、basecallerは明示的fixtureです。実gRPC・TLS・minimap2・操作応答・終了処理を確認します。
 
-`scripts/package.sh` がソース、固定依存、ビルド済みバイナリ、文書、試験結果をtar.gzへまとめ、SHA-256も出力します。Pythonパッケージ、Dorado、モデル、GPUランタイム、実データは同梱しません。
+開発用の `scripts/build.sh` は `shards update` で依存のmainブランチを更新します。`shard.lock` は直近の解決結果の記録であり、標準ビルドを特定コミットへ固定するものではありません。
+
+`scripts/package.sh` がソース、依存定義と解決記録、ビルド済みバイナリ、文書、試験結果をtar.gzへまとめ、SHA-256も出力します。Pythonパッケージ、Dorado、モデル、GPUランタイム、実データは同梱しません。
