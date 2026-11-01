@@ -157,6 +157,59 @@ describe Adaptive::Engine do
       expect_raises(Exception, /acknowledgment timeout/) { engine.advance }
     end
   end
+
+  it "does not confirm a late acknowledgment or release its reservation" do
+    harness(Adaptive::Decision.new(Adaptive::Choice::Accept, "target", "virus", 1)) do |engine, config, jobs, sent|
+      config.ack_timeout_ms = 10
+      feed(engine)
+      engine.advance
+      engine.complete(answer(jobs[0]))
+      sleep 20.milliseconds
+      expect_raises(Exception, /acknowledgment timeout/) { engine.acknowledge(sent[0][3], 0) }
+      engine.pending_actions.should eq(1)
+      engine.experiment.confirmed["virus"].should eq(0)
+      engine.experiment.reserved["virus"].should eq(1)
+    end
+  end
+
+  it "stops before a completed worker can send another action after an acknowledgment timeout" do
+    harness(Adaptive::Decision.new(Adaptive::Choice::Reject, "non_target")) do |engine, config, jobs, sent|
+      config.ack_timeout_ms = 10
+      feed(engine)
+      feed(engine, channel: 2, id: "other")
+      engine.advance
+      engine.complete(answer(jobs[0]))
+      sleep 20.milliseconds
+      expect_raises(Exception, /acknowledgment timeout/) { engine.complete(answer(jobs[1])) }
+      sent.size.should eq(1)
+    end
+  end
+
+  it "checks acknowledgment timeouts before issuing deadline fallback actions" do
+    harness do |engine, config, jobs, sent|
+      config.ack_timeout_ms = 10
+      feed(engine)
+      engine.advance
+      engine.complete(answer(jobs[0]))
+      feed(engine, channel: 2, id: "other")
+      config.deadline_ms = 1
+      sleep 20.milliseconds
+      expect_raises(Exception, /acknowledgment timeout/) { engine.advance }
+      sent.size.should eq(1)
+    end
+  end
+
+  it "rechecks acknowledgment deadlines after a slow custom policy returns" do
+    harness(policy: SlowRejectPolicy.new) do |engine, config, jobs, sent|
+      config.ack_timeout_ms = 50
+      feed(engine)
+      feed(engine, channel: 2, id: "other")
+      engine.advance
+      engine.complete(answer(jobs[0]))
+      expect_raises(Exception, /acknowledgment timeout/) { engine.complete(answer(jobs[1])) }
+      sent.size.should eq(1)
+    end
+  end
 end
 
 describe "real minimap2 policy replay" do

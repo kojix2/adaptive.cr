@@ -44,6 +44,7 @@ module Adaptive
     end
 
     def advance : Nil
+      check_ack_deadline
       now = Time.instant
       @states.each do |channel, state|
         next if state.terminal
@@ -64,13 +65,10 @@ module Adaptive
           @active_jobs.add({channel, state.generation})
         end
       end
-      expired = @pending.select { |_, item| (now - item.sent).total_milliseconds >= @config.ack_timeout_ms }.keys
-      # A timed-out action could still have been applied. Keep its reservation
-      # until shutdown, and stop the run instead of issuing conflicting retries.
-      raise "action acknowledgment timeout: #{expired.first}" unless expired.empty?
     end
 
     def complete(result : Result) : Nil
+      check_ack_deadline
       job = result.job
       return unless @active_jobs.delete({job.channel, job.generation})
       @inflight_bytes -= job.signal.size
@@ -115,6 +113,7 @@ module Adaptive
     end
 
     def acknowledge(id : String, status : Int32) : Nil
+      check_ack_deadline
       if pending = @pending.delete(id)
         if group = pending.group
           @experiment.acknowledge(group, status == 0)
@@ -126,6 +125,9 @@ module Adaptive
 
     private def finish_read(channel : Int32, state : ReadState, decision : Decision) : Nil
       return if state.terminal
+      # A slow policy or a long ingest/advance iteration can cross an ACK
+      # deadline after the public entry point checked it. Check before sending.
+      check_ack_deadline
       group = decision.choice.accept? ? decision.group : nil
       if group && !@experiment.reserve(group, decision.limit)
         decision = Decision.new(Choice::Reject, "quota_full")
@@ -147,6 +149,18 @@ module Adaptive
         @pending[action_id] = Pending.new(group, Time.instant, channel, state.id)
         @send.call(channel, state.id, decision, action_id)
       end
+    end
+
+    private def check_ack_deadline : Nil
+      # Hash iteration follows insertion order; sends use a monotonic clock.
+      # Checking the oldest outstanding action is sufficient and avoids scans
+      # on every result or ACK at high channel counts.
+      return unless oldest = @pending.first?
+      id, pending = oldest
+      return if (Time.instant - pending.sent).total_milliseconds < @config.ack_timeout_ms
+      # It may already have been applied. Retain its reservation and stop;
+      # neither a late ACK nor a subsequent action can hide this timeout.
+      raise "action acknowledgment timeout: #{id}"
     end
   end
 end
