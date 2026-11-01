@@ -2,11 +2,11 @@ version: 2.0
 shards:
   ameba:
     git: https://github.com/crystal-ameba/ameba.git
-    version: 1.7.1-dev+git.commit.7590399af9837a072d6523c5a7f33f08c1588f38
+    version: 1.7.1-dev+git.commit.a099c01ca1c883a03f7431d2f8ab754bb9b1e3f7
 
   grpc:
     git: https://github.com/kojix2/grpc.git
-    version: 0.1.0+git.commit.867a084acf52ae6713522171097bd2a257bcc73c
+    version: 0.1.0+git.commit.94c4507ba5292d95ec3af24e5a57f44c4d1423dd
 
   minimap2:
     git: https://github.com/kojix2/minimap2-cr.git

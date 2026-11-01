@@ -89,3 +89,29 @@ formatting, Ameba, Actionlint, and `git diff --check`.
 This correction changes test expectations, not device-control behavior. Hosted
 verification is available in the repository's
 [Test workflow](https://github.com/kojix2/adaptive.cr/actions/workflows/test.yml).
+
+## Upstream receive flow control (2026-11-01)
+
+After the termination correction, macOS passed the first ten integration cases,
+including the deterministic stream-end regression. The
+[512-channel case](https://github.com/kojix2/adaptive.cr/actions/runs/41272428071)
+then exposed a separate upstream defect: `request stream receive buffer exhausted`.
+
+`grpc.cr` rejected more than 256 coalesced requests or 128 responses before the
+application had an opportunity to consume them. Deterministic upstream tests
+reproduce both failures on the old implementation. The fix is upstream
+[94c4507](https://github.com/kojix2/grpc/commit/94c4507ba5292d95ec3af24e5a57f44c4d1423dd):
+both receivers now return HTTP/2 stream credit as messages are consumed, with
+separate connection credit and support for incomplete messages exceeding the
+window. The initial 65,535-byte window is unchanged.
+
+Upstream verification passed 211 standard specs and 32 independent grpcurl
+checks locally. Its [hosted CI](https://github.com/kojix2/grpc/actions/runs/41273903962)
+also passed on Ubuntu/macOS, including grpcurl and GripMock. Both applications
+obtain the published fix through their existing `main` dependencies; there are
+no application-side pacing changes or enlarged receive-buffer limits.
+
+Rebuilt both apps from the published upstream fix and reran local validation:
+adaptive passed 24 Crystal specs, 17 portable Python tests, and all 11 integration
+scenarios, including 512 channels with zero deadline fallbacks. Moleflow's full
+suite also passed, including independent Python 3,000-channel/TLS and POD5 checks.
