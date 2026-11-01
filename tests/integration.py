@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Real gRPC + minimap2 with an explicitly synthetic basecall backend."""
 import argparse
+from collections import Counter
 import json
 from pathlib import Path
 import socket
 import subprocess
 import tempfile
 import time
+
+from stream_end_proxy import StreamEndProxy
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -15,6 +18,31 @@ def free_port():
     with socket.socket() as sock:
         sock.bind(('127.0.0.1', 0))
         return sock.getsockname()[1]
+
+
+def validate_action_accounting(decisions, acks, end):
+    """Every action must be acknowledged exactly once or remain unresolved."""
+    sent = {row['action_id']: row for row in decisions}
+    assert len(sent) == len(decisions), 'duplicate decision action ID'
+    acknowledged = set()
+    for ack in acks:
+        action_id = ack['action_id']
+        assert action_id in sent, ('unknown acknowledgment', action_id)
+        assert action_id not in acknowledged, ('duplicate acknowledgment', action_id)
+        decision = sent[action_id]
+        assert (ack['channel'], ack['read_id']) == (decision['channel'], decision['read_id']), ack
+        assert ack['status'] == 0, ack
+        acknowledged.add(action_id)
+    unresolved = sent.keys() - acknowledged
+    assert end['unacknowledged_actions'] == len(unresolved), ('unaccounted actions', end, unresolved)
+    # Unresolved accepts retain reservations, never confirmed successes.
+    for field, action_ids in (('confirmed', acknowledged), ('pending', unresolved)):
+        expected = Counter(sent[action_id]['group'] for action_id in action_ids
+                           if sent[action_id].get('group'))
+        actual = end[field]
+        groups = actual.keys() | expected.keys()
+        assert all(actual.get(group, 0) == expected[group] for group in groups), (field, actual, expected)
+    return unresolved
 
 
 def run(binary, mode, channels=16):
@@ -27,6 +55,8 @@ def run(binary, mode, channels=16):
                              manager_port=free_port(), position_port=port, output=str(tmp / 'reads'))
         if mode in ('shutdown', 'disconnect'):
             server_config['duration_seconds'] = 30.0
+        if mode == 'stream_end':
+            server_config['read_length_sigma'] = 0.0
         if mode == 'tls':
             subprocess.run(['openssl', 'req', '-x509', '-newkey', 'rsa:2048', '-nodes',
                             '-keyout', str(tmp / 'key.pem'), '-out', str(tmp / 'cert.pem'),
@@ -41,7 +71,10 @@ def run(binary, mode, channels=16):
                       workers=4, min_samples=500, step_samples=500, max_samples=10000,
                       deadline_ms=1500, bridge_timeout_ms=3000, observe=mode == 'observe',
                       allow_test_bridge=True, fixture_sequence=sequence, log=str(tmp / 'audit.jsonl'),
-                      quota=1 if mode == 'quota' else 0)
+                      quota=1 if mode in ('quota', 'stream_end') else 0)
+        if mode == 'stream_end':
+            # All first prefixes arrive at the final tick (2 s * 5 kHz).
+            config.update(min_samples=10000)
         if mode == 'tls':
             config['ca_file'] = str(tmp / 'cert.pem')
         if mode in ('deadline', 'worker_error'):
@@ -56,6 +89,7 @@ def run(binary, mode, channels=16):
         (tmp / 'client.json').write_text(json.dumps(config))
         with (tmp / 'server.log').open('w+') as log:
             server = subprocess.Popen([str(binary), '-c', str(tmp / 'server.json')], stdout=log, stderr=log)
+            proxy = None
             try:
                 for _ in range(100):
                     try:
@@ -63,6 +97,10 @@ def run(binary, mode, channels=16):
                             break
                     except OSError:
                         time.sleep(0.05)
+                if mode == 'stream_end':
+                    proxy = StreamEndProxy(port)
+                    config['port'] = proxy.port
+                    (tmp / 'client.json').write_text(json.dumps(config))
                 started = time.monotonic()
                 command = [str(ROOT / 'bin/adaptive'), '-c', str(tmp / 'client.json')]
                 if mode in ('shutdown', 'disconnect'):
@@ -105,22 +143,33 @@ def run(binary, mode, channels=16):
                 if mode == 'disconnect':
                     assert events[-1]['outcome'] == 'error'
                     assert any(row['event'] == 'error' for row in events)
+                elif mode != 'shutdown':
+                    assert events[-1]['outcome'] == 'stream_end'
                 assert len({row['read_id'] for row in decisions}) == len(decisions)
-                assert all(row['status'] == 0 for row in acks), acks
                 if mode == 'observe':
                     assert not acks
+                    assert events[-1]['unacknowledged_actions'] == 0
                 else:
-                    assert len(acks) + events[-1]['unacknowledged_actions'] == len(decisions)
-                    if channels == 16 and mode not in ('shutdown', 'disconnect'):
-                        assert len(acks) == len(decisions), (len(acks), len(decisions))
+                    # The final signal can produce decisions after Moleflow
+                    # ends its RPC. Account for them; do not require late ACKs.
+                    validate_action_accounting(decisions, acks, events[-1])
+                    if mode not in ('shutdown', 'disconnect', 'stream_end'):
+                        assert acks, 'no device action was acknowledged'
                 choices = [row['choice'] for row in decisions]
                 if mode == 'reject':
                     assert set(choices) == {'Reject'}
                     assert any(json.loads(row)['end_reason'] == 'unblock_mux_change'
                                for row in (tmp / 'reads/reads.jsonl').read_text().splitlines())
-                elif mode == 'quota':
+                elif mode in ('quota', 'stream_end'):
                     assert choices.count('Accept') == 1 and 'Reject' in choices
-                    assert events[-1]['confirmed']['virus'] == 1
+                    if mode == 'stream_end':
+                        assert not acks
+                        assert len(decisions) == channels
+                        assert events[-1]['unacknowledged_actions'] == channels
+                        assert events[-1]['confirmed'].get('virus', 0) == 0
+                        assert events[-1]['pending']['virus'] == 1
+                    else:
+                        assert events[-1]['confirmed']['virus'] == 1
                 else:
                     assert set(choices) == {'Accept'}, choices
                 if mode == 'deadline':
@@ -133,6 +182,8 @@ def run(binary, mode, channels=16):
                                       deadline_fallbacks=sum(row['reason'] == 'decision_deadline' for row in decisions),
                                       elapsed_s=round(time.monotonic()-started, 3))), flush=True)
             finally:
+                if proxy:
+                    proxy.close()
                 server.terminate()
                 try:
                     server.wait(timeout=5)
@@ -145,6 +196,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--moleflow', required=True, type=Path)
     args = parser.parse_args()
-    for case in ('accept', 'reject', 'quota', 'observe', 'tls', 'deadline', 'worker_error', 'shutdown', 'disconnect'):
+    for case in ('accept', 'reject', 'quota', 'observe', 'tls', 'deadline', 'worker_error', 'shutdown', 'disconnect', 'stream_end'):
         run(args.moleflow.resolve(), case)
     run(args.moleflow.resolve(), 'quota', channels=512)

@@ -44,8 +44,7 @@ not for newer Python. Consequently CI does not install that optional native
 package. Install `requirements.txt` with a supported interpreter to enable its
 two extra checks. There is no fallback pretending to perform real basecalling.
 
-macOS execution and hosted Actions results have not been verified locally;
-this environment is Linux. The macOS job targets Apple Silicon (the current
+Local execution is Linux-only. The macOS job targets Apple Silicon (the current
 [`macos-latest` runner](https://github.com/actions/runner-images)) and uses
 Homebrew libraries. Native POD5 installers support macOS ARM64; Intel macOS
 requires a separately built native POD5 library.
@@ -54,3 +53,39 @@ No GPU Dorado server or physical MinKNOW device was available. These checks
 do not establish basecalling accuracy, enrichment, GPU capacity, sustained
 throughput, or hardware compatibility. See [operations](operations.md) before
 moving from observation to device actions.
+
+## Stream termination regression (2026-11-01)
+
+Hosted Ubuntu CI passed, while macOS built both apps and passed the unit tests
+but failed a strict acknowledgment-count assertion in integration. The
+[first failure](https://github.com/kojix2/adaptive.cr/actions/runs/41271162281)
+reported 63 ACKs for 65 decisions (quota); the
+[next run](https://github.com/kojix2/adaptive.cr/actions/runs/41271599939)
+reported 71 ACKs for 73 decisions (reject).
+
+Moleflow sends its final signal tick before ending the RPC and does not continue
+processing actions afterward. The client can finish processing that signal and
+submit an action before observing the stream end. Such actions cannot receive an
+ACK. Adaptive already records them as unresolved and retains any quota
+reservation. The test nevertheless required every decision to receive an ACK
+for 16-channel runs, contradicting the existing shutdown contract.
+
+Integration now checks unique action IDs, ACK/read/channel correlation, successful
+statuses, exact unresolved counts, and confirmed/reserved quota accounting. It
+still requires successful ACKs during ordinary active-stream scenarios. Unknown,
+duplicate, failed, mismatched, and unaccounted ACKs remain failures.
+
+A deterministic `stream_end` regression uses a test-only TCP proxy to delay
+HTTP/2 END_STREAM delivery. All first signal prefixes arrive at Moleflow's final
+tick, so 16 decisions remain unresolved, including one reserved but unconfirmed
+accept. The previous assertion fails this scenario with `(0, 16)` on Linux too;
+the corrected accounting passes. Five portable unit tests also cover the
+accounting invariants. The integration suite now has 11 scenarios.
+
+Local verification passed: 24 Crystal specs, 17 portable Python tests (plus two
+explicitly skipped optional-client checks), all 11 integration scenarios,
+formatting, Ameba, Actionlint, and `git diff --check`.
+
+This correction changes test expectations, not device-control behavior. Hosted
+verification is available in the repository's
+[Test workflow](https://github.com/kojix2/adaptive.cr/actions/workflows/test.yml).
