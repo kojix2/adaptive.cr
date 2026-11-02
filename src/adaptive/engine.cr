@@ -9,17 +9,20 @@ module Adaptive
     getter states = {} of Int32 => ReadState
     getter buffered_bytes = 0_i64
     getter inflight_bytes = 0_i64
+    getter unsent_actions = 0
+    @stopped = false
     @generation = 0_u64
     @counter = 0_u64
     @pending = {} of String => Pending
     @active_jobs = Set(Tuple(Int32, UInt64)).new
 
     def initialize(@config : Config, @policy : Policy, @log : EventLog,
-                   @submit : Job -> Bool, @send : Int32, String, Decision, String -> Nil,
+                   @submit : Job -> Bool, @send : Int32, String, Decision, String -> Bool,
                    @offsets : Array(Float64), @scales : Array(Float64), @sample_rate : Float64)
     end
 
     def ingest(channel : Int32, id : String, start : UInt64, chunk_start : UInt64, count : UInt64, data : Bytes) : Nil
+      return if @stopped
       raise "unexpected channel" unless (@config.first_channel..@config.last_channel).includes?(channel)
       raise "invalid signal payload" unless count <= 250000 && data.size.to_u64 == count * 2
       state = @states[channel]?
@@ -44,9 +47,11 @@ module Adaptive
     end
 
     def advance : Nil
+      return if @stopped
       check_ack_deadline
       now = Time.instant
       @states.each do |channel, state|
+        break if @stopped
         next if state.terminal
         if (now - state.created).total_milliseconds >= @config.deadline_ms
           finish_read(channel, state, Decision.new(Choice::Accept, "decision_deadline"))
@@ -68,6 +73,7 @@ module Adaptive
     end
 
     def complete(result : Result) : Nil
+      return if @stopped
       check_ack_deadline
       job = result.job
       return unless @active_jobs.delete({job.channel, job.generation})
@@ -112,6 +118,11 @@ module Adaptive
       @pending.size
     end
 
+    # Stop new work without discarding ACKs for actions already queued.
+    def stop : Nil
+      @stopped = true
+    end
+
     def acknowledge(id : String, status : Int32) : Nil
       check_ack_deadline
       if pending = @pending.delete(id)
@@ -147,7 +158,15 @@ module Adaptive
       else
         raise "too many unacknowledged actions" if @pending.size >= 4096
         @pending[action_id] = Pending.new(group, Time.instant, channel, state.id)
-        @send.call(channel, state.id, decision, action_id)
+        # False guarantees that the message was not enqueued and the sender has
+        # stopped. Exceptions give no such guarantee: retain pending/reserved.
+        unless @send.call(channel, state.id, decision, action_id)
+          @pending.delete(action_id)
+          @experiment.release(group) if group
+          @unsent_actions += 1
+          @log.emit("action_unsent", action_id: action_id, read_id: state.id, channel: channel)
+          stop
+        end
       end
     end
 

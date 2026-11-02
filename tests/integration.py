@@ -20,20 +20,30 @@ def free_port():
         return sock.getsockname()[1]
 
 
-def validate_action_accounting(decisions, acks, end):
-    """Every action must be acknowledged exactly once or remain unresolved."""
+def validate_action_accounting(decisions, acks, end, unsent=()):
+    """Every decision is acknowledged, unresolved, or explicitly not enqueued."""
     sent = {row['action_id']: row for row in decisions}
     assert len(sent) == len(decisions), 'duplicate decision action ID'
+    unsent_ids = set()
+    for row in unsent:
+        action_id = row['action_id']
+        assert action_id in sent, ('unknown unsent action', action_id)
+        assert action_id not in unsent_ids, ('duplicate unsent action', action_id)
+        decision = sent[action_id]
+        assert (row['channel'], row['read_id']) == (decision['channel'], decision['read_id']), row
+        unsent_ids.add(action_id)
+    assert end.get('unsent_actions', 0) == len(unsent_ids), ('unaccounted unsent actions', end)
     acknowledged = set()
     for ack in acks:
         action_id = ack['action_id']
         assert action_id in sent, ('unknown acknowledgment', action_id)
         assert action_id not in acknowledged, ('duplicate acknowledgment', action_id)
+        assert action_id not in unsent_ids, ('acknowledged unsent action', action_id)
         decision = sent[action_id]
         assert (ack['channel'], ack['read_id']) == (decision['channel'], decision['read_id']), ack
         assert ack['status'] == 0, ack
         acknowledged.add(action_id)
-    unresolved = sent.keys() - acknowledged
+    unresolved = sent.keys() - acknowledged - unsent_ids
     assert end['unacknowledged_actions'] == len(unresolved), ('unaccounted actions', end, unresolved)
     # Unresolved accepts retain reservations, never confirmed successes.
     for field, action_ids in (('confirmed', acknowledged), ('pending', unresolved)):
@@ -135,6 +145,7 @@ def run(binary, mode, channels=16):
                 events = [json.loads(line) for line in (tmp / 'audit.jsonl').read_text().splitlines()]
                 decisions = [row for row in events if row['event'] == 'decision']
                 acks = [row for row in events if row['event'] == 'ack']
+                unsent = [row for row in events if row['event'] == 'action_unsent']
                 assert decisions, mode
                 assert events[0]['backend'] == 'fixture'
                 assert events[-1]['event'] == 'end'
@@ -150,9 +161,9 @@ def run(binary, mode, channels=16):
                     assert not acks
                     assert events[-1]['unacknowledged_actions'] == 0
                 else:
-                    # The final signal can produce decisions after Moleflow
-                    # ends its RPC. Account for them; do not require late ACKs.
-                    validate_action_accounting(decisions, acks, events[-1])
+                    # Enqueueing does not prove device execution. Separately
+                    # account for requests rejected before entering the queue.
+                    validate_action_accounting(decisions, acks, events[-1], unsent)
                     if mode not in ('shutdown', 'disconnect', 'stream_end'):
                         assert acks, 'no device action was acknowledged'
                 choices = [row['choice'] for row in decisions]
@@ -179,6 +190,7 @@ def run(binary, mode, channels=16):
                     assert all(row['reason'] == 'worker_error' for row in decisions)
                 print(json.dumps(dict(mode=mode, channels=channels, decisions=len(decisions),
                                       acks=len(acks), unacknowledged=events[-1]['unacknowledged_actions'],
+                                      unsent=events[-1]['unsent_actions'],
                                       deadline_fallbacks=sum(row['reason'] == 'decision_deadline' for row in decisions),
                                       elapsed_s=round(time.monotonic()-started, 3))), flush=True)
             finally:

@@ -10,7 +10,7 @@ shards:
 
   grpc:
     git: https://github.com/kojix2/grpc.git
-    version: 0.1.0+git.commit.e97f402bb8727b7acc7f5428069fdd44be1dad41
+    version: 0.1.0+git.commit.d3b02c38fc9d623ba8839efb884a709fff53aa82
 
   icon-radix:
     git: https://github.com/kojix2/icon-radix.git
@@ -22,7 +22,7 @@ shards:
 
   minknow:
     git: https://github.com/kojix2/minknow.git
-    version: 0.1.0+git.commit.a9b4f3cbd9166e44a5f57dd681482e07a6e69dba
+    version: 0.1.0+git.commit.fdd3cbec9d7888983f2690142f058269ef4f07a1
 
   pod5:
     git: https://github.com/kojix2/pod5.cr.git

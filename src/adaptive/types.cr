@@ -28,8 +28,12 @@ module Adaptive
     end
 
     def acknowledge(group : String, success : Bool) : Nil
-      @reserved[group] -= 1
+      release(group)
       @confirmed[group] += 1 if success
+    end
+
+    def release(group : String) : Nil
+      @reserved[group] -= 1
     end
   end
 

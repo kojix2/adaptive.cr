@@ -11,7 +11,7 @@ class FixedPolicy < Adaptive::Policy
   end
 end
 
-private def harness(decision = Adaptive::Decision.new(Adaptive::Choice::Accept, "test"), policy : Adaptive::Policy? = nil, &)
+private def harness(decision = Adaptive::Decision.new(Adaptive::Choice::Accept, "test"), policy : Adaptive::Policy? = nil, send_result = true, &)
   config = Adaptive::Config.from_json(%({"reference":"examples/reference.fa","targets":["host"],"first_channel":1,"last_channel":2,"min_samples":100,"step_samples":100,"max_samples":400,"observe":false}))
   file = File.tempfile("adaptive-spec")
   path = file.path
@@ -21,7 +21,7 @@ private def harness(decision = Adaptive::Decision.new(Adaptive::Choice::Accept, 
   jobs = [] of Adaptive::Job
   sent = [] of Tuple(Int32, String, Adaptive::Decision, String)
   submit = ->(job : Adaptive::Job) { jobs << job; true }
-  sender = ->(channel : Int32, id : String, value : Adaptive::Decision, action_id : String) { sent << {channel, id, value, action_id}; nil }
+  sender = ->(channel : Int32, id : String, value : Adaptive::Decision, action_id : String) { sent << {channel, id, value, action_id}; send_result }
   engine = Adaptive::Engine.new(config, policy || FixedPolicy.new(decision), log, submit, sender, [0.0, 1.0], [0.1, 0.2], 5000.0)
   begin
     yield engine, config, jobs, sent
@@ -126,6 +126,22 @@ describe Adaptive::Engine do
       engine.complete(answer(jobs[0]))
       engine.inflight_bytes.should eq(0)
       sent.size.should eq(1)
+    end
+  end
+
+  it "releases only an unsent reservation and stops issuing further decisions" do
+    harness(Adaptive::Decision.new(Adaptive::Choice::Accept, "target", "virus", 1), send_result: false) do |engine, _, jobs, sent|
+      feed(engine)
+      feed(engine, channel: 2, id: "other")
+      engine.advance
+      engine.complete(answer(jobs[0]))
+      engine.complete(answer(jobs[1]))
+      engine.advance
+      sent.size.should eq(1)
+      engine.unsent_actions.should eq(1)
+      engine.pending_actions.should eq(0)
+      engine.experiment.reserved["virus"].should eq(0)
+      engine.experiment.confirmed["virus"].should eq(0)
     end
   end
   it "emits no device commands in observation mode" do

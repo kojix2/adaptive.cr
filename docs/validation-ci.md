@@ -115,3 +115,33 @@ Rebuilt both apps from the published upstream fix and reran local validation:
 adaptive passed 24 Crystal specs, 17 portable Python tests, and all 11 integration
 scenarios, including 512 channels with zero deadline fallbacks. Moleflow's full
 suite also passed, including independent Python 3,000-channel/TLS and POD5 checks.
+
+## RPC completion and action sends (2026-11-02)
+
+HTTP/2 RPC completion can precede application consumption of the last responses.
+Live now stops new work on transport completion while draining queued ACKs and
+receive errors. The upstream gRPC API distinguishes completed RPCs from request
+half-closes and identifies sends rejected before enqueueing. Such decisions emit
+`action_unsent`, release their reservation, and increment `end.unsent_actions`.
+Queued requests without an ACK retain their reservations and remain unresolved.
+
+Local validation on macOS ARM64 / Crystal 1.22.1 passed:
+
+- gRPC: 286 specs in shuffled order, including real HTTP/2 completion with
+  unconsumed responses and blocked-send completion tests.
+- MinKNOW: 64 specs, also checked against its locked proto dependency; the
+  regenerated sources change only the three bidirectional client constructors.
+- Adaptive: 54 Crystal specs, formatting, Ameba, validation and replay;
+  22 Python tests with the two optional ONT-client checks skipped.
+- All 11 Moleflow integration scenarios, plus 20 consecutive 512-channel quota
+  runs, all ending normally with correct ACK/reservation accounting.
+
+Controlled coordinator tests cover completion before worker results, during
+ingestion, during result-driven sends, and during a deadline fallback batch.
+They also check draining final ACKs, non-OK completion and unrelated send errors.
+The existing delayed-END_STREAM scenario remains a test of unresolved actions;
+no production delay, queue expansion or retry was introduced.
+
+The binaries were built against the committed local gRPC and MinKNOW sources
+through `CRYSTAL_PATH`. Their commits are recorded in `shard.lock`; no local-path
+dependency overrides are committed. Moleflow's source and binary were unchanged.

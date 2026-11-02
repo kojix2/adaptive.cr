@@ -44,7 +44,8 @@ module Adaptive
       ensure
         begin
           log.emit("end", outcome: outcome, confirmed: engine.try(&.experiment.confirmed),
-            pending: engine.try(&.experiment.reserved), unacknowledged_actions: engine.try(&.pending_actions) || 0)
+            pending: engine.try(&.experiment.reserved), unacknowledged_actions: engine.try(&.pending_actions) || 0,
+            unsent_actions: engine.try(&.unsent_actions) || 0)
         ensure
           begin
             call.try &.cancel
