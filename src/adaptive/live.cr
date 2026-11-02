@@ -1,6 +1,7 @@
 require "minknow"
 require "./engine"
 require "./pool"
+require "./live_session"
 
 module Adaptive
   class Live
@@ -9,7 +10,6 @@ module Adaptive
 
     def run : Nil
       log = EventLog.new(@config.log)
-      incoming = Channel(MinknowApi::Data::GetLiveReadsResponse | Exception?).new(8)
       stop = Channel(Nil).new(1)
       outcome = "error"
       [Signal::INT, Signal::TERM].each do |signal|
@@ -35,52 +35,9 @@ module Adaptive
           backend: @config.fixture_sequence ? "fixture" : "dorado", model: @config.dorado_model,
           backend_info: pool.backend_info, reference: @config.reference, policy: @config.policy,
           sample_rate: rate, deadline_ms: @config.deadline_ms)
-        active_pool = pool
-        active_call = call
-        sender = ->(number : Int32, id : String, decision : Decision, action_id : String) do
-          action = if decision.choice.reject?
-                     Minknow::DataService.unblock_action(action_id, number.to_u32, id, 0.1)
-                   else
-                     Minknow::DataService.stop_action(action_id, number.to_u32, id)
-                   end
-          active_call.send(Minknow::DataService.actions_request([action]))
-        end
-        engine = Engine.new(@config, @policy, log, ->(job : Job) { active_pool.submit(job) }, sender, offsets, scales, rate)
-        spawn do
-          active_call.each { |response| incoming.send(response) }
-          status = active_call.status
-          raise "live stream failed: #{status}" unless status.ok?
-          incoming.send(nil)
-        rescue ex
-          begin
-            incoming.send(ex)
-          rescue Channel::ClosedError
-          end
-        end
-        loop do
-          select
-          when stop.receive
-            outcome = "signal"
-            break
-          when event = incoming.receive
-            case event
-            when Exception
-              raise event
-            when MinknowApi::Data::GetLiveReadsResponse
-              event.action_responses.each { |ack| engine.acknowledge(ack.action_id, ack.response.raw) }
-              event.channels.each do |number, read|
-                engine.ingest(number.to_i, read.id, read.start_sample, read.chunk_start_sample, read.chunk_length, read.raw_data)
-              end
-            else
-              outcome = "stream_end"
-              break
-            end
-          when result = active_pool.results.receive
-            engine.complete(result)
-          when timeout(10.milliseconds)
-          end
-          engine.advance
-        end
+        session = LiveSession.new(@config, @policy, log, pool, call, offsets, scales, rate)
+        engine = session.engine
+        outcome = session.run(stop)
       rescue ex
         log.emit("error", error: ex.message || ex.class.to_s) rescue nil
         raise ex
@@ -89,7 +46,6 @@ module Adaptive
           log.emit("end", outcome: outcome, confirmed: engine.try(&.experiment.confirmed),
             pending: engine.try(&.experiment.reserved), unacknowledged_actions: engine.try(&.pending_actions) || 0)
         ensure
-          incoming.close
           begin
             call.try &.cancel
           ensure
