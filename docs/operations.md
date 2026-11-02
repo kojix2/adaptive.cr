@@ -1,10 +1,13 @@
-# 運用手順（0.3.0）
+# Operations
 
-この版は実行系、独自policyの入口、異常時の処理、診断、再現可能な試験をまとめた研究用リリースです。GPU Dorado実サーバー・実機MinKNOW・生物学的な選択精度の検証は、利用環境で行います。
+This is a research implementation. GPU Dorado basecalling, physical MinKNOW
+operation and biological selection accuracy require validation in your environment.
+See [validation](validation-ci.md) for the checks performed so far.
 
-## 1. 環境を固定する
+## Prepare the environment
 
-READMEのビルド依存を導入し、プロジェクトルートで実行します。
+Install the build dependencies in the [README](../README.md), then run from the
+project root:
 
 ```sh
 python3 -m venv .venv
@@ -13,78 +16,124 @@ scripts/build.sh
 PATH="$PWD/.venv/bin:$PATH" scripts/test.sh
 ```
 
-ライブ用のPythonには公式wheelのある版を使います。固定している `ont-pybasecall-client-lib==7.13.6` の [配布物](https://pypi.org/project/ont-pybasecall-client-lib/7.13.6/#files) はCPython 3.13までで、`requirements.txt` 全体では3.11〜3.13が対象です。`mise.toml` とCIは最新Pythonを使うため、ライブ用には対応するPythonで別途 `.venv` を作成します。標準ライブラリだけでオフラインreplayとfixture試験を実行でき、公式クライアント未導入なら専用の2試験は理由付きでskipします。導入後は同じ `scripts/test.sh` で追加実行されます。
+Choose a Python interpreter supported by the pinned packages in
+`requirements.txt`; the latest Python used by mise or CI may differ. Offline
+replay and fixture tests do not require the optional ONT client. Its two tests
+report a skip when it is unavailable.
 
-クライアント版はDorado Basecall Serverと一致させます。サーバーは別途導入し、その `--version` を確認してください。異なるサーバー版を使う場合はrequirementsも一致させ、その組み合わせで再検証します。Dorado CLI本体の版と混同しないでください。サーバー・GPU・実機を使用した検証は引き続き未実施です。
+Install Dorado Basecall Server, GPU drivers and models separately. Match the
+client version to the server and check the server's own `--version`, separately
+from the Dorado basecaller CLI. Revalidate the combination after changing versions.
+Choose a model suitable for the flow cell, kit and sample rate; Adaptive does not
+automatically check that compatibility.
 
-GPU・モデル・参照indexは実際のrunに必要なものを事前に用意します。モデル名の例は5 kHz条件用で、使用するflow cell・kit・sample rateとの適合性を自動判定する機能はありません。
+## Check configuration and reference
 
-## 2. 設定と参照を確認する
+Adapt the README's `run.json`. Set `reference`, and `targets` for the contig policy.
+Check the MinKNOW position port, channel range, TLS, Dorado address and model.
+Set `python` to `.venv/bin/python` and begin with `observe: true`.
+Relative paths resolve from the **current working directory**, not the config file.
 
-READMEの `run.json` 例を編集します。必須は `reference`、contig policyなら `targets` です。ライブではMinKNOW positionのポート、TLS・認証、チャネル範囲、Dorado接続先とモデルも確認します。`python` は `.venv/bin/python`、`observe` は最初trueにします。相対パスの基準は設定ファイルの場所ではなく**現在の作業ディレクトリ**です。
+For TLS, set `tls: true` and provide `ca_file` when needed. Authentication metadata
+can be supplied through `MINKNOW_AUTH_TOKEN` and `PROTOCOL_TOKEN`. Adaptive disables
+automatic local-token discovery; configure authentication explicitly if required.
 
 ```sh
 bin/adaptive -c run.json --validate
 bin/adaptive -c run.json --check-backend
 ```
 
-validateは設定キー、参照index、対象contigを確認します。check-backendは本物の公式clientで接続し、実バージョン情報をJSONへ出します。標準設定ではfixtureを受け入れません。`allow_test_bridge` と `fixture_sequence` は試験専用です。
+Validation checks configuration, the reference index and target contigs.
+The backend check connects through the Python adapter and reports client version
+information; it does not independently verify the server version or basecall a read.
+Keep `allow_test_bridge` and `fixture_sequence` out of production configurations.
 
-## 3. 実信号でbasecallする
+## Check a real signal prefix
 
-測定データから取り出したprefixを `prefix.i16` として用意します。形式はヘッダーなしlittle-endian signed int16 ADC。pAへ変換済みのfloat列ではありません。100〜250000 samplesに制限していますが、正常なbasecallが期待できる実際のprefix長を使います。
+Use headerless, little-endian signed int16 ADC samples, rather than calibrated
+floating-point pA values. The diagnostic accepts 100–250,000 samples. To extract
+a prefix and its original calibration from POD5 into a new directory:
 
-同じ信号に対応する `prefix.json` を用意します。以下の数値は形式説明用であり、信号に合った値へ必ず置き換えます。
+```sh
+scripts/pod5.sh input.pod5 prefix --samples=20000
+bin/adaptive -c run.json --check-signal=prefix/prefix.i16 \
+  --signal-metadata=prefix/prefix.json > basecall-check.json
+```
+
+Use `--read-id=UUID` to select a POD5 read. Extraction decodes a full read and
+rejects reads longer than 10 million samples before allocating the signal buffer.
+
+For a prefix prepared elsewhere, supply matching calibration metadata:
 
 ```json
 {"offset": -12.5, "scale": 0.14, "sample_rate": 5000.0, "start_sample": 1234}
 ```
 
-scaleはチャンネルのrange/digitisation、start_sampleはrun開始からのsample indexです。
+Replace these example values with the signal's own metadata. `scale` is the
+channel range divided by digitisation; `start_sample` is the sample index from
+the start of the run. Successful output contains basecalled sequences, preserving
+split results separately. Compare them with known sequences or a reference;
+this diagnostic checks communication, not basecalling accuracy. Keep real signals
+and sequences separate from distributed synthetic test fixtures.
 
-```sh
-bin/adaptive -c run.json --check-signal=prefix.i16 --signal-metadata=prefix.json > basecall-check.json
-```
+## Start in observation mode
 
-成功時は実配列とsplitごとの結果が出ます。これはDoradoへの送受信を確認する診断であり、精度の保証ではありません。既知の配列・参照へ照合してください。実信号や配列は配布テストへ混ぜず、研究データとして管理します。
-
-## 4. 観測から開始する
-
-MinKNOWで適切なrunを開始し、`observe: true` で実行します。
+Start an appropriate MinKNOW run, then launch Adaptive with `observe: true`:
 
 ```sh
 bin/adaptive -c run.json
 ```
 
-`start` でbackend、モデル、クライアント版、sample rate、参照を確認します。`evaluation` でworker_ms・policy_ms・配列長・hit数、`decision` でelapsed_ms・理由を確認します。Doradoが遅すぎると `decision_deadline` や `worker_error` が増えます。実際のチャネル数・参照・GPUで測定し、workersやprefix長を調整してください。512チャネルのfixture試験はGPU能力の測定ではありません。
+Check backend, model, client version, sample rate and reference in `start`.
+Inspect `worker_ms`, `policy_ms`, base and hit counts in `evaluation`, and
+`elapsed_ms` and reasons in `decision`. Frequent `decision_deadline` or
+`worker_error` events call for checking the backend and tuning workers, prefix
+length or deadlines against the actual reference, GPU and channel count.
+The 512-channel fixture test does not measure GPU capacity.
 
-観測で期待する判定を確認後、別のlogパスを指定し、`observe: false` にして実行します。Acceptは分子の測定を継続したまま信号配信を止め、Rejectは0.1秒unblockします。quotaは採用操作数の上限であり、coverageや得られた完全長分子数ではありません。
+After checking decisions, choose a new log path and set `observe: false`.
+Accept stops signal delivery while sequencing continues; Reject unblocks for
+0.1 seconds. Quotas count accepted and reserved reads, not coverage or completed
+full-length molecules.
 
-## 5. 停止・障害の確認
+## Stop and inspect failures
 
-Ctrl-CまたはSIGTERMで停止します。正常終了コードは0、設定・接続・処理系の致命的エラーは1です。basecallerの個々のjob失敗では、その分子を残して継続するため、終了コードだけでなくログも確認します。
+Ctrl-C or SIGTERM stops the run. Normal completion returns 0; fatal configuration,
+connection or processing errors return 1. Individual basecaller job failures
+preserve the molecule and allow the run to continue, so also inspect the audit log.
 
-| イベント・理由 | 意味と対応 |
+| Event or reason | Meaning and response |
 | --- | --- |
-| `decision_deadline` | 受信開始からの期限超過。分子を温存。prefix長・worker/GPU負荷・期限を見直す |
-| `signal_gap_or_overlap` | 信号が連続していない。分子を温存。初回chunkとstreamを確認 |
-| `signal_budget`, `sample_limit` | 保存量または判定に使う信号の上限。分子を温存 |
-| `worker_error` | basecall/mapping障害。直前のerror内容、接続・モデル・キューを確認 |
-| `stale_result` | 古い世代、終端read、期限後の結果。操作へ使わない |
-| `ack` status=0 | MinKNOWが操作成功を返した。分子の完全長取得の証明ではない |
-| `ack` status≠0 | 操作失敗。予約を解除し、自動で同じ操作を再送しない |
-| `action_unsent` | RPC終了と競合し、送信キューへ入らなかった操作。予約を解除し、成功・未確認操作には数えない |
-| `error` | 実行を停止する障害。stderrも確認 |
-| `end` | outcomeは `stream_end`, `signal`, `error`。未確認操作数・予約数・`unsent_actions`を確認 |
+| `decision_deadline` | Decision time expired; preserve the molecule. Check prefix length, load and deadline. |
+| `signal_gap_or_overlap` | Discontinuous signal; preserve the molecule. Check the first chunk and stream. |
+| `signal_budget`, `sample_limit` | Signal storage or evaluation limit reached; preserve the molecule. |
+| `worker_error` | Basecalling or mapping failed. Check the preceding error, backend and queues. |
+| `stale_result` | Result belongs to a superseded or terminal read; do not use it for an action. |
+| `ack` status=0 | MinKNOW reported success; this does not prove full-length molecule acquisition. |
+| `ack` status≠0 | Action failed; release its reservation without automatically retrying it. |
+| `action_unsent` | RPC completion prevented enqueueing; release its reservation and count it as unsent. |
+| `error` | Fatal run error; also inspect stderr. |
+| `end` | Outcome is `stream_end`, `signal` or `error`; inspect reservations, `unacknowledged_actions` and `unsent_actions`. |
 
-操作応答タイムアウト時は、既に適用された可能性を残して停止し、成功扱いや再送をしません。ログは新規作成専用で、同じパスで再実行すると失敗します。ディスク障害時には最終ログを書けないため、stderrも保存してください。終了直前の未確認操作は次回runへ持ち越しません。
+An ACK timeout stops the run while retaining the reservation: the action may
+already have been applied. Do not treat it as successful or automatically resend
+it. Unresolved actions are not carried into the next run. Logs require a new
+path and refuse to overwrite existing files. Save stderr too, because disk errors
+can prevent the final log entry.
 
-Crystal policyは信頼されたコンパイル時コードです。coordinatorをブロックするpolicyは遅延を招きます。戻った時点で期限を越えていれば排出を抑止しますが、無限ループや実行中C関数を強制中断する保証はありません。
+Custom Crystal policies are trusted compiled code. A blocking policy delays the
+coordinator; a late Reject becomes Accept when the policy returns. Running C
+code and policies that never return cannot be forcibly interrupted by this check.
 
-## 6. 配布・再現
+## Reproduce and package
 
-`scripts/test.sh /absolute/path/moleflow/bin/moleflow` が結合試験を追加します。Moleflowは独立したプロジェクトです。試験データは人工配列、basecallerは明示的fixtureです。実gRPC・TLS・minimap2・操作応答・終了処理を確認します。
+Run `scripts/test.sh /absolute/path/moleflow/bin/moleflow` for integration against
+a separately built Moleflow. It uses synthetic sequences and fixture basecalling
+with real gRPC, TLS, minimap2, action responses and shutdown handling.
 
-開発用の `scripts/build.sh` は `shards update` で依存のmainブランチを更新します。`shard.lock` は直近の解決結果の記録であり、標準ビルドを特定コミットへ固定するものではありません。
+Development builds run `shards update` and follow dependency `main` branches.
+`shard.lock` records the last resolution; the standard build does not preserve
+those exact commits automatically.
 
-`scripts/package.sh` がソース、依存定義と解決記録、ビルド済みバイナリ、文書、試験結果をtar.gzへまとめ、SHA-256も出力します。Pythonパッケージ、Dorado、モデル、GPUランタイム、実データは同梱しません。
+`scripts/package.sh` creates a source/binary/documentation archive and a SHA-256
+checksum. Python packages, Dorado, models, GPU runtimes and real data are not bundled.
