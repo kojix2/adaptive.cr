@@ -32,6 +32,7 @@ module Adaptive
     property targets : Array(String) = [] of String
     property motif : String = ""
     property mapq : UInt32 = 20_u32
+    property mapping_mode : String = "any"
     property min_bases : Int32 = 300
     property quota : Int32 = 0
     property background_fraction : Float64 = 0.0
@@ -41,7 +42,7 @@ module Adaptive
 
     def validate! : Nil
       validate_connection!
-      validate_policy!
+      validate_sequence!
       raise "invalid worker count" unless (1..64).includes?(workers)
       raise "invalid sample limits" unless 100 <= min_samples <= max_samples <= 250000 && step_samples > 0
       raise "invalid timeouts" unless deadline_ms > 0 && (100..60000).includes?(bridge_timeout_ms) && ack_timeout_ms > 0
@@ -49,11 +50,17 @@ module Adaptive
       raise "invalid memory limit" unless max_buffer_bytes >= max_samples.to_i64 * 4 && max_buffer_bytes <= 16_i64 * 1024**3
     end
 
+    # Sequence processing has no dependency on bridge files or live settings.
+    def validate_sequence! : Nil
+      raise "missing reference" unless File.file?(reference)
+      validate_policy!
+      raise "unknown mapping mode" unless {"any", "primary"}.includes?(mapping_mode)
+    end
+
     private def validate_connection! : Nil
       raise "invalid port" unless (1..65535).includes?(port)
       raise "empty connection setting" if {host, python, bridge_script, dorado_address, dorado_model, log}.any?(&.strip.empty?)
       raise "missing bridge script" unless File.file?(bridge_script)
-      raise "missing reference" unless File.file?(reference)
       if path = ca_file
         raise "missing CA certificate" unless File.file?(path)
       end

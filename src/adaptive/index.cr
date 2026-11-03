@@ -8,12 +8,16 @@ class Minimap2::Aligner
 
   def validate_targets!(config : Adaptive::Config) : self
     single_index!
-    if config.policy == "contig"
-      missing = config.targets.reject do |name|
-        Minimap2::LibMinimap2.mm_idx_name2id(@idx_parts.first, name) >= 0
-      end
-      raise "targets missing from reference: #{missing.join(", ")}" unless missing.empty?
+    validate_target_names!(config.targets) if config.policy == "contig"
+    self
+  end
+
+  def validate_target_names!(targets : Array(String)) : self
+    single_index!
+    missing = targets.reject do |name|
+      Minimap2::LibMinimap2.mm_idx_name2id(@idx_parts.first, name) >= 0
     end
+    raise "targets missing from reference: #{missing.join(", ")}" unless missing.empty?
     self
   end
 end

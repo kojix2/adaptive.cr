@@ -35,6 +35,54 @@ bin/adaptive --replay=examples/replay.jsonl
 Replay maps sequence JSONL without Dorado or MinKNOW. The example produces
 Reject / Accept / Reject, with the final rejection caused by the acceptance quota.
 
+## Sequence API
+
+`require "adaptive/sequence"` provides mapping and policy evaluation without
+loading live connections or starting Python/Dorado. See
+[examples/sequence.cr](examples/sequence.cr) for an executable example.
+
+```crystal
+config = Adaptive::Config.from_json({reference: "reference.fa", targets: ["virus"]}.to_json)
+mapper = Adaptive::SequenceMapper.new(config)
+policy = Adaptive::BuiltinPolicy.new(config)
+result = mapper.evaluate([sequence], policy, Adaptive::Experiment.new,
+  {} of String => String, channel: 1, read_id: "preview")
+result.decision.choice
+result.display_hit.try(&.mapping.target_start)
+```
+
+`map` returns `Evidence`; `evaluate` also returns a `Decision` and `display_hit`.
+`Mapping` and `Strand` are Adaptive value types, preserving reference/query
+coordinates (zero-based, half-open), MAPQ, primary status, CIGAR and alignment
+fields used by custom policies. Existing `Hit.new(segment, minimap2_mapping)`
+construction remains supported; `hit.mapping` now returns `Adaptive::Mapping`.
+The binding exposes primary status only: secondary and supplementary alignments
+are both non-primary and cannot be distinguished through this API.
+
+The default `mapping_mode: "any"` preserves live/replay behavior: any confident
+target hit can justify acceptance. `mapping_mode: "primary"` selects the highest
+MAPQ confident primary hit before checking targets, for sandbox compatibility.
+`Decision#hit` identifies the alignment used for a contig decision;
+`display_hit` is selected independently and may belong to another contig.
+Motif, background, short-sequence and accept-all decisions have no decision hit.
+Molefarm uses `min_bases: 1`, with its existing 220-base gate in the game;
+live/replay retain their configured minimum, background sampling and quota.
+
+A mapper builds its index once and can be shared by mapping workers; buffers
+are local to each call. Keep policy/config changes and evaluation on their owning
+coordinator. After changing targets or policy settings, call
+`mapper.validate!(config)` without rebuilding; changing the reference requires
+a new mapper. `validate_sequence!` checks reference/policy settings independently
+of bridge files and live connection configuration.
+
+Segments stay separate, including empty segment positions. Metadata is preserved,
+and `Evidence#source` distinguishes `Sequence` from `Basecall`; only the live pool
+marks actual bridge output as basecalls. Pass the existing read's memory and
+experiment into repeated evaluations. Evaluation calls the supplied policy but
+does not reserve or acknowledge quotas. Replay and the live coordinator retain
+terminal-read, reservation and ACK accounting; custom policies retain responsibility
+for any mutations they perform themselves.
+
 ## GUI
 
 ```sh

@@ -1,4 +1,5 @@
 require "./bridge"
+require "./sequence"
 
 module Adaptive
   class Pool
@@ -12,9 +13,7 @@ module Adaptive
     def initialize(@config : Config)
       @jobs = Channel(Job).new(config.workers)
       @done = Channel(Nil).new(config.workers)
-      # Aligner.map allocates its own mm_tbuf per call; index/options remain
-      # immutable during mapping. Do not use its finalize method manually.
-      aligner = Minimap2::Aligner.new(config.reference, preset: "map-ont", cigar: true, threads: config.workers).validate_targets!(config)
+      mapper = SequenceMapper.new(config, threads: config.workers)
       @context = Fiber::ExecutionContext::Parallel.new("mapping", config.workers)
       ready = Channel(JSON::Any | Exception).new(config.workers)
       config.workers.times do
@@ -36,12 +35,8 @@ module Adaptive
                 bridge ||= Bridge.new(config)
                 sequences = bridge.call(job)
                 check_deadline(job)
-                hits = [] of Hit
-                sequences.each_with_index do |sequence, index|
-                  next if sequence.empty?
-                  aligner.map(sequence).each { |mapping| hits << Hit.new(index, mapping) }
-                end
-                evidence = Evidence.new(job.channel, job.read_id, job.signal.size // 2, sequences, hits)
+                evidence = mapper.map(sequences, channel: job.channel, read_id: job.read_id,
+                  samples: job.signal.size // 2, source: EvidenceSource::Basecall)
                 @results.send(Result.new(job, evidence, elapsed_ms: (Time.instant - started).total_milliseconds))
               rescue ex
                 bridge.try &.close

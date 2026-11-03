@@ -23,6 +23,16 @@ class CliTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('fixture', result.stdout)
 
+    def test_replay_does_not_require_live_settings(self):
+        result = self.run_check(
+            arguments=[f'--replay={ROOT / "examples/replay.jsonl"}'],
+            python='/nonexistent-adaptive-python', bridge_script='/nonexistent-bridge.py',
+            host='', port=0)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        rows = [json.loads(line) for line in result.stdout.splitlines()]
+        self.assertEqual([row['choice'] for row in rows], ['Accept', 'Accept', 'Accept'])
+        self.assertTrue(all(set(row) == {'id', 'choice', 'reason', 'hits'} for row in rows))
+
     def test_diagnostic_signal_uses_full_binary_adapter_path(self):
         with tempfile.TemporaryDirectory() as directory:
             signal = Path(directory)/'signal.i16'

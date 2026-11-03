@@ -24,7 +24,11 @@ module Adaptive
     raise "select only one of --validate, --replay, --check-backend, --check-signal" if [validate, !replay_path.nil?, check_backend, !signal_path.nil?].count(true) > 1
     raise "--check-signal and --signal-metadata must be used together" unless signal_path.nil? == metadata_path.nil?
     config = Config.from_json(File.read(config_path))
-    config.validate!
+    if replay_path
+      config.validate_sequence!
+    else
+      config.validate!
+    end
     policy = policy_factory.call(config)
     if validate
       index = Minimap2::Aligner.new(config.reference, preset: "map-ont").validate_targets!(config)
