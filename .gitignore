@@ -10,3 +10,4 @@
 *.mmi
 __pycache__/
 *.pyc
+/shard.lock

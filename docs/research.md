@@ -52,5 +52,6 @@ split sequence and continues when more evidence is needed.
 A policy can only use the prefix observed so far; it cannot infer an unseen
 downstream feature with certainty. Performance must be measured with the actual
 reference, signal, GPU and channel count. The examples provide a programmable
-runtime, not a validated biological selection method. Exact resolved dependency
-revisions are recorded in [shard.lock](../shard.lock).
+runtime, not a validated biological selection method. Application lockfiles are
+not committed; development builds resolve the dependency branches in
+[shard.yml](../shard.yml).

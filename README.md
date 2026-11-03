@@ -22,6 +22,8 @@ export LIBRARY_PATH="$(brew --prefix libnghttp2)/lib:$(brew --prefix openssl@3)/
 
 Run the commands for your OS, then `scripts/build.sh`. It updates runtime
 dependencies from `main` and builds native minimap2/POD5 libraries and the binaries.
+Application lockfiles are not committed; Shards-generated `shard.lock` files are
+ignored, and development builds update dependencies.
 Native downloads support Linux x86_64/ARM64 and macOS 14+ ARM64. With mise, use
 `mise install` followed by `mise exec -- scripts/build.sh`.
 

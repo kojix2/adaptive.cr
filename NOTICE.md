@@ -11,7 +11,8 @@ External Shards retain their upstream licenses and copyright notices:
 - kojix2/pod5.cr (native POD5 licensing is described in its THIRD_PARTY.md)
 - lh3/minimap2 (downloaded by minimap2-cr)
 
-Exact Shard commits are in shard.lock.
+Application lockfiles are not distributed. Shards resolves dependencies from
+shard.yml and records the local resolution in its generated shard.lock.
 readfish was consulted as an API usage
 reference; its implementation is not bundled here. The official ONT Python client,
 Dorado server, models and GPU runtime are external dependencies, not included.

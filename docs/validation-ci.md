@@ -6,7 +6,8 @@ the unmodified packages in `requirements.txt` for the official-client checks.
 
 These results predate the development dependency policy change: application
 builds now run `shards update` and track runtime dependencies on `main`, rather
-than requiring the previously recorded lock commits.
+than requiring the previously recorded lock commits. Application lockfiles are
+no longer committed; lockfile references below describe the historical checks.
 
 ## Checks performed
 
@@ -143,5 +144,6 @@ The existing delayed-END_STREAM scenario remains a test of unresolved actions;
 no production delay, queue expansion or retry was introduced.
 
 The binaries were built against the committed local gRPC and MinKNOW sources
-through `CRYSTAL_PATH`. Their commits are recorded in `shard.lock`; no local-path
-dependency overrides are committed. Moleflow's source and binary were unchanged.
+through `CRYSTAL_PATH`. That validation recorded their commits in the then-current
+`shard.lock`, before application lockfiles were removed; no local-path dependency
+overrides are committed. Moleflow's source and binary were unchanged.

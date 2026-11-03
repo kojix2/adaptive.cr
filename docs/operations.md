@@ -132,8 +132,9 @@ a separately built Moleflow. It uses synthetic sequences and fixture basecalling
 with real gRPC, TLS, minimap2, action responses and shutdown handling.
 
 Development builds run `shards update` and follow dependency `main` branches.
-`shard.lock` records the last resolution; the standard build does not preserve
-those exact commits automatically.
+Application `shard.lock` files are not committed or included in release archives.
+Shards may generate one locally, but the standard build updates dependencies
+instead of preserving that resolution.
 
 `scripts/package.sh` creates a source/binary/documentation archive and a SHA-256
 checksum. Python packages, Dorado, models, GPU runtimes and real data are not bundled.
