@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.21.0">
+<meta name="crystal_docs.project_version" content="main">
+<meta name="crystal_docs.project_name" content="adaptive">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="adaptive">
+  <title>Adaptive::Job - adaptive main</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          adaptive
+        </a>
+      </h1>
+
+      <span class="project-version">
+        main
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="adaptive/Adaptive" data-name="adaptive">
+      <a href="../Adaptive.html">Adaptive</a>
+      
+        <ul>
+  
+  <li class=" " data-id="adaptive/Adaptive/Bridge" data-name="adaptive::bridge">
+      <a href="../Adaptive/Bridge.html">Bridge</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BuiltinPolicy" data-name="adaptive::builtinpolicy">
+      <a href="../Adaptive/BuiltinPolicy.html">BuiltinPolicy</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Choice" data-name="adaptive::choice">
+      <a href="../Adaptive/Choice.html">Choice</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Config" data-name="adaptive::config">
+      <a href="../Adaptive/Config.html">Config</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Decision" data-name="adaptive::decision">
+      <a href="../Adaptive/Decision.html">Decision</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Engine" data-name="adaptive::engine">
+      <a href="../Adaptive/Engine.html">Engine</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Evaluation" data-name="adaptive::evaluation">
+      <a href="../Adaptive/Evaluation.html">Evaluation</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/EventLog" data-name="adaptive::eventlog">
+      <a href="../Adaptive/EventLog.html">EventLog</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Evidence" data-name="adaptive::evidence">
+      <a href="../Adaptive/Evidence.html">Evidence</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/EvidenceSource" data-name="adaptive::evidencesource">
+      <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Experiment" data-name="adaptive::experiment">
+      <a href="../Adaptive/Experiment.html">Experiment</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Hit" data-name="adaptive::hit">
+      <a href="../Adaptive/Hit.html">Hit</a>
+      
+    </li>
+  
+  <li class=" current" data-id="adaptive/Adaptive/Job" data-name="adaptive::job">
+      <a href="../Adaptive/Job.html">Job</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Live" data-name="adaptive::live">
+      <a href="../Adaptive/Live.html">Live</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/LiveSession" data-name="adaptive::livesession(p, c)">
+      <a href="../Adaptive/LiveSession.html">LiveSession</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Mapping" data-name="adaptive::mapping">
+      <a href="../Adaptive/Mapping.html">Mapping</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
+      <a href="../Adaptive/Pending.html">Pending</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pod5Export" data-name="adaptive::pod5export">
+      <a href="../Adaptive/Pod5Export.html">Pod5Export</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Policy" data-name="adaptive::policy">
+      <a href="../Adaptive/Policy.html">Policy</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pool" data-name="adaptive::pool">
+      <a href="../Adaptive/Pool.html">Pool</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/ReadState" data-name="adaptive::readstate">
+      <a href="../Adaptive/ReadState.html">ReadState</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Result" data-name="adaptive::result">
+      <a href="../Adaptive/Result.html">Result</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
+      <a href="../Adaptive/SequenceMapper.html">SequenceMapper</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
+      <a href="../Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Strand" data-name="adaptive::strand">
+      <a href="../Adaptive/Strand.html">Strand</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="adaptive/NanoporeGUI" data-name="nanoporegui">
+      <a href="../NanoporeGUI.html">NanoporeGUI</a>
+      
+        <ul>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Document" data-name="nanoporegui::document">
+      <a href="../NanoporeGUI/Document.html">Document</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Field" data-name="nanoporegui::field">
+      <a href="../NanoporeGUI/Field.html">Field</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/LogBuffer" data-name="nanoporegui::logbuffer">
+      <a href="../NanoporeGUI/LogBuffer.html">LogBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Profile" data-name="nanoporegui::profile">
+      <a href="../NanoporeGUI/Profile.html">Profile</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Runner" data-name="nanoporegui::runner">
+      <a href="../NanoporeGUI/Runner.html">Runner</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Window" data-name="nanoporegui::window">
+      <a href="../NanoporeGUI/Window.html">Window</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    struct
+  </span> Adaptive::<wbr>Job
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Adaptive/Job.html">Adaptive::Job</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L61" target="_blank">
+        adaptive/types.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28channel%3AInt32%2Cread_id%3AString%2Cgeneration%3AUInt64%2Csignal%3ABytes%2Coffset%3AFloat64%2Cscale%3AFloat64%2Csample_rate%3AFloat64%2Cstart_sample%3AUInt64%2Cexpires_at%3ATime%3A%3AInstant%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, read_id : String, generation : UInt64, signal : Bytes, offset : Float64, scale : Float64, sample_rate : Float64, start_sample : UInt64, expires_at : Time::Instant | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#channel%3AInt32-instance-method" class="signature"><strong>#channel</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clone-instance-method" class="signature"><strong>#clone</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Cgeneration_generation%3D%40generation%2Csignal_signal%3D%40signal%2Coffset_offset%3D%40offset%2Cscale_scale%3D%40scale%2Csample_rate_sample_rate%3D%40sample_rate%2Cstart_sample_start_sample%3D%40start_sample%2Cexpires_at_expires_at%3D%40expires_at%29-instance-method" class="signature"><strong>#copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, generation _generation = @generation, signal _signal = @signal, offset _offset = @offset, scale _scale = @scale, sample_rate _sample_rate = @sample_rate, start_sample _start_sample = @start_sample, expires_at _expires_at = @expires_at)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#expires_at%3ATime%3A%3AInstant%7CNil-instance-method" class="signature"><strong>#expires_at</strong> : Time::Instant | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#generation%3AUInt64-instance-method" class="signature"><strong>#generation</strong> : UInt64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#offset%3AFloat64-instance-method" class="signature"><strong>#offset</strong> : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_id%3AString-instance-method" class="signature"><strong>#read_id</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sample_rate%3AFloat64-instance-method" class="signature"><strong>#sample_rate</strong> : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scale%3AFloat64-instance-method" class="signature"><strong>#scale</strong> : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#signal%3ABytes-instance-method" class="signature"><strong>#signal</strong> : Bytes</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#start_sample%3AUInt64-instance-method" class="signature"><strong>#start_sample</strong> : UInt64</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(channel:Int32,read_id:String,generation:UInt64,signal:Bytes,offset:Float64,scale:Float64,sample_rate:Float64,start_sample:UInt64,expires_at:Time::Instant|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(channel : Int32, read_id : String, generation : UInt64, signal : Bytes, offset : Float64, scale : Float64, sample_rate : Float64, start_sample : UInt64, expires_at : Time::Instant | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28channel%3AInt32%2Cread_id%3AString%2Cgeneration%3AUInt64%2Csignal%3ABytes%2Coffset%3AFloat64%2Cscale%3AFloat64%2Csample_rate%3AFloat64%2Cstart_sample%3AUInt64%2Cexpires_at%3ATime%3A%3AInstant%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L61" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="channel:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>channel</strong> : Int32
+
+        <a class="method-permalink" href="#channel%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clone-instance-method">
+      <div class="signature">
+        
+        def <strong>clone</strong>
+
+        <a class="method-permalink" href="#clone-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L61" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="copy_with(channel_channel=@channel,read_id_read_id=@read_id,generation_generation=@generation,signal_signal=@signal,offset_offset=@offset,scale_scale=@scale,sample_rate_sample_rate=@sample_rate,start_sample_start_sample=@start_sample,expires_at_expires_at=@expires_at)-instance-method">
+      <div class="signature">
+        
+        def <strong>copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, generation _generation = @generation, signal _signal = @signal, offset _offset = @offset, scale _scale = @scale, sample_rate _sample_rate = @sample_rate, start_sample _start_sample = @start_sample, expires_at _expires_at = @expires_at)
+
+        <a class="method-permalink" href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Cgeneration_generation%3D%40generation%2Csignal_signal%3D%40signal%2Coffset_offset%3D%40offset%2Cscale_scale%3D%40scale%2Csample_rate_sample_rate%3D%40sample_rate%2Cstart_sample_start_sample%3D%40start_sample%2Cexpires_at_expires_at%3D%40expires_at%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L61" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="expires_at:Time::Instant|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>expires_at</strong> : Time::Instant | Nil
+
+        <a class="method-permalink" href="#expires_at%3ATime%3A%3AInstant%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="generation:UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>generation</strong> : UInt64
+
+        <a class="method-permalink" href="#generation%3AUInt64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="offset:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>offset</strong> : Float64
+
+        <a class="method-permalink" href="#offset%3AFloat64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_id:String-instance-method">
+      <div class="signature">
+        
+        def <strong>read_id</strong> : String
+
+        <a class="method-permalink" href="#read_id%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sample_rate:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>sample_rate</strong> : Float64
+
+        <a class="method-permalink" href="#sample_rate%3AFloat64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scale:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>scale</strong> : Float64
+
+        <a class="method-permalink" href="#scale%3AFloat64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="signal:Bytes-instance-method">
+      <div class="signature">
+        
+        def <strong>signal</strong> : Bytes
+
+        <a class="method-permalink" href="#signal%3ABytes-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="start_sample:UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>start_sample</strong> : UInt64
+
+        <a class="method-permalink" href="#start_sample%3AUInt64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

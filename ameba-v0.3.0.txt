@@ -1,0 +1,6 @@
+Inspecting 23 files
+
+.......................
+
+Finished in 147.59 milliseconds
+23 inspected, 0 failures

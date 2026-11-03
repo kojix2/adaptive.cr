@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.21.0">
+<meta name="crystal_docs.project_version" content="main">
+<meta name="crystal_docs.project_name" content="adaptive">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="adaptive">
+  <title>Adaptive::Mapping - adaptive main</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          adaptive
+        </a>
+      </h1>
+
+      <span class="project-version">
+        main
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="adaptive/Adaptive" data-name="adaptive">
+      <a href="../Adaptive.html">Adaptive</a>
+      
+        <ul>
+  
+  <li class=" " data-id="adaptive/Adaptive/Bridge" data-name="adaptive::bridge">
+      <a href="../Adaptive/Bridge.html">Bridge</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BuiltinPolicy" data-name="adaptive::builtinpolicy">
+      <a href="../Adaptive/BuiltinPolicy.html">BuiltinPolicy</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Choice" data-name="adaptive::choice">
+      <a href="../Adaptive/Choice.html">Choice</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Config" data-name="adaptive::config">
+      <a href="../Adaptive/Config.html">Config</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Decision" data-name="adaptive::decision">
+      <a href="../Adaptive/Decision.html">Decision</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Engine" data-name="adaptive::engine">
+      <a href="../Adaptive/Engine.html">Engine</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Evaluation" data-name="adaptive::evaluation">
+      <a href="../Adaptive/Evaluation.html">Evaluation</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/EventLog" data-name="adaptive::eventlog">
+      <a href="../Adaptive/EventLog.html">EventLog</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Evidence" data-name="adaptive::evidence">
+      <a href="../Adaptive/Evidence.html">Evidence</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/EvidenceSource" data-name="adaptive::evidencesource">
+      <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Experiment" data-name="adaptive::experiment">
+      <a href="../Adaptive/Experiment.html">Experiment</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Hit" data-name="adaptive::hit">
+      <a href="../Adaptive/Hit.html">Hit</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Job" data-name="adaptive::job">
+      <a href="../Adaptive/Job.html">Job</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Live" data-name="adaptive::live">
+      <a href="../Adaptive/Live.html">Live</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/LiveSession" data-name="adaptive::livesession(p, c)">
+      <a href="../Adaptive/LiveSession.html">LiveSession</a>
+      
+    </li>
+  
+  <li class=" current" data-id="adaptive/Adaptive/Mapping" data-name="adaptive::mapping">
+      <a href="../Adaptive/Mapping.html">Mapping</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
+      <a href="../Adaptive/Pending.html">Pending</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pod5Export" data-name="adaptive::pod5export">
+      <a href="../Adaptive/Pod5Export.html">Pod5Export</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Policy" data-name="adaptive::policy">
+      <a href="../Adaptive/Policy.html">Policy</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pool" data-name="adaptive::pool">
+      <a href="../Adaptive/Pool.html">Pool</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/ReadState" data-name="adaptive::readstate">
+      <a href="../Adaptive/ReadState.html">ReadState</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Result" data-name="adaptive::result">
+      <a href="../Adaptive/Result.html">Result</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
+      <a href="../Adaptive/SequenceMapper.html">SequenceMapper</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
+      <a href="../Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Strand" data-name="adaptive::strand">
+      <a href="../Adaptive/Strand.html">Strand</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="adaptive/NanoporeGUI" data-name="nanoporegui">
+      <a href="../NanoporeGUI.html">NanoporeGUI</a>
+      
+        <ul>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Document" data-name="nanoporegui::document">
+      <a href="../NanoporeGUI/Document.html">Document</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Field" data-name="nanoporegui::field">
+      <a href="../NanoporeGUI/Field.html">Field</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/LogBuffer" data-name="nanoporegui::logbuffer">
+      <a href="../NanoporeGUI/LogBuffer.html">LogBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Profile" data-name="nanoporegui::profile">
+      <a href="../NanoporeGUI/Profile.html">Profile</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Runner" data-name="nanoporegui::runner">
+      <a href="../NanoporeGUI/Runner.html">Runner</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Window" data-name="nanoporegui::window">
+      <a href="../NanoporeGUI/Window.html">Window</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    struct
+  </span> Adaptive::<wbr>Mapping
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Adaptive/Mapping.html">Adaptive::Mapping</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A value snapshot; callers never need minimap2's types or native pointers.
+Non-primary includes both secondary and supplementary alignments: the
+binding does not expose enough information to distinguish those two.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L20" target="_blank">
+        adaptive/types.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#from_minimap2%28mapping%3AMinimap2%3A%3AMapping%29%3Aself-class-method" class="signature"><strong>.from_minimap2</strong>(mapping : Minimap2::Mapping) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28target_name%3AString%2Cmapq%3AUInt32%3D0_u32%2Ctarget_start%3AInt32%3D0%2Ctarget_end%3AInt32%3D0%2Ctarget_len%3AInt32%3D0%2Cquery_start%3AInt32%3D0%2Cquery_end%3AInt32%3D0%2Cstrand%3AStrand%3DStrand%3A%3AForward%2Cmatch_len%3AInt32%3D0%2Cblock_len%3AInt32%3D0%2Cis_primary%3ABool%3Dtrue%2Ccigar%3AArray%28Tuple%28UInt32%2CUInt8%29%29%3D%5B%5DofTuple%28UInt32%2CUInt8%29%2Ccigar_str%3AString%3D%22%22%2Cnm%3AInt32%3D0%2Cmd%3AString%7CNil%3Dnil%2Ccs%3AString%7CNil%3Dnil%2Cds%3AString%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(target_name : String, mapq : UInt32 = <span class="n">0_u32</span>, target_start : Int32 = <span class="n">0</span>, target_end : Int32 = <span class="n">0</span>, target_len : Int32 = <span class="n">0</span>, query_start : Int32 = <span class="n">0</span>, query_end : Int32 = <span class="n">0</span>, strand : Strand = <span class="t">Strand</span><span class="t">::</span><span class="t">Forward</span>, match_len : Int32 = <span class="n">0</span>, block_len : Int32 = <span class="n">0</span>, is_primary : Bool = <span class="n">true</span>, cigar : Array(Tuple(UInt32, UInt8)) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">UInt32</span>, <span class="t">UInt8</span>), cigar_str : String = <span class="s">&quot;&quot;</span>, nm : Int32 = <span class="n">0</span>, md : String | Nil = <span class="n">nil</span>, cs : String | Nil = <span class="n">nil</span>, ds : String | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#block_len%3AInt32-instance-method" class="signature"><strong>#block_len</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cigar%3AArray%28Tuple%28UInt32%2CUInt8%29%29-instance-method" class="signature"><strong>#cigar</strong> : Array(Tuple(UInt32, UInt8))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cigar_str%3AString-instance-method" class="signature"><strong>#cigar_str</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clone-instance-method" class="signature"><strong>#clone</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#copy_with%28target_name_target_name%3D%40target_name%2Cmapq_mapq%3D%40mapq%2Ctarget_start_target_start%3D%40target_start%2Ctarget_end_target_end%3D%40target_end%2Ctarget_len_target_len%3D%40target_len%2Cquery_start_query_start%3D%40query_start%2Cquery_end_query_end%3D%40query_end%2Cstrand_strand%3D%40strand%2Cmatch_len_match_len%3D%40match_len%2Cblock_len_block_len%3D%40block_len%2Cis_primary_is_primary%3D%40is_primary%2Ccigar_cigar%3D%40cigar%2Ccigar_str_cigar_str%3D%40cigar_str%2Cnm_nm%3D%40nm%2Cmd_md%3D%40md%2Ccs_cs%3D%40cs%2Cds_ds%3D%40ds%29-instance-method" class="signature"><strong>#copy_with</strong>(target_name _target_name = @target_name, mapq _mapq = @mapq, target_start _target_start = @target_start, target_end _target_end = @target_end, target_len _target_len = @target_len, query_start _query_start = @query_start, query_end _query_end = @query_end, strand _strand = @strand, match_len _match_len = @match_len, block_len _block_len = @block_len, is_primary _is_primary = @is_primary, cigar _cigar = @cigar, cigar_str _cigar_str = @cigar_str, nm _nm = @nm, md _md = @md, cs _cs = @cs, ds _ds = @ds)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#cs%3AString%7CNil-instance-method" class="signature"><strong>#cs</strong> : String | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ds%3AString%7CNil-instance-method" class="signature"><strong>#ds</strong> : String | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#is_primary%3ABool-instance-method" class="signature"><strong>#is_primary</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mapq%3AUInt32-instance-method" class="signature"><strong>#mapq</strong> : UInt32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#match_len%3AInt32-instance-method" class="signature"><strong>#match_len</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#md%3AString%7CNil-instance-method" class="signature"><strong>#md</strong> : String | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#nm%3AInt32-instance-method" class="signature"><strong>#nm</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#query_end%3AInt32-instance-method" class="signature"><strong>#query_end</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#query_start%3AInt32-instance-method" class="signature"><strong>#query_start</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#strand%3AStrand-instance-method" class="signature"><strong>#strand</strong> : Strand</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#target_end%3AInt32-instance-method" class="signature"><strong>#target_end</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#target_len%3AInt32-instance-method" class="signature"><strong>#target_len</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#target_name%3AString-instance-method" class="signature"><strong>#target_name</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#target_start%3AInt32-instance-method" class="signature"><strong>#target_start</strong> : Int32</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="from_minimap2(mapping:Minimap2::Mapping):self-class-method">
+      <div class="signature">
+        
+        def self.<strong>from_minimap2</strong>(mapping : Minimap2::Mapping) : <span class="k">self</span>
+
+        <a class="method-permalink" href="#from_minimap2%28mapping%3AMinimap2%3A%3AMapping%29%3Aself-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(target_name:String,mapq:UInt32=0_u32,target_start:Int32=0,target_end:Int32=0,target_len:Int32=0,query_start:Int32=0,query_end:Int32=0,strand:Strand=Strand::Forward,match_len:Int32=0,block_len:Int32=0,is_primary:Bool=true,cigar:Array(Tuple(UInt32,UInt8))=[]ofTuple(UInt32,UInt8),cigar_str:String=&quot;&quot;,nm:Int32=0,md:String|Nil=nil,cs:String|Nil=nil,ds:String|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(target_name : String, mapq : UInt32 = <span class="n">0_u32</span>, target_start : Int32 = <span class="n">0</span>, target_end : Int32 = <span class="n">0</span>, target_len : Int32 = <span class="n">0</span>, query_start : Int32 = <span class="n">0</span>, query_end : Int32 = <span class="n">0</span>, strand : <a href="../Adaptive/Strand.html">Strand</a> = <span class="t">Strand</span><span class="t">::</span><span class="t">Forward</span>, match_len : Int32 = <span class="n">0</span>, block_len : Int32 = <span class="n">0</span>, is_primary : Bool = <span class="n">true</span>, cigar : Array(Tuple(UInt32, UInt8)) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">UInt32</span>, <span class="t">UInt8</span>), cigar_str : String = <span class="s">&quot;&quot;</span>, nm : Int32 = <span class="n">0</span>, md : String | Nil = <span class="n">nil</span>, cs : String | Nil = <span class="n">nil</span>, ds : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28target_name%3AString%2Cmapq%3AUInt32%3D0_u32%2Ctarget_start%3AInt32%3D0%2Ctarget_end%3AInt32%3D0%2Ctarget_len%3AInt32%3D0%2Cquery_start%3AInt32%3D0%2Cquery_end%3AInt32%3D0%2Cstrand%3AStrand%3DStrand%3A%3AForward%2Cmatch_len%3AInt32%3D0%2Cblock_len%3AInt32%3D0%2Cis_primary%3ABool%3Dtrue%2Ccigar%3AArray%28Tuple%28UInt32%2CUInt8%29%29%3D%5B%5DofTuple%28UInt32%2CUInt8%29%2Ccigar_str%3AString%3D%22%22%2Cnm%3AInt32%3D0%2Cmd%3AString%7CNil%3Dnil%2Ccs%3AString%7CNil%3Dnil%2Cds%3AString%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="block_len:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>block_len</strong> : Int32
+
+        <a class="method-permalink" href="#block_len%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cigar:Array(Tuple(UInt32,UInt8))-instance-method">
+      <div class="signature">
+        
+        def <strong>cigar</strong> : Array(Tuple(UInt32, UInt8))
+
+        <a class="method-permalink" href="#cigar%3AArray%28Tuple%28UInt32%2CUInt8%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cigar_str:String-instance-method">
+      <div class="signature">
+        
+        def <strong>cigar_str</strong> : String
+
+        <a class="method-permalink" href="#cigar_str%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clone-instance-method">
+      <div class="signature">
+        
+        def <strong>clone</strong>
+
+        <a class="method-permalink" href="#clone-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="copy_with(target_name_target_name=@target_name,mapq_mapq=@mapq,target_start_target_start=@target_start,target_end_target_end=@target_end,target_len_target_len=@target_len,query_start_query_start=@query_start,query_end_query_end=@query_end,strand_strand=@strand,match_len_match_len=@match_len,block_len_block_len=@block_len,is_primary_is_primary=@is_primary,cigar_cigar=@cigar,cigar_str_cigar_str=@cigar_str,nm_nm=@nm,md_md=@md,cs_cs=@cs,ds_ds=@ds)-instance-method">
+      <div class="signature">
+        
+        def <strong>copy_with</strong>(target_name _target_name = @target_name, mapq _mapq = @mapq, target_start _target_start = @target_start, target_end _target_end = @target_end, target_len _target_len = @target_len, query_start _query_start = @query_start, query_end _query_end = @query_end, strand _strand = @strand, match_len _match_len = @match_len, block_len _block_len = @block_len, is_primary _is_primary = @is_primary, cigar _cigar = @cigar, cigar_str _cigar_str = @cigar_str, nm _nm = @nm, md _md = @md, cs _cs = @cs, ds _ds = @ds)
+
+        <a class="method-permalink" href="#copy_with%28target_name_target_name%3D%40target_name%2Cmapq_mapq%3D%40mapq%2Ctarget_start_target_start%3D%40target_start%2Ctarget_end_target_end%3D%40target_end%2Ctarget_len_target_len%3D%40target_len%2Cquery_start_query_start%3D%40query_start%2Cquery_end_query_end%3D%40query_end%2Cstrand_strand%3D%40strand%2Cmatch_len_match_len%3D%40match_len%2Cblock_len_block_len%3D%40block_len%2Cis_primary_is_primary%3D%40is_primary%2Ccigar_cigar%3D%40cigar%2Ccigar_str_cigar_str%3D%40cigar_str%2Cnm_nm%3D%40nm%2Cmd_md%3D%40md%2Ccs_cs%3D%40cs%2Cds_ds%3D%40ds%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="cs:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>cs</strong> : String | Nil
+
+        <a class="method-permalink" href="#cs%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ds:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>ds</strong> : String | Nil
+
+        <a class="method-permalink" href="#ds%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="is_primary:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>is_primary</strong> : Bool
+
+        <a class="method-permalink" href="#is_primary%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mapq:UInt32-instance-method">
+      <div class="signature">
+        
+        def <strong>mapq</strong> : UInt32
+
+        <a class="method-permalink" href="#mapq%3AUInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="match_len:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>match_len</strong> : Int32
+
+        <a class="method-permalink" href="#match_len%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="md:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>md</strong> : String | Nil
+
+        <a class="method-permalink" href="#md%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="nm:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>nm</strong> : Int32
+
+        <a class="method-permalink" href="#nm%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="query_end:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>query_end</strong> : Int32
+
+        <a class="method-permalink" href="#query_end%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="query_start:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>query_start</strong> : Int32
+
+        <a class="method-permalink" href="#query_start%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="strand:Strand-instance-method">
+      <div class="signature">
+        
+        def <strong>strand</strong> : <a href="../Adaptive/Strand.html">Strand</a>
+
+        <a class="method-permalink" href="#strand%3AStrand-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="target_end:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>target_end</strong> : Int32
+
+        <a class="method-permalink" href="#target_end%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="target_len:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>target_len</strong> : Int32
+
+        <a class="method-permalink" href="#target_len%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="target_name:String-instance-method">
+      <div class="signature">
+        
+        def <strong>target_name</strong> : String
+
+        <a class="method-permalink" href="#target_name%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="target_start:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>target_start</strong> : Int32
+
+        <a class="method-permalink" href="#target_start%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

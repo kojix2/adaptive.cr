@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.21.0">
+<meta name="crystal_docs.project_version" content="main">
+<meta name="crystal_docs.project_name" content="adaptive">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="adaptive">
+  <title>Adaptive::Config - adaptive main</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          adaptive
+        </a>
+      </h1>
+
+      <span class="project-version">
+        main
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="adaptive/Adaptive" data-name="adaptive">
+      <a href="../Adaptive.html">Adaptive</a>
+      
+        <ul>
+  
+  <li class=" " data-id="adaptive/Adaptive/Bridge" data-name="adaptive::bridge">
+      <a href="../Adaptive/Bridge.html">Bridge</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BuiltinPolicy" data-name="adaptive::builtinpolicy">
+      <a href="../Adaptive/BuiltinPolicy.html">BuiltinPolicy</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Choice" data-name="adaptive::choice">
+      <a href="../Adaptive/Choice.html">Choice</a>
+      
+    </li>
+  
+  <li class=" current" data-id="adaptive/Adaptive/Config" data-name="adaptive::config">
+      <a href="../Adaptive/Config.html">Config</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Decision" data-name="adaptive::decision">
+      <a href="../Adaptive/Decision.html">Decision</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Engine" data-name="adaptive::engine">
+      <a href="../Adaptive/Engine.html">Engine</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Evaluation" data-name="adaptive::evaluation">
+      <a href="../Adaptive/Evaluation.html">Evaluation</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/EventLog" data-name="adaptive::eventlog">
+      <a href="../Adaptive/EventLog.html">EventLog</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Evidence" data-name="adaptive::evidence">
+      <a href="../Adaptive/Evidence.html">Evidence</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/EvidenceSource" data-name="adaptive::evidencesource">
+      <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Experiment" data-name="adaptive::experiment">
+      <a href="../Adaptive/Experiment.html">Experiment</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Hit" data-name="adaptive::hit">
+      <a href="../Adaptive/Hit.html">Hit</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Job" data-name="adaptive::job">
+      <a href="../Adaptive/Job.html">Job</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Live" data-name="adaptive::live">
+      <a href="../Adaptive/Live.html">Live</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/LiveSession" data-name="adaptive::livesession(p, c)">
+      <a href="../Adaptive/LiveSession.html">LiveSession</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Mapping" data-name="adaptive::mapping">
+      <a href="../Adaptive/Mapping.html">Mapping</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
+      <a href="../Adaptive/Pending.html">Pending</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pod5Export" data-name="adaptive::pod5export">
+      <a href="../Adaptive/Pod5Export.html">Pod5Export</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Policy" data-name="adaptive::policy">
+      <a href="../Adaptive/Policy.html">Policy</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pool" data-name="adaptive::pool">
+      <a href="../Adaptive/Pool.html">Pool</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/ReadState" data-name="adaptive::readstate">
+      <a href="../Adaptive/ReadState.html">ReadState</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Result" data-name="adaptive::result">
+      <a href="../Adaptive/Result.html">Result</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
+      <a href="../Adaptive/SequenceMapper.html">SequenceMapper</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
+      <a href="../Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Strand" data-name="adaptive::strand">
+      <a href="../Adaptive/Strand.html">Strand</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="adaptive/NanoporeGUI" data-name="nanoporegui">
+      <a href="../NanoporeGUI.html">NanoporeGUI</a>
+      
+        <ul>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Document" data-name="nanoporegui::document">
+      <a href="../NanoporeGUI/Document.html">Document</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Field" data-name="nanoporegui::field">
+      <a href="../NanoporeGUI/Field.html">Field</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/LogBuffer" data-name="nanoporegui::logbuffer">
+      <a href="../NanoporeGUI/LogBuffer.html">LogBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Profile" data-name="nanoporegui::profile">
+      <a href="../NanoporeGUI/Profile.html">Profile</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Runner" data-name="nanoporegui::runner">
+      <a href="../NanoporeGUI/Runner.html">Runner</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Window" data-name="nanoporegui::window">
+      <a href="../NanoporeGUI/Window.html">Window</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    class
+  </span> Adaptive::<wbr>Config
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Adaptive/Config.html">Adaptive::Config</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type">JSON::Serializable</li>
+    
+      <li class="other-type">JSON::Serializable::Strict</li>
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L6" target="_blank">
+        adaptive/config.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28pull%3AJSON%3A%3APullParser%29-class-method" class="signature"><strong>.new</strong>(pull : JSON::PullParser)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28%2A%2C__pull_for_json_serializablepull%3AJSON%3A%3APullParser%29-class-method" class="signature"><strong>.new</strong>(*, __pull_for_json_serializable pull : JSON::PullParser)</a>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#ack_timeout_ms%3AInt32-instance-method" class="signature"><strong>#ack_timeout_ms</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ack_timeout_ms%3D%28ack_timeout_ms%3AInt32%29-instance-method" class="signature"><strong>#ack_timeout_ms=</strong>(ack_timeout_ms : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#allow_test_bridge%3ABool-instance-method" class="signature"><strong>#allow_test_bridge</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#allow_test_bridge%3D%28allow_test_bridge%3ABool%29-instance-method" class="signature"><strong>#allow_test_bridge=</strong>(allow_test_bridge : Bool)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#background_fraction%3AFloat64-instance-method" class="signature"><strong>#background_fraction</strong> : Float64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#background_fraction%3D%28background_fraction%3AFloat64%29-instance-method" class="signature"><strong>#background_fraction=</strong>(background_fraction : Float64)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bridge_script%3AString-instance-method" class="signature"><strong>#bridge_script</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bridge_script%3D%28bridge_script%3AString%29-instance-method" class="signature"><strong>#bridge_script=</strong>(bridge_script : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bridge_startup_timeout_ms%3AInt32-instance-method" class="signature"><strong>#bridge_startup_timeout_ms</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bridge_startup_timeout_ms%3D%28bridge_startup_timeout_ms%3AInt32%29-instance-method" class="signature"><strong>#bridge_startup_timeout_ms=</strong>(bridge_startup_timeout_ms : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bridge_timeout_ms%3AInt32-instance-method" class="signature"><strong>#bridge_timeout_ms</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bridge_timeout_ms%3D%28bridge_timeout_ms%3AInt32%29-instance-method" class="signature"><strong>#bridge_timeout_ms=</strong>(bridge_timeout_ms : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ca_file%3AString%7CNil-instance-method" class="signature"><strong>#ca_file</strong> : String | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ca_file%3D%28ca_file%3AString%7CNil%29-instance-method" class="signature"><strong>#ca_file=</strong>(ca_file : String | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#deadline_ms%3AInt32-instance-method" class="signature"><strong>#deadline_ms</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#deadline_ms%3D%28deadline_ms%3AInt32%29-instance-method" class="signature"><strong>#deadline_ms=</strong>(deadline_ms : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dorado_address%3AString-instance-method" class="signature"><strong>#dorado_address</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dorado_address%3D%28dorado_address%3AString%29-instance-method" class="signature"><strong>#dorado_address=</strong>(dorado_address : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dorado_model%3AString-instance-method" class="signature"><strong>#dorado_model</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dorado_model%3D%28dorado_model%3AString%29-instance-method" class="signature"><strong>#dorado_model=</strong>(dorado_model : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#first_channel%3AInt32-instance-method" class="signature"><strong>#first_channel</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#first_channel%3D%28first_channel%3AInt32%29-instance-method" class="signature"><strong>#first_channel=</strong>(first_channel : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fixture_sequence%3AString%7CNil-instance-method" class="signature"><strong>#fixture_sequence</strong> : String | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fixture_sequence%3D%28fixture_sequence%3AString%7CNil%29-instance-method" class="signature"><strong>#fixture_sequence=</strong>(fixture_sequence : String | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#host%3AString-instance-method" class="signature"><strong>#host</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#host%3D%28host%3AString%29-instance-method" class="signature"><strong>#host=</strong>(host : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#last_channel%3AInt32-instance-method" class="signature"><strong>#last_channel</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#last_channel%3D%28last_channel%3AInt32%29-instance-method" class="signature"><strong>#last_channel=</strong>(last_channel : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#log%3AString-instance-method" class="signature"><strong>#log</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#log%3D%28log%3AString%29-instance-method" class="signature"><strong>#log=</strong>(log : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mapping_mode%3AString-instance-method" class="signature"><strong>#mapping_mode</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mapping_mode%3D%28mapping_mode%3AString%29-instance-method" class="signature"><strong>#mapping_mode=</strong>(mapping_mode : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mapq%3AUInt32-instance-method" class="signature"><strong>#mapq</strong> : UInt32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#mapq%3D%28mapq%3AUInt32%29-instance-method" class="signature"><strong>#mapq=</strong>(mapq : UInt32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_buffer_bytes%3AInt64-instance-method" class="signature"><strong>#max_buffer_bytes</strong> : Int64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_buffer_bytes%3D%28max_buffer_bytes%3AInt64%29-instance-method" class="signature"><strong>#max_buffer_bytes=</strong>(max_buffer_bytes : Int64)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_samples%3AInt32-instance-method" class="signature"><strong>#max_samples</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#max_samples%3D%28max_samples%3AInt32%29-instance-method" class="signature"><strong>#max_samples=</strong>(max_samples : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#min_bases%3AInt32-instance-method" class="signature"><strong>#min_bases</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#min_bases%3D%28min_bases%3AInt32%29-instance-method" class="signature"><strong>#min_bases=</strong>(min_bases : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#min_samples%3AInt32-instance-method" class="signature"><strong>#min_samples</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#min_samples%3D%28min_samples%3AInt32%29-instance-method" class="signature"><strong>#min_samples=</strong>(min_samples : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#motif%3AString-instance-method" class="signature"><strong>#motif</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#motif%3D%28motif%3AString%29-instance-method" class="signature"><strong>#motif=</strong>(motif : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#observe%3ABool-instance-method" class="signature"><strong>#observe</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#observe%3D%28observe%3ABool%29-instance-method" class="signature"><strong>#observe=</strong>(observe : Bool)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#policy%3AString-instance-method" class="signature"><strong>#policy</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#policy%3D%28policy%3AString%29-instance-method" class="signature"><strong>#policy=</strong>(policy : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#port%3AInt32-instance-method" class="signature"><strong>#port</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#port%3D%28port%3AInt32%29-instance-method" class="signature"><strong>#port=</strong>(port : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#python%3AString-instance-method" class="signature"><strong>#python</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#python%3D%28python%3AString%29-instance-method" class="signature"><strong>#python=</strong>(python : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#quota%3AInt32-instance-method" class="signature"><strong>#quota</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#quota%3D%28quota%3AInt32%29-instance-method" class="signature"><strong>#quota=</strong>(quota : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reference%3AString-instance-method" class="signature"><strong>#reference</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reference%3D%28reference%3AString%29-instance-method" class="signature"><strong>#reference=</strong>(reference : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#seed%3AUInt64-instance-method" class="signature"><strong>#seed</strong> : UInt64</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#seed%3D%28seed%3AUInt64%29-instance-method" class="signature"><strong>#seed=</strong>(seed : UInt64)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#step_samples%3AInt32-instance-method" class="signature"><strong>#step_samples</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#step_samples%3D%28step_samples%3AInt32%29-instance-method" class="signature"><strong>#step_samples=</strong>(step_samples : Int32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#targets%3AArray%28String%29-instance-method" class="signature"><strong>#targets</strong> : Array(String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#targets%3D%28targets%3AArray%28String%29%29-instance-method" class="signature"><strong>#targets=</strong>(targets : Array(String))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tls%3ABool-instance-method" class="signature"><strong>#tls</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tls%3D%28tls%3ABool%29-instance-method" class="signature"><strong>#tls=</strong>(tls : Bool)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#validate%21%3ANil-instance-method" class="signature"><strong>#validate!</strong> : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#validate_sequence%21%3ANil-instance-method" class="signature"><strong>#validate_sequence!</strong> : Nil</a>
+        
+          <div class="summary"><p>Sequence processing has no dependency on bridge files or live settings.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#workers%3AInt32-instance-method" class="signature"><strong>#workers</strong> : Int32</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#workers%3D%28workers%3AInt32%29-instance-method" class="signature"><strong>#workers=</strong>(workers : Int32)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(pull:JSON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(pull : JSON::PullParser)
+
+        <a class="method-permalink" href="#new%28pull%3AJSON%3A%3APullParser%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(*,__pull_for_json_serializablepull:JSON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(*, __pull_for_json_serializable pull : JSON::PullParser)
+
+        <a class="method-permalink" href="#new%28%2A%2C__pull_for_json_serializablepull%3AJSON%3A%3APullParser%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="ack_timeout_ms:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>ack_timeout_ms</strong> : Int32
+
+        <a class="method-permalink" href="#ack_timeout_ms%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ack_timeout_ms=(ack_timeout_ms:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>ack_timeout_ms=</strong>(ack_timeout_ms : Int32)
+
+        <a class="method-permalink" href="#ack_timeout_ms%3D%28ack_timeout_ms%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="allow_test_bridge:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>allow_test_bridge</strong> : Bool
+
+        <a class="method-permalink" href="#allow_test_bridge%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="allow_test_bridge=(allow_test_bridge:Bool)-instance-method">
+      <div class="signature">
+        
+        def <strong>allow_test_bridge=</strong>(allow_test_bridge : Bool)
+
+        <a class="method-permalink" href="#allow_test_bridge%3D%28allow_test_bridge%3ABool%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="background_fraction:Float64-instance-method">
+      <div class="signature">
+        
+        def <strong>background_fraction</strong> : Float64
+
+        <a class="method-permalink" href="#background_fraction%3AFloat64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="background_fraction=(background_fraction:Float64)-instance-method">
+      <div class="signature">
+        
+        def <strong>background_fraction=</strong>(background_fraction : Float64)
+
+        <a class="method-permalink" href="#background_fraction%3D%28background_fraction%3AFloat64%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bridge_script:String-instance-method">
+      <div class="signature">
+        
+        def <strong>bridge_script</strong> : String
+
+        <a class="method-permalink" href="#bridge_script%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L25" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bridge_script=(bridge_script:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>bridge_script=</strong>(bridge_script : String)
+
+        <a class="method-permalink" href="#bridge_script%3D%28bridge_script%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L25" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bridge_startup_timeout_ms:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>bridge_startup_timeout_ms</strong> : Int32
+
+        <a class="method-permalink" href="#bridge_startup_timeout_ms%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bridge_startup_timeout_ms=(bridge_startup_timeout_ms:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>bridge_startup_timeout_ms=</strong>(bridge_startup_timeout_ms : Int32)
+
+        <a class="method-permalink" href="#bridge_startup_timeout_ms%3D%28bridge_startup_timeout_ms%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bridge_timeout_ms:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>bridge_timeout_ms</strong> : Int32
+
+        <a class="method-permalink" href="#bridge_timeout_ms%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bridge_timeout_ms=(bridge_timeout_ms:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>bridge_timeout_ms=</strong>(bridge_timeout_ms : Int32)
+
+        <a class="method-permalink" href="#bridge_timeout_ms%3D%28bridge_timeout_ms%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ca_file:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>ca_file</strong> : String | Nil
+
+        <a class="method-permalink" href="#ca_file%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ca_file=(ca_file:String|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>ca_file=</strong>(ca_file : String | Nil)
+
+        <a class="method-permalink" href="#ca_file%3D%28ca_file%3AString%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="deadline_ms:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>deadline_ms</strong> : Int32
+
+        <a class="method-permalink" href="#deadline_ms%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="deadline_ms=(deadline_ms:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>deadline_ms=</strong>(deadline_ms : Int32)
+
+        <a class="method-permalink" href="#deadline_ms%3D%28deadline_ms%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dorado_address:String-instance-method">
+      <div class="signature">
+        
+        def <strong>dorado_address</strong> : String
+
+        <a class="method-permalink" href="#dorado_address%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L27" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dorado_address=(dorado_address:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>dorado_address=</strong>(dorado_address : String)
+
+        <a class="method-permalink" href="#dorado_address%3D%28dorado_address%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L27" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dorado_model:String-instance-method">
+      <div class="signature">
+        
+        def <strong>dorado_model</strong> : String
+
+        <a class="method-permalink" href="#dorado_model%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dorado_model=(dorado_model:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>dorado_model=</strong>(dorado_model : String)
+
+        <a class="method-permalink" href="#dorado_model%3D%28dorado_model%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="first_channel:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>first_channel</strong> : Int32
+
+        <a class="method-permalink" href="#first_channel%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="first_channel=(first_channel:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>first_channel=</strong>(first_channel : Int32)
+
+        <a class="method-permalink" href="#first_channel%3D%28first_channel%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fixture_sequence:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>fixture_sequence</strong> : String | Nil
+
+        <a class="method-permalink" href="#fixture_sequence%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L41" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fixture_sequence=(fixture_sequence:String|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>fixture_sequence=</strong>(fixture_sequence : String | Nil)
+
+        <a class="method-permalink" href="#fixture_sequence%3D%28fixture_sequence%3AString%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L41" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="host:String-instance-method">
+      <div class="signature">
+        
+        def <strong>host</strong> : String
+
+        <a class="method-permalink" href="#host%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="host=(host:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>host=</strong>(host : String)
+
+        <a class="method-permalink" href="#host%3D%28host%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="last_channel:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>last_channel</strong> : Int32
+
+        <a class="method-permalink" href="#last_channel%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="last_channel=(last_channel:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>last_channel=</strong>(last_channel : Int32)
+
+        <a class="method-permalink" href="#last_channel%3D%28last_channel%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="log:String-instance-method">
+      <div class="signature">
+        
+        def <strong>log</strong> : String
+
+        <a class="method-permalink" href="#log%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L30" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="log=(log:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>log=</strong>(log : String)
+
+        <a class="method-permalink" href="#log%3D%28log%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L30" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mapping_mode:String-instance-method">
+      <div class="signature">
+        
+        def <strong>mapping_mode</strong> : String
+
+        <a class="method-permalink" href="#mapping_mode%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L35" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mapping_mode=(mapping_mode:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>mapping_mode=</strong>(mapping_mode : String)
+
+        <a class="method-permalink" href="#mapping_mode%3D%28mapping_mode%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L35" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mapq:UInt32-instance-method">
+      <div class="signature">
+        
+        def <strong>mapq</strong> : UInt32
+
+        <a class="method-permalink" href="#mapq%3AUInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="mapq=(mapq:UInt32)-instance-method">
+      <div class="signature">
+        
+        def <strong>mapq=</strong>(mapq : UInt32)
+
+        <a class="method-permalink" href="#mapq%3D%28mapq%3AUInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_buffer_bytes:Int64-instance-method">
+      <div class="signature">
+        
+        def <strong>max_buffer_bytes</strong> : Int64
+
+        <a class="method-permalink" href="#max_buffer_bytes%3AInt64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_buffer_bytes=(max_buffer_bytes:Int64)-instance-method">
+      <div class="signature">
+        
+        def <strong>max_buffer_bytes=</strong>(max_buffer_bytes : Int64)
+
+        <a class="method-permalink" href="#max_buffer_bytes%3D%28max_buffer_bytes%3AInt64%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_samples:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>max_samples</strong> : Int32
+
+        <a class="method-permalink" href="#max_samples%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="max_samples=(max_samples:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>max_samples=</strong>(max_samples : Int32)
+
+        <a class="method-permalink" href="#max_samples%3D%28max_samples%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="min_bases:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>min_bases</strong> : Int32
+
+        <a class="method-permalink" href="#min_bases%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L36" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="min_bases=(min_bases:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>min_bases=</strong>(min_bases : Int32)
+
+        <a class="method-permalink" href="#min_bases%3D%28min_bases%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L36" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="min_samples:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>min_samples</strong> : Int32
+
+        <a class="method-permalink" href="#min_samples%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="min_samples=(min_samples:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>min_samples=</strong>(min_samples : Int32)
+
+        <a class="method-permalink" href="#min_samples%3D%28min_samples%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L17" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="motif:String-instance-method">
+      <div class="signature">
+        
+        def <strong>motif</strong> : String
+
+        <a class="method-permalink" href="#motif%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L33" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="motif=(motif:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>motif=</strong>(motif : String)
+
+        <a class="method-permalink" href="#motif%3D%28motif%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L33" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="observe:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>observe</strong> : Bool
+
+        <a class="method-permalink" href="#observe%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="observe=(observe:Bool)-instance-method">
+      <div class="signature">
+        
+        def <strong>observe=</strong>(observe : Bool)
+
+        <a class="method-permalink" href="#observe%3D%28observe%3ABool%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="policy:String-instance-method">
+      <div class="signature">
+        
+        def <strong>policy</strong> : String
+
+        <a class="method-permalink" href="#policy%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="policy=(policy:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>policy=</strong>(policy : String)
+
+        <a class="method-permalink" href="#policy%3D%28policy%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="port:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>port</strong> : Int32
+
+        <a class="method-permalink" href="#port%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="port=(port:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>port=</strong>(port : Int32)
+
+        <a class="method-permalink" href="#port%3D%28port%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="python:String-instance-method">
+      <div class="signature">
+        
+        def <strong>python</strong> : String
+
+        <a class="method-permalink" href="#python%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="python=(python:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>python=</strong>(python : String)
+
+        <a class="method-permalink" href="#python%3D%28python%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="quota:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>quota</strong> : Int32
+
+        <a class="method-permalink" href="#quota%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="quota=(quota:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>quota=</strong>(quota : Int32)
+
+        <a class="method-permalink" href="#quota%3D%28quota%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reference:String-instance-method">
+      <div class="signature">
+        
+        def <strong>reference</strong> : String
+
+        <a class="method-permalink" href="#reference%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reference=(reference:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>reference=</strong>(reference : String)
+
+        <a class="method-permalink" href="#reference%3D%28reference%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="seed:UInt64-instance-method">
+      <div class="signature">
+        
+        def <strong>seed</strong> : UInt64
+
+        <a class="method-permalink" href="#seed%3AUInt64-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L39" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="seed=(seed:UInt64)-instance-method">
+      <div class="signature">
+        
+        def <strong>seed=</strong>(seed : UInt64)
+
+        <a class="method-permalink" href="#seed%3D%28seed%3AUInt64%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L39" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="step_samples:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>step_samples</strong> : Int32
+
+        <a class="method-permalink" href="#step_samples%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="step_samples=(step_samples:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>step_samples=</strong>(step_samples : Int32)
+
+        <a class="method-permalink" href="#step_samples%3D%28step_samples%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="targets:Array(String)-instance-method">
+      <div class="signature">
+        
+        def <strong>targets</strong> : Array(String)
+
+        <a class="method-permalink" href="#targets%3AArray%28String%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L32" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="targets=(targets:Array(String))-instance-method">
+      <div class="signature">
+        
+        def <strong>targets=</strong>(targets : Array(String))
+
+        <a class="method-permalink" href="#targets%3D%28targets%3AArray%28String%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L32" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tls:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>tls</strong> : Bool
+
+        <a class="method-permalink" href="#tls%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tls=(tls:Bool)-instance-method">
+      <div class="signature">
+        
+        def <strong>tls=</strong>(tls : Bool)
+
+        <a class="method-permalink" href="#tls%3D%28tls%3ABool%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="validate!:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>validate!</strong> : Nil
+
+        <a class="method-permalink" href="#validate%21%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L43" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="validate_sequence!:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>validate_sequence!</strong> : Nil
+
+        <a class="method-permalink" href="#validate_sequence%21%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sequence processing has no dependency on bridge files or live settings.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L54" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="workers:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>workers</strong> : Int32
+
+        <a class="method-permalink" href="#workers%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="workers=(workers:Int32)-instance-method">
+      <div class="signature">
+        
+        def <strong>workers=</strong>(workers : Int32)
+
+        <a class="method-permalink" href="#workers%3D%28workers%3AInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/config.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

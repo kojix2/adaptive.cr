@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.21.0">
+<meta name="crystal_docs.project_version" content="main">
+<meta name="crystal_docs.project_name" content="adaptive">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="adaptive">
+  <title>Adaptive::Strand - adaptive main</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          adaptive
+        </a>
+      </h1>
+
+      <span class="project-version">
+        main
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="adaptive/Adaptive" data-name="adaptive">
+      <a href="../Adaptive.html">Adaptive</a>
+      
+        <ul>
+  
+  <li class=" " data-id="adaptive/Adaptive/Bridge" data-name="adaptive::bridge">
+      <a href="../Adaptive/Bridge.html">Bridge</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BuiltinPolicy" data-name="adaptive::builtinpolicy">
+      <a href="../Adaptive/BuiltinPolicy.html">BuiltinPolicy</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Choice" data-name="adaptive::choice">
+      <a href="../Adaptive/Choice.html">Choice</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Config" data-name="adaptive::config">
+      <a href="../Adaptive/Config.html">Config</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Decision" data-name="adaptive::decision">
+      <a href="../Adaptive/Decision.html">Decision</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Engine" data-name="adaptive::engine">
+      <a href="../Adaptive/Engine.html">Engine</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Evaluation" data-name="adaptive::evaluation">
+      <a href="../Adaptive/Evaluation.html">Evaluation</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/EventLog" data-name="adaptive::eventlog">
+      <a href="../Adaptive/EventLog.html">EventLog</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Evidence" data-name="adaptive::evidence">
+      <a href="../Adaptive/Evidence.html">Evidence</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/EvidenceSource" data-name="adaptive::evidencesource">
+      <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Experiment" data-name="adaptive::experiment">
+      <a href="../Adaptive/Experiment.html">Experiment</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Hit" data-name="adaptive::hit">
+      <a href="../Adaptive/Hit.html">Hit</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Job" data-name="adaptive::job">
+      <a href="../Adaptive/Job.html">Job</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Live" data-name="adaptive::live">
+      <a href="../Adaptive/Live.html">Live</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/LiveSession" data-name="adaptive::livesession(p, c)">
+      <a href="../Adaptive/LiveSession.html">LiveSession</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Mapping" data-name="adaptive::mapping">
+      <a href="../Adaptive/Mapping.html">Mapping</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
+      <a href="../Adaptive/Pending.html">Pending</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pod5Export" data-name="adaptive::pod5export">
+      <a href="../Adaptive/Pod5Export.html">Pod5Export</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Policy" data-name="adaptive::policy">
+      <a href="../Adaptive/Policy.html">Policy</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Pool" data-name="adaptive::pool">
+      <a href="../Adaptive/Pool.html">Pool</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/ReadState" data-name="adaptive::readstate">
+      <a href="../Adaptive/ReadState.html">ReadState</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/Result" data-name="adaptive::result">
+      <a href="../Adaptive/Result.html">Result</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
+      <a href="../Adaptive/SequenceMapper.html">SequenceMapper</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
+      <a href="../Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" current" data-id="adaptive/Adaptive/Strand" data-name="adaptive::strand">
+      <a href="../Adaptive/Strand.html">Strand</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="adaptive/NanoporeGUI" data-name="nanoporegui">
+      <a href="../NanoporeGUI.html">NanoporeGUI</a>
+      
+        <ul>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Document" data-name="nanoporegui::document">
+      <a href="../NanoporeGUI/Document.html">Document</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Field" data-name="nanoporegui::field">
+      <a href="../NanoporeGUI/Field.html">Field</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/LogBuffer" data-name="nanoporegui::logbuffer">
+      <a href="../NanoporeGUI/LogBuffer.html">LogBuffer</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Profile" data-name="nanoporegui::profile">
+      <a href="../NanoporeGUI/Profile.html">Profile</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Runner" data-name="nanoporegui::runner">
+      <a href="../NanoporeGUI/Runner.html">Runner</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Window" data-name="nanoporegui::window">
+      <a href="../NanoporeGUI/Window.html">Window</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    enum
+  </span> Adaptive::<wbr>Strand
+
+</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L12" target="_blank">
+        adaptive/types.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="enum-members" class="anchor" href="#enum-members">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Enum Members
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="Forward">
+        <strong>Forward</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Reverse">
+        <strong>Reverse</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#forward%3F-instance-method" class="signature"><strong>#forward?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../Adaptive/Strand.html#Forward">Forward</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reverse%3F-instance-method" class="signature"><strong>#reverse?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if this enum value equals <code><a href="../Adaptive/Strand.html#Reverse">Reverse</a></code></p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="forward?-instance-method">
+      <div class="signature">
+        
+        def <strong>forward?</strong>
+
+        <a class="method-permalink" href="#forward%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../Adaptive/Strand.html#Forward">Forward</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reverse?-instance-method">
+      <div class="signature">
+        
+        def <strong>reverse?</strong>
+
+        <a class="method-permalink" href="#reverse%3F-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if this enum value equals <code><a href="../Adaptive/Strand.html#Reverse">Reverse</a></code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>

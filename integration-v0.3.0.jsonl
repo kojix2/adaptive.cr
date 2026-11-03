@@ -1,0 +1,10 @@
+{"mode": "accept", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.05}
+{"mode": "reject", "channels": 16, "decisions": 80, "acks": 80, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.051}
+{"mode": "quota", "channels": 16, "decisions": 76, "acks": 76, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.049}
+{"mode": "observe", "channels": 16, "decisions": 16, "acks": 0, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.048}
+{"mode": "tls", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.06}
+{"mode": "deadline", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 16, "elapsed_s": 2.045}
+{"mode": "worker_error", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 2.055}
+{"mode": "shutdown", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "deadline_fallbacks": 0, "elapsed_s": 0.154}
+{"mode": "disconnect", "channels": 16, "decisions": 16, "acks": 0, "unacknowledged": 16, "deadline_fallbacks": 0, "elapsed_s": 0.151}
+{"mode": "quota", "channels": 512, "decisions": 2193, "acks": 2180, "unacknowledged": 13, "deadline_fallbacks": 0, "elapsed_s": 2.093}
