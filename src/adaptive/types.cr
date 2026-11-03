@@ -2,6 +2,7 @@ require "./config"
 require "minimap2"
 require "set"
 require "./index"
+require "./basecall"
 
 module Adaptive
   enum Choice
@@ -25,6 +26,8 @@ module Adaptive
     cigar : Array(Tuple(UInt32, UInt8)) = [] of Tuple(UInt32, UInt8),
     cigar_str : String = "", nm : Int32 = 0,
     md : String? = nil, cs : String? = nil, ds : String? = nil do
+    include JSON::Serializable
+
     def self.from_minimap2(mapping : Minimap2::Mapping) : self
       new(target_name: mapping.target_name, mapq: mapping.mapq,
         target_start: mapping.target_start, target_end: mapping.target_end, target_len: mapping.target_len,
@@ -37,20 +40,26 @@ module Adaptive
   end
 
   record Hit, segment : Int32, mapping : Mapping do
+    include JSON::Serializable
+
     # Compatibility for existing custom policies that construct evidence.
     def initialize(@segment : Int32, mapping : Minimap2::Mapping)
       @mapping = Mapping.from_minimap2(mapping)
     end
   end
 
-  record Decision, choice : Choice, reason : String, group : String? = nil, limit : Int32 = 0, hit : Hit? = nil
+  record Decision, choice : Choice, reason : String, group : String? = nil, limit : Int32 = 0, hit : Hit? = nil do
+    include JSON::Serializable
+  end
 
   enum EvidenceSource
     Sequence
     Basecall
   end
 
-  record Evidence, channel : Int32, read_id : String, samples : Int32, sequences : Array(String), hits : Array(Hit), source : EvidenceSource = EvidenceSource::Sequence do
+  record Evidence, channel : Int32, read_id : String, samples : Int32, sequences : Array(String), hits : Array(Hit), source : EvidenceSource = EvidenceSource::Sequence, basecalls : BasecallResult? = nil do
+    include JSON::Serializable
+
     def representative_hit(minimum_mapq : UInt32 = 0_u32, primary_only = false) : Hit?
       hits.select { |hit| hit.mapping.mapq >= minimum_mapq && (!primary_only || hit.mapping.is_primary) }
         .max_by?(&.mapping.mapq)

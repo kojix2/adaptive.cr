@@ -21,6 +21,8 @@ module Adaptive
     property deadline_ms : Int32 = 2000
     property bridge_timeout_ms : Int32 = 3000
     property bridge_startup_timeout_ms : Int32 = 60000
+    property bridge_max_signal_bytes : Int32 = 500000
+    property bridge_max_response_bytes : Int32 = 2097152
     property ack_timeout_ms : Int32 = 3000
     property bridge_script : String = "scripts/dorado_bridge.py"
     property python : String = "python3"
@@ -47,6 +49,8 @@ module Adaptive
       raise "invalid sample limits" unless 100 <= min_samples <= max_samples <= 250000 && step_samples > 0
       raise "invalid timeouts" unless deadline_ms > 0 && (100..60000).includes?(bridge_timeout_ms) && ack_timeout_ms > 0
       raise "invalid bridge startup timeout" unless (100..600000).includes?(bridge_startup_timeout_ms)
+      raise "invalid bridge signal limit" unless (200..67108864).includes?(bridge_max_signal_bytes) && bridge_max_signal_bytes.even?
+      raise "invalid bridge response limit" unless (1024..67108864).includes?(bridge_max_response_bytes)
       raise "invalid memory limit" unless max_buffer_bytes >= max_samples.to_i64 * 4 && max_buffer_bytes <= 16_i64 * 1024**3
     end
 

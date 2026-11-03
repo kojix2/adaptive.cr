@@ -90,7 +90,46 @@ class BridgeTest(unittest.TestCase):
         self.assertEqual(values[0]['protocol'], 1)
         self.assertEqual(values[0]['backend'], 'fixture')
         self.assertIn('python', values[0])
-        self.assertEqual(values[1], dict(id='current', sequences=['']))
+        self.assertEqual(values[1]['id'], 'current')
+        self.assertEqual(values[1]['sequences'], [''])
+        self.assertEqual(values[1]['segments'], [dict(sequence='', quality=None, read_id='current')])
+
+    def test_segments_keep_quality_and_parent_correlation(self):
+        first = result('current', b'acg')
+        first['datasets']['qstring'] = b'III'
+        second = result('child', 'TTA')
+        second['metadata']['parent_read_id'] = 'current'
+        second['datasets']['qstring'] = 'JJJ'
+        segments = bridge.basecall_segments(Client([[[first, second]]]), self.request, self.signal, 1)
+        self.assertEqual(segments, [dict(sequence='ACG', quality='III', read_id='current'),
+                                    dict(sequence='TTA', quality='JJJ', read_id='child')])
+        for quality in ('II', 'II\n', 42):
+            first['datasets']['qstring'] = quality
+            with self.assertRaisesRegex(ValueError, 'quality'):
+                bridge.segment_data(first)
+
+    def test_explicit_full_read_limit_keeps_the_default_prefix_limit(self):
+        size = 500002
+        request = dict(self.request, bytes=size)
+        with self.assertRaisesRegex(ValueError, 'signal size'):
+            bridge.validate_request(request)
+        bridge.validate_request(request, max_signal_bytes=size)
+        command = [sys.executable, str(ROOT / 'scripts/dorado_bridge.py'), '--address', 'test',
+                   '--model', 'test', '--test-sequence', 'ACGT', '--max-signal-bytes', str(size)]
+        response = subprocess.run(command, input=json.dumps(request).encode()+b'\n'+bytes(size),
+                                  capture_output=True, check=True).stdout
+        header_size, = struct.unpack('<I', response[:4])
+        self.assertEqual(json.loads(response[4:4+header_size])['max_signal_bytes'], size)
+        self.assertIn(b'"sequences": ["ACGT"]', response)
+
+    def test_response_limits_apply_to_sequence_and_quality_together(self):
+        with self.assertRaisesRegex(ValueError, 'response too large'):
+            bridge.emit(dict(sequence='A' * 1000, quality='I' * 1000), max_bytes=1024)
+        command = [sys.executable, str(ROOT / 'scripts/dorado_bridge.py'), '--address', 'test',
+                   '--model', 'test', '--test-sequence', '', '--max-response-bytes', '1023']
+        response = subprocess.run(command, capture_output=True)
+        self.assertNotEqual(response.returncode, 0)
+        self.assertIn(b'max-response-bytes', response.stderr)
 
     def test_truncated_and_oversized_requests_fail(self):
         command = [sys.executable, str(ROOT / 'scripts/dorado_bridge.py'), '--address', 'test',

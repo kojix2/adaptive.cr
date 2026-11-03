@@ -33,10 +33,10 @@ module Adaptive
               begin
                 check_deadline(job)
                 bridge ||= Bridge.new(config)
-                sequences = bridge.call(job)
+                basecalls = bridge.basecall(job)
                 check_deadline(job)
-                evidence = mapper.map(sequences, channel: job.channel, read_id: job.read_id,
-                  samples: job.signal.size // 2, source: EvidenceSource::Basecall)
+                evidence = mapper.map(basecalls.sequences, channel: job.channel, read_id: job.read_id,
+                  samples: job.signal.size // 2, source: EvidenceSource::Basecall, basecalls: basecalls)
                 @results.send(Result.new(job, evidence, elapsed_ms: (Time.instant - started).total_milliseconds))
               rescue ex
                 bridge.try &.close

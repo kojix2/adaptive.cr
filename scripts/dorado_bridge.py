@@ -10,15 +10,16 @@ import sys
 import time
 
 MAX_SIGNAL_BYTES = 500000
+MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 
 
-def validate_request(request):
+def validate_request(request, max_signal_bytes=MAX_SIGNAL_BYTES):
     if not isinstance(request, dict):
         raise ValueError("request must be an object")
     if not isinstance(request.get("id"), str) or not request["id"] or len(request["id"]) > 256:
         raise ValueError("invalid request id")
     size = request.get("bytes")
-    if type(size) is not int or not 0 < size <= MAX_SIGNAL_BYTES or size % 2:
+    if type(size) is not int or not 0 < size <= max_signal_bytes or size % 2:
         raise ValueError("invalid signal size")
     for field in ("offset", "scale", "sample_rate"):
         value = request.get(field)
@@ -39,9 +40,9 @@ def sequence_text(value):
     return value.upper()
 
 
-def emit(value):
+def emit(value, max_bytes=MAX_RESPONSE_BYTES):
     data = json.dumps(value).encode()
-    if len(data) > 2 * 1024 * 1024:
+    if len(data) > max_bytes:
         raise ValueError("response too large")
     sys.stdout.buffer.write(struct.pack("<I", len(data)) + data)
     sys.stdout.buffer.flush()
@@ -59,7 +60,7 @@ def package_signal(request, signal):
     )
 
 
-def basecall(client, request, signal, timeout):
+def basecall_segments(client, request, signal, timeout):
     read = package_signal(request, signal)
     deadline = time.monotonic() + timeout
     # The pinned PyBasecallClient returns False for queue_full. Fail this job
@@ -68,12 +69,33 @@ def basecall(client, request, signal, timeout):
         raise RuntimeError("Dorado input queue is full")
     while time.monotonic() < deadline:
         for batch in client.get_completed_reads():
-            matching = [result for result in batch if result["metadata"]["read_id"] == request["id"]]
+            matching = [result for result in batch
+                        if result["metadata"]["read_id"] == request["id"]
+                        or result["metadata"].get("parent_read_id") == request["id"]]
             if matching:
                 # Preserve split molecules as separate sequences, never concatenate.
-                return [sequence_text(result["datasets"]["sequence"]) for result in matching]
+                return [segment_data(result) for result in matching]
         time.sleep(0.002)
     raise TimeoutError("Dorado result deadline exceeded")
+
+
+def segment_data(result):
+    sequence = sequence_text(result["datasets"]["sequence"])
+    quality = result["datasets"].get("qstring")
+    if isinstance(quality, bytes):
+        quality = quality.decode("ascii")
+    if quality is not None and (not isinstance(quality, str) or len(quality) != len(sequence)
+                                or any(not 33 <= ord(value) <= 126 for value in quality)):
+        raise ValueError("invalid basecall quality")
+    read_id = result["metadata"]["read_id"]
+    if not isinstance(read_id, str):
+        raise ValueError("invalid segment read id")
+    return dict(sequence=sequence, quality=quality, read_id=read_id)
+
+
+def basecall(client, request, signal, timeout):
+    """Sequence-only compatibility view; new consumers use basecall_segments."""
+    return [segment["sequence"] for segment in basecall_segments(client, request, signal, timeout)]
 
 
 def main():
@@ -82,13 +104,21 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--timeout", type=float, default=3)
     parser.add_argument("--startup-timeout", type=float, default=60)
+    parser.add_argument("--max-signal-bytes", type=int, default=MAX_SIGNAL_BYTES)
+    parser.add_argument("--max-response-bytes", type=int, default=MAX_RESPONSE_BYTES)
     parser.add_argument("--test-sequence", help="Explicit test backend; never a real basecall")
     args = parser.parse_args()
     if not all(math.isfinite(value) and value > 0 for value in (args.timeout, args.startup_timeout)):
         parser.error("timeouts must be finite and positive")
+    if not 200 <= args.max_signal_bytes <= 64 * 1024 * 1024 or args.max_signal_bytes % 2:
+        parser.error("max-signal-bytes must be an even value from 200 to 67108864")
+    if not 1024 <= args.max_response_bytes <= 64 * 1024 * 1024:
+        parser.error("max-response-bytes must be from 1024 to 67108864")
     client = None
     try:
-        info = {"protocol": 1, "backend": "fixture", "python": platform.python_version()}
+        info = {"protocol": 1, "backend": "fixture", "python": platform.python_version(),
+                "max_signal_bytes": args.max_signal_bytes,
+                "max_response_bytes": args.max_response_bytes}
         if args.test_sequence is None:
             import numpy as np
             from pybasecall_client_lib import __version__
@@ -102,7 +132,7 @@ def main():
             info.update(backend="dorado", client_version=__version__, numpy=np.__version__, model=args.model)
         else:
             args.test_sequence = sequence_text(args.test_sequence)
-        emit(info)
+        emit(info, args.max_response_bytes)
         while True:
             line = sys.stdin.buffer.readline(16385)
             if not line:
@@ -110,19 +140,20 @@ def main():
             if len(line) > 16384 or not line.endswith(b"\n"):
                 raise ValueError("invalid request header")
             request = json.loads(line)
-            validate_request(request)
+            validate_request(request, args.max_signal_bytes)
             size = request["bytes"]
             signal = sys.stdin.buffer.read(size)
             if len(signal) != size:
                 raise EOFError("truncated signal")
             try:
-                seqs = [args.test_sequence] if client is None else basecall(client, request, signal, args.timeout)
-                emit({"id": request["id"], "sequences": seqs})
+                segments = [dict(sequence=args.test_sequence, quality=None, read_id=request["id"])] if client is None else basecall_segments(client, request, signal, args.timeout)
+                emit({"id": request["id"], "sequences": [segment["sequence"] for segment in segments],
+                      "segments": segments}, args.max_response_bytes)
             except Exception as error:
-                emit({"id": request["id"], "error": str(error)})
+                emit({"id": request["id"], "error": str(error)}, args.max_response_bytes)
                 return  # recycle connection after errors; no stale pending replies
     except Exception as error:
-        emit({"protocol": 1, "error": f"{type(error).__name__}: {error}"})
+        emit({"protocol": 1, "error": f"{type(error).__name__}: {error}"}, args.max_response_bytes)
         raise
     finally:
         if client is not None:

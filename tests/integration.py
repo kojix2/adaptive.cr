@@ -89,11 +89,13 @@ def run(binary, mode, channels=16):
             config['ca_file'] = str(tmp / 'cert.pem')
         if mode in ('deadline', 'worker_error'):
             bridge = (ROOT / 'scripts/dorado_bridge.py').read_text()
+            marker = 'segments = [dict(sequence=args.test_sequence'
+            assert marker in bridge, 'fixture fault-injection point no longer exists'
             if mode == 'deadline':
-                bridge = bridge.replace('seqs = [args.test_sequence]', 'time.sleep(0.25)\n                seqs = [args.test_sequence]')
+                bridge = bridge.replace(marker, 'time.sleep(0.25)\n                ' + marker, 1)
                 config.update(deadline_ms=50)
             else:
-                bridge = bridge.replace('seqs = [args.test_sequence]', 'raise RuntimeError("injected backend failure")\n                seqs = [args.test_sequence]')
+                bridge = bridge.replace(marker, 'raise RuntimeError("injected backend failure")\n                ' + marker, 1)
             (tmp / 'bridge.py').write_text(bridge)
             config['bridge_script'] = str(tmp / 'bridge.py')
         (tmp / 'client.json').write_text(json.dumps(config))

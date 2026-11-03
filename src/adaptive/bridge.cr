@@ -15,6 +15,14 @@ module Adaptive
       args = [config.bridge_script, "--address", config.dorado_address, "--model", config.dorado_model,
               "--timeout", (config.bridge_timeout_ms / 1000.0).to_s,
               "--startup-timeout", (config.bridge_startup_timeout_ms / 1000.0).to_s]
+      if config.bridge_max_signal_bytes != 500000
+        args += ["--max-signal-bytes", config.bridge_max_signal_bytes.to_s]
+      end
+      if config.bridge_max_response_bytes != 2097152
+        args += ["--max-response-bytes", config.bridge_max_response_bytes.to_s]
+      end
+      @max_signal_bytes = config.bridge_max_signal_bytes
+      @max_response_bytes = config.bridge_max_response_bytes
       if fixture = config.fixture_sequence
         args += ["--test-sequence", fixture]
       end
@@ -40,6 +48,15 @@ module Adaptive
     end
 
     def call(job : Job) : Array(String)
+      basecall(job).sequences
+    end
+
+    # Full basecall data, including quality and the original molecule identity.
+    # call remains a sequence-only compatibility view for existing clients.
+    def basecall(job : Job) : BasecallResult
+      unless 0 < job.signal.size <= @max_signal_bytes && job.signal.size.even?
+        raise ArgumentError.new("signal exceeds configured bridge limit or is not int16 ADC")
+      end
       request_id = UUID.random.to_s
       header = {id: request_id, bytes: job.signal.size, offset: job.offset, scale: job.scale,
                 sample_rate: job.sample_rate, start_sample: job.start_sample}.to_json
@@ -49,12 +66,22 @@ module Adaptive
       result = receive
       raise "basecaller correlation mismatch" unless result["id"].as_s == request_id
       raise result["error"].as_s if result["error"]?
-      result["sequences"].as_a.map(&.as_s)
+      segments = if values = result["segments"]?
+                   values.as_a.map { |value| BasecallSegment.from_json(value.to_json) }
+                 else
+                   result["sequences"].as_a.map { |value| BasecallSegment.new(value.as_s) }
+                 end
+      basecalls = BasecallResult.new(job.read_id, segments)
+      basecalls.validate!
+      if values = result["sequences"]?
+        raise "basecaller segment mismatch" unless values.as_a.map(&.as_s) == basecalls.sequences
+      end
+      basecalls
     end
 
     private def receive : JSON::Any
       size = @output.read_bytes(UInt32, IO::ByteFormat::LittleEndian)
-      raise "bridge response too large" if size > 2 * 1024 * 1024
+      raise "bridge response too large" if size > @max_response_bytes
       bytes = Bytes.new(size)
       @output.read_fully(bytes)
       JSON.parse(String.new(bytes))
