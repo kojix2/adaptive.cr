@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
+      <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallSegment" data-name="adaptive::basecallsegment">
+      <a href="../Adaptive/BasecallSegment.html">BasecallSegment</a>
+      
+    </li>
+  
   <li class=" current" data-id="adaptive/Adaptive/Bridge" data-name="adaptive::bridge">
       <a href="../Adaptive/Bridge.html">Bridge</a>
       
@@ -290,7 +300,7 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
   </h2>
   
     
-      <a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/bridge.cr#L7" target="_blank">
+      <a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/bridge.cr#L7" target="_blank">
         adaptive/bridge.cr
       </a>
     
@@ -334,6 +344,13 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
     Instance Method Summary
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#basecall%28job%3AJob%29%3ABasecallResult-instance-method" class="signature"><strong>#basecall</strong>(job : Job) : BasecallResult</a>
+        
+          <div class="summary"><p>Full basecall data, including quality and the original molecule identity.</p></div>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#call%28job%3AJob%29%3AArray%28String%29-instance-method" class="signature"><strong>#call</strong>(job : Job) : Array(String)</a>
@@ -405,7 +422,7 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/bridge.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/bridge.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -426,6 +443,28 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="basecall(job:Job):BasecallResult-instance-method">
+      <div class="signature">
+        
+        def <strong>basecall</strong>(job : <a href="../Adaptive/Job.html">Job</a>) : <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
+
+        <a class="method-permalink" href="#basecall%28job%3AJob%29%3ABasecallResult-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Full basecall data, including quality and the original molecule identity.
+call remains a sequence-only compatibility view for existing clients.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/bridge.cr#L56" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="call(job:Job):Array(String)-instance-method">
       <div class="signature">
         
@@ -437,7 +476,7 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/bridge.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/bridge.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -453,7 +492,7 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/bridge.cr#L63" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/bridge.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -469,7 +508,7 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/bridge.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/bridge.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
+      <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallSegment" data-name="adaptive::basecallsegment">
+      <a href="../Adaptive/BasecallSegment.html">BasecallSegment</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/Bridge" data-name="adaptive::bridge">
       <a href="../Adaptive/Bridge.html">Bridge</a>
       
@@ -291,7 +301,7 @@ by the coordinator; evaluate never reserves or acknowledges quota.</p>
   </h2>
   
     
-      <a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/sequence.cr#L7" target="_blank">
+      <a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/sequence.cr#L7" target="_blank">
         adaptive/sequence.cr
       </a>
     
@@ -337,12 +347,12 @@ by the coordinator; evaluate never reserves or acknowledges quota.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#evaluate%28sequences%3AArray%28String%29%2Cpolicy%3APolicy%2Cexperiment%3AExperiment%2Cmemory%3AHash%28String%2CString%29%2C%2A%2Cchannel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%3D0%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%29%3AEvaluation-instance-method" class="signature"><strong>#evaluate</strong>(sequences : Array(String), policy : Policy, experiment : Experiment, memory : Hash(String, String), *, channel : Int32, read_id : String, samples : Int32 = <span class="n">0</span>, source : EvidenceSource = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>) : Evaluation</a>
+        <a href="#evaluate%28sequences%3AArray%28String%29%2Cpolicy%3APolicy%2Cexperiment%3AExperiment%2Cmemory%3AHash%28String%2CString%29%2C%2A%2Cchannel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%3D0%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%2Cbasecalls%3ABasecallResult%7CNil%3Dnil%29%3AEvaluation-instance-method" class="signature"><strong>#evaluate</strong>(sequences : Array(String), policy : Policy, experiment : Experiment, memory : Hash(String, String), *, channel : Int32, read_id : String, samples : Int32 = <span class="n">0</span>, source : EvidenceSource = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>, basecalls : BasecallResult | Nil = <span class="n">nil</span>) : Evaluation</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#map%28sequences%3AArray%28String%29%2C%2A%2Cchannel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%3D0%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%29%3AEvidence-instance-method" class="signature"><strong>#map</strong>(sequences : Array(String), *, channel : Int32, read_id : String, samples : Int32 = <span class="n">0</span>, source : EvidenceSource = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>) : Evidence</a>
+        <a href="#map%28sequences%3AArray%28String%29%2C%2A%2Cchannel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%3D0%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%2Cbasecalls%3ABasecallResult%7CNil%3Dnil%29%3AEvidence-instance-method" class="signature"><strong>#map</strong>(sequences : Array(String), *, channel : Int32, read_id : String, samples : Int32 = <span class="n">0</span>, source : EvidenceSource = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>, basecalls : BasecallResult | Nil = <span class="n">nil</span>) : Evidence</a>
         
       </li>
     
@@ -413,7 +423,7 @@ by the coordinator; evaluate never reserves or acknowledges quota.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/sequence.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/sequence.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -434,34 +444,34 @@ by the coordinator; evaluate never reserves or acknowledges quota.</p>
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="evaluate(sequences:Array(String),policy:Policy,experiment:Experiment,memory:Hash(String,String),*,channel:Int32,read_id:String,samples:Int32=0,source:EvidenceSource=EvidenceSource::Sequence):Evaluation-instance-method">
+    <div class="entry-detail" id="evaluate(sequences:Array(String),policy:Policy,experiment:Experiment,memory:Hash(String,String),*,channel:Int32,read_id:String,samples:Int32=0,source:EvidenceSource=EvidenceSource::Sequence,basecalls:BasecallResult|Nil=nil):Evaluation-instance-method">
       <div class="signature">
         
-        def <strong>evaluate</strong>(sequences : Array(String), policy : <a href="../Adaptive/Policy.html">Policy</a>, experiment : <a href="../Adaptive/Experiment.html">Experiment</a>, memory : Hash(String, String), *, channel : Int32, read_id : String, samples : Int32 = <span class="n">0</span>, source : <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a> = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>) : <a href="../Adaptive/Evaluation.html">Evaluation</a>
+        def <strong>evaluate</strong>(sequences : Array(String), policy : <a href="../Adaptive/Policy.html">Policy</a>, experiment : <a href="../Adaptive/Experiment.html">Experiment</a>, memory : Hash(String, String), *, channel : Int32, read_id : String, samples : Int32 = <span class="n">0</span>, source : <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a> = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>, basecalls : <a href="../Adaptive/BasecallResult.html">BasecallResult</a> | Nil = <span class="n">nil</span>) : <a href="../Adaptive/Evaluation.html">Evaluation</a>
 
-        <a class="method-permalink" href="#evaluate%28sequences%3AArray%28String%29%2Cpolicy%3APolicy%2Cexperiment%3AExperiment%2Cmemory%3AHash%28String%2CString%29%2C%2A%2Cchannel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%3D0%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%29%3AEvaluation-instance-method">#</a>
+        <a class="method-permalink" href="#evaluate%28sequences%3AArray%28String%29%2Cpolicy%3APolicy%2Cexperiment%3AExperiment%2Cmemory%3AHash%28String%2CString%29%2C%2A%2Cchannel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%3D0%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%2Cbasecalls%3ABasecallResult%7CNil%3Dnil%29%3AEvaluation-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/sequence.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/sequence.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="map(sequences:Array(String),*,channel:Int32,read_id:String,samples:Int32=0,source:EvidenceSource=EvidenceSource::Sequence):Evidence-instance-method">
+    <div class="entry-detail" id="map(sequences:Array(String),*,channel:Int32,read_id:String,samples:Int32=0,source:EvidenceSource=EvidenceSource::Sequence,basecalls:BasecallResult|Nil=nil):Evidence-instance-method">
       <div class="signature">
         
-        def <strong>map</strong>(sequences : Array(String), *, channel : Int32, read_id : String, samples : Int32 = <span class="n">0</span>, source : <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a> = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>) : <a href="../Adaptive/Evidence.html">Evidence</a>
+        def <strong>map</strong>(sequences : Array(String), *, channel : Int32, read_id : String, samples : Int32 = <span class="n">0</span>, source : <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a> = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>, basecalls : <a href="../Adaptive/BasecallResult.html">BasecallResult</a> | Nil = <span class="n">nil</span>) : <a href="../Adaptive/Evidence.html">Evidence</a>
 
-        <a class="method-permalink" href="#map%28sequences%3AArray%28String%29%2C%2A%2Cchannel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%3D0%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%29%3AEvidence-instance-method">#</a>
+        <a class="method-permalink" href="#map%28sequences%3AArray%28String%29%2C%2A%2Cchannel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%3D0%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%2Cbasecalls%3ABasecallResult%7CNil%3Dnil%29%3AEvidence-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/sequence.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/sequence.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -477,7 +487,7 @@ by the coordinator; evaluate never reserves or acknowledges quota.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/sequence.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/sequence.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -498,7 +508,7 @@ by the coordinator; evaluate never reserves or acknowledges quota.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/sequence.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/sequence.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>

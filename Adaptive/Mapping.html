@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
+      <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallSegment" data-name="adaptive::basecallsegment">
+      <a href="../Adaptive/BasecallSegment.html">BasecallSegment</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/Bridge" data-name="adaptive::bridge">
       <a href="../Adaptive/Bridge.html">Bridge</a>
       
@@ -272,6 +282,20 @@ binding does not expose enough information to distinguish those two.</p>
 
 
 
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type">JSON::Serializable</li>
+    
+  </ul>
+
 
 
 
@@ -291,7 +315,7 @@ binding does not expose enough information to distinguish those two.</p>
   </h2>
   
     
-      <a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L20" target="_blank">
+      <a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L21" target="_blank">
         adaptive/types.cr
       </a>
     
@@ -320,6 +344,16 @@ binding does not expose enough information to distinguish those two.</p>
     
       <li class="entry-summary">
         <a href="#new%28target_name%3AString%2Cmapq%3AUInt32%3D0_u32%2Ctarget_start%3AInt32%3D0%2Ctarget_end%3AInt32%3D0%2Ctarget_len%3AInt32%3D0%2Cquery_start%3AInt32%3D0%2Cquery_end%3AInt32%3D0%2Cstrand%3AStrand%3DStrand%3A%3AForward%2Cmatch_len%3AInt32%3D0%2Cblock_len%3AInt32%3D0%2Cis_primary%3ABool%3Dtrue%2Ccigar%3AArray%28Tuple%28UInt32%2CUInt8%29%29%3D%5B%5DofTuple%28UInt32%2CUInt8%29%2Ccigar_str%3AString%3D%22%22%2Cnm%3AInt32%3D0%2Cmd%3AString%7CNil%3Dnil%2Ccs%3AString%7CNil%3Dnil%2Cds%3AString%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(target_name : String, mapq : UInt32 = <span class="n">0_u32</span>, target_start : Int32 = <span class="n">0</span>, target_end : Int32 = <span class="n">0</span>, target_len : Int32 = <span class="n">0</span>, query_start : Int32 = <span class="n">0</span>, query_end : Int32 = <span class="n">0</span>, strand : Strand = <span class="t">Strand</span><span class="t">::</span><span class="t">Forward</span>, match_len : Int32 = <span class="n">0</span>, block_len : Int32 = <span class="n">0</span>, is_primary : Bool = <span class="n">true</span>, cigar : Array(Tuple(UInt32, UInt8)) = <span class="o">[]</span> <span class="k">of</span> <span class="t">Tuple</span>(<span class="t">UInt32</span>, <span class="t">UInt8</span>), cigar_str : String = <span class="s">&quot;&quot;</span>, nm : Int32 = <span class="n">0</span>, md : String | Nil = <span class="n">nil</span>, cs : String | Nil = <span class="n">nil</span>, ds : String | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28pull%3AJSON%3A%3APullParser%29-class-method" class="signature"><strong>.new</strong>(pull : JSON::PullParser)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28%2A%2C__pull_for_json_serializablepull%3AJSON%3A%3APullParser%29-class-method" class="signature"><strong>.new</strong>(*, __pull_for_json_serializable pull : JSON::PullParser)</a>
         
       </li>
     
@@ -481,6 +515,19 @@ binding does not expose enough information to distinguish those two.</p>
 
 
     
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
   </div>
 
   
@@ -504,7 +551,7 @@ binding does not expose enough information to distinguish those two.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -520,7 +567,39 @@ binding does not expose enough information to distinguish those two.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L21" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(pull:JSON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(pull : JSON::PullParser)
+
+        <a class="method-permalink" href="#new%28pull%3AJSON%3A%3APullParser%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(*,__pull_for_json_serializablepull:JSON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(*, __pull_for_json_serializable pull : JSON::PullParser)
+
+        <a class="method-permalink" href="#new%28%2A%2C__pull_for_json_serializablepull%3AJSON%3A%3APullParser%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -594,7 +673,7 @@ binding does not expose enough information to distinguish those two.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -610,7 +689,7 @@ binding does not expose enough information to distinguish those two.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>

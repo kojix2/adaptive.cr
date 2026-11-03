@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
+      <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallSegment" data-name="adaptive::basecallsegment">
+      <a href="../Adaptive/BasecallSegment.html">BasecallSegment</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/Bridge" data-name="adaptive::bridge">
       <a href="../Adaptive/Bridge.html">Bridge</a>
       
@@ -259,6 +269,20 @@
 
 
 
+  <h2>
+    <a id="included-modules" class="anchor" href="#included-modules">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Included Modules
+  </h2>
+  <ul class="other-types-list">
+    
+      <li class="other-type">JSON::Serializable</li>
+    
+  </ul>
+
 
 
 
@@ -278,7 +302,7 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L53" target="_blank">
+      <a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L60" target="_blank">
         adaptive/types.cr
       </a>
     
@@ -301,7 +325,17 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28channel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%2Csequences%3AArray%28String%29%2Chits%3AArray%28Hit%29%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, read_id : String, samples : Int32, sequences : Array(String), hits : Array(Hit), source : EvidenceSource = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>)</a>
+        <a href="#new%28channel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%2Csequences%3AArray%28String%29%2Chits%3AArray%28Hit%29%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%2Cbasecalls%3ABasecallResult%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, read_id : String, samples : Int32, sequences : Array(String), hits : Array(Hit), source : EvidenceSource = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>, basecalls : BasecallResult | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28pull%3AJSON%3A%3APullParser%29-class-method" class="signature"><strong>.new</strong>(pull : JSON::PullParser)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28%2A%2C__pull_for_json_serializablepull%3AJSON%3A%3APullParser%29-class-method" class="signature"><strong>.new</strong>(*, __pull_for_json_serializable pull : JSON::PullParser)</a>
         
       </li>
     
@@ -324,6 +358,11 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#basecalls%3ABasecallResult%7CNil-instance-method" class="signature"><strong>#basecalls</strong> : BasecallResult | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#channel%3AInt32-instance-method" class="signature"><strong>#channel</strong> : Int32</a>
         
       </li>
@@ -334,7 +373,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Csamples_samples%3D%40samples%2Csequences_sequences%3D%40sequences%2Chits_hits%3D%40hits%2Csource_source%3D%40source%29-instance-method" class="signature"><strong>#copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, samples _samples = @samples, sequences _sequences = @sequences, hits _hits = @hits, source _source = @source)</a>
+        <a href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Csamples_samples%3D%40samples%2Csequences_sequences%3D%40sequences%2Chits_hits%3D%40hits%2Csource_source%3D%40source%2Cbasecalls_basecalls%3D%40basecalls%29-instance-method" class="signature"><strong>#copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, samples _samples = @samples, sequences _sequences = @sequences, hits _hits = @hits, source _source = @source, basecalls _basecalls = @basecalls)</a>
         
       </li>
     
@@ -413,6 +452,19 @@
 
 
     
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
   </div>
 
   
@@ -425,18 +477,50 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(channel:Int32,read_id:String,samples:Int32,sequences:Array(String),hits:Array(Hit),source:EvidenceSource=EvidenceSource::Sequence)-class-method">
+    <div class="entry-detail" id="new(channel:Int32,read_id:String,samples:Int32,sequences:Array(String),hits:Array(Hit),source:EvidenceSource=EvidenceSource::Sequence,basecalls:BasecallResult|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(channel : Int32, read_id : String, samples : Int32, sequences : Array(String), hits : Array(<a href="../Adaptive/Hit.html">Hit</a>), source : <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a> = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>)
+        def self.<strong>new</strong>(channel : Int32, read_id : String, samples : Int32, sequences : Array(String), hits : Array(<a href="../Adaptive/Hit.html">Hit</a>), source : <a href="../Adaptive/EvidenceSource.html">EvidenceSource</a> = <span class="t">EvidenceSource</span><span class="t">::</span><span class="t">Sequence</span>, basecalls : <a href="../Adaptive/BasecallResult.html">BasecallResult</a> | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28channel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%2Csequences%3AArray%28String%29%2Chits%3AArray%28Hit%29%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28channel%3AInt32%2Cread_id%3AString%2Csamples%3AInt32%2Csequences%3AArray%28String%29%2Chits%3AArray%28Hit%29%2Csource%3AEvidenceSource%3DEvidenceSource%3A%3ASequence%2Cbasecalls%3ABasecallResult%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L53" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L60" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(pull:JSON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(pull : JSON::PullParser)
+
+        <a class="method-permalink" href="#new%28pull%3AJSON%3A%3APullParser%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L61" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(*,__pull_for_json_serializablepull:JSON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(*, __pull_for_json_serializable pull : JSON::PullParser)
+
+        <a class="method-permalink" href="#new%28%2A%2C__pull_for_json_serializablepull%3AJSON%3A%3APullParser%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -456,6 +540,20 @@
 </a>
     Instance Method Detail
   </h2>
+  
+    <div class="entry-detail" id="basecalls:BasecallResult|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>basecalls</strong> : <a href="../Adaptive/BasecallResult.html">BasecallResult</a> | Nil
+
+        <a class="method-permalink" href="#basecalls%3ABasecallResult%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
   
     <div class="entry-detail" id="channel:Int32-instance-method">
       <div class="signature">
@@ -482,23 +580,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L53" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="copy_with(channel_channel=@channel,read_id_read_id=@read_id,samples_samples=@samples,sequences_sequences=@sequences,hits_hits=@hits,source_source=@source)-instance-method">
+    <div class="entry-detail" id="copy_with(channel_channel=@channel,read_id_read_id=@read_id,samples_samples=@samples,sequences_sequences=@sequences,hits_hits=@hits,source_source=@source,basecalls_basecalls=@basecalls)-instance-method">
       <div class="signature">
         
-        def <strong>copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, samples _samples = @samples, sequences _sequences = @sequences, hits _hits = @hits, source _source = @source)
+        def <strong>copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, samples _samples = @samples, sequences _sequences = @sequences, hits _hits = @hits, source _source = @source, basecalls _basecalls = @basecalls)
 
-        <a class="method-permalink" href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Csamples_samples%3D%40samples%2Csequences_sequences%3D%40sequences%2Chits_hits%3D%40hits%2Csource_source%3D%40source%29-instance-method">#</a>
+        <a class="method-permalink" href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Csamples_samples%3D%40samples%2Csequences_sequences%3D%40sequences%2Chits_hits%3D%40hits%2Csource_source%3D%40source%2Cbasecalls_basecalls%3D%40basecalls%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L53" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -542,7 +640,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/a90424fde27b39ea7a576900f8a50862c97d35f7/src/adaptive/types.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/ddde7f7c0776e5929cef18a24fae6a7d01386590/src/adaptive/types.cr#L63" target="_blank">View source</a>]
         
       </div>
     </div>
