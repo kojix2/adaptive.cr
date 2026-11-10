@@ -217,6 +217,11 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/NanoporeGUI/LanguagePicker" data-name="nanoporegui::languagepicker">
+      <a href="NanoporeGUI/LanguagePicker.html">LanguagePicker</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/NanoporeGUI/LogBuffer" data-name="nanoporegui::logbuffer">
       <a href="NanoporeGUI/LogBuffer.html">LogBuffer</a>
       
@@ -229,6 +234,11 @@
   
   <li class=" " data-id="adaptive/NanoporeGUI/Runner" data-name="nanoporegui::runner">
       <a href="NanoporeGUI/Runner.html">Runner</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/NanoporeGUI/Translations" data-name="nanoporegui::translations">
+      <a href="NanoporeGUI/Translations.html">Translations</a>
       
     </li>
   
@@ -342,6 +352,22 @@ the displayed working directory. The GUI launches the sibling <code>adaptive</co
 defaults to observe only.
 Ubuntu requires GTK 3; macOS uses native controls. GUI smoke tests:
 <code>sh scripts/test-gui.sh</code> (Linux also needs <code>xvfb</code> and <code>xauth</code>).</p>
+<p>The GUI supports English, Spanish, French, German, Simplified Chinese and
+Japanese (<code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>zh</code>, <code>ja</code>). It follows the OS language by
+default (including the macOS preferred language); unsupported languages use
+English. Choose a language in the GUI and restart to apply it. The preference
+is saved separately in <code>$XDG_CONFIG_HOME/adaptive/gui.json</code> (default:
+<code>~/.config/adaptive/gui.json</code>). <code>bin/adaptive-gui --locale=ja</code> overrides the saved
+language for that launch. Choose <strong>System language</strong> to follow the OS again.
+Catalogues in <code>config/locales</code> are embedded in the binary; no translation files
+are needed at runtime. Configuration keys, protocol values and raw process logs
+retain their original format.</p>
+<p>The GUI requires <code>-Dwithout_mt</code> to keep native UI calls on the main OS thread,
+including after process I/O. Without it, Crystal execution contexts can move
+GUI fibers to another OS thread and cause native UI crashes (notably in AppKit
+on macOS). Build and GUI test scripts set this flag on every platform; manual
+builds must use <code>crystal build src/gui_main.cr --release -Dwithout_mt -o bin/adaptive-gui</code>.
+The CLI binaries retain execution contexts for their worker pools.</p>
 <h2><a id="run-live" class="anchor" href="#run-live">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
