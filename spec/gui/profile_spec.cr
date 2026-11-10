@@ -1,6 +1,8 @@
 require "spec"
 require "../../src/gui/profile"
 
+NanoporeGUI::Translations.setup("en")
+
 module NanoporeGUI
   describe Profile do
     it "starts in observe mode and preserves optional and custom policy settings" do

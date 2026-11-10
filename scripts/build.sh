@@ -4,7 +4,9 @@ cd "$(dirname "$0")/.."
 shards update
 mkdir -p bin
 crystal build src/main.cr --release -o bin/adaptive
-crystal build src/gui_main.cr --release -o bin/adaptive-gui
+# Native UI calls must stay on the main OS thread, including after process I/O.
+# Keep execution contexts enabled for CLI workers; use the legacy GUI scheduler.
+crystal build src/gui_main.cr --release -Dwithout_mt -o bin/adaptive-gui
 crystal build examples/custom.cr --release -o bin/adaptive-junction
 crystal build lib/ameba/src/cli.cr -o bin/ameba
 

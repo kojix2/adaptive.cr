@@ -1,5 +1,6 @@
 require "../adaptive/config"
 require "./model"
+require "./i18n"
 
 module NanoporeGUI
   module Profile
@@ -52,7 +53,7 @@ module NanoporeGUI
       return ["--validate"] if action == :validate
       return ["--check-backend"] if action == :backend
       return [] of String if mode == 0
-      raise "Choose a replay JSONL file" if replay.strip.empty?
+      raise NanoporeGUI.t("Choose a replay JSONL file") if replay.strip.empty?
       ["--replay=#{replay}"]
     end
   end

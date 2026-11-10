@@ -1,6 +1,8 @@
 require "spec"
 require "../../src/gui/runner"
 
+NanoporeGUI::Translations.setup("en")
+
 private def wait_for_gui_runner(runner : NanoporeGUI::Runner)
   deadline = Time.instant + 5.seconds
   while runner.busy? && Time.instant < deadline

@@ -7,17 +7,20 @@ module NanoporeGUI
     directory = Dir.current
     config : String? = nil
     information_only = false
+    locale : String? = nil
     parser = OptionParser.new do |options|
       options.banner = "Usage: #{Profile.command}-gui [options]"
       options.on("-c PATH", "--config=PATH", "Open a JSON configuration") { |value| config = File.expand_path(value) }
       options.on("--workdir=PATH", "Working directory for relative config paths") { |value| directory = File.expand_path(value) }
       options.on("--cli=PATH", "CLI executable (default: sibling binary)") { |value| executable = File.expand_path(value) }
+      options.on("-l LOCALE", "--locale=LOCALE", "Interface language (en|es|fr|de|zh|ja)") { |value| locale = value }
       options.on("--version", "Show version") { puts "#{Profile.command}-gui #{Profile.version}"; information_only = true }
       options.on("-h", "--help", "Show help") { puts options; information_only = true }
     end
     parser.parse
     return if information_only
     raise "Unexpected arguments: #{ARGV.join(" ")}" unless ARGV.empty?
+    Translations.setup(locale)
     UIng.init do
       app = Window.new(executable, directory)
       UIng.main_steps

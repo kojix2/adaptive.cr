@@ -11,7 +11,7 @@ release_name="adaptive-cr-v${release_version}.tar.gz"
 release_stage=$(mktemp -d)
 trap 'rm -rf "$release_stage"' EXIT
 mkdir "$release_stage/adaptive-cr"
-cp -R ./src ./spec ./tests ./scripts ./examples ./bin ./docs ./.github \
+cp -R ./src ./config ./spec ./tests ./scripts ./examples ./bin ./docs ./.github \
   ./README.md ./LICENSE ./NOTICE.md ./shard.yml ./mise.toml \
   ./requirements.txt ./.ameba.yml ./.gitignore "$release_stage/adaptive-cr/"
 tar -czf "$release_directory/$release_name" \

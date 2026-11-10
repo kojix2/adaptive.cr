@@ -1,4 +1,5 @@
 require "json"
+require "./i18n"
 
 module NanoporeGUI
   record Field, key : String, label : String, kind : Symbol = :string, picker : Symbol? = nil
@@ -44,7 +45,7 @@ module NanoporeGUI
               end
       set(field.key, value)
     rescue error
-      raise ArgumentError.new("#{field.label}: #{error.message}")
+      raise ArgumentError.new("#{NanoporeGUI.t(field.label)}: #{error.message}")
     end
   end
 end

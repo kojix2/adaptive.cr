@@ -100,6 +100,24 @@ defaults to observe only.
 Ubuntu requires GTK 3; macOS uses native controls. GUI smoke tests:
 `sh scripts/test-gui.sh` (Linux also needs `xvfb` and `xauth`).
 
+The GUI supports English, Spanish, French, German, Simplified Chinese and
+Japanese (`en`, `es`, `fr`, `de`, `zh`, `ja`). It follows the OS language by
+default (including the macOS preferred language); unsupported languages use
+English. Choose a language in the GUI and restart to apply it. The preference
+is saved separately in `$XDG_CONFIG_HOME/adaptive/gui.json` (default:
+`~/.config/adaptive/gui.json`). `bin/adaptive-gui --locale=ja` overrides the saved
+language for that launch. Choose **System language** to follow the OS again.
+Catalogues in `config/locales` are embedded in the binary; no translation files
+are needed at runtime. Configuration keys, protocol values and raw process logs
+retain their original format.
+
+The GUI requires `-Dwithout_mt` to keep native UI calls on the main OS thread,
+including after process I/O. Without it, Crystal execution contexts can move
+GUI fibers to another OS thread and cause native UI crashes (notably in AppKit
+on macOS). Build and GUI test scripts set this flag on every platform; manual
+builds must use `crystal build src/gui_main.cr --release -Dwithout_mt -o bin/adaptive-gui`.
+The CLI binaries retain execution contexts for their worker pools.
+
 ## Run live
 
 Install Dorado Basecall Server, models and GPU drivers separately; the server

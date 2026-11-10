@@ -1,8 +1,13 @@
+{% unless flag?(:without_mt) || flag?(:docs) %}
+  {% raise "Adaptive GUI requires -Dwithout_mt to keep native UI calls on the main OS thread. Use scripts/build.sh." %}
+{% end %}
+
 require "uing/crimage"
 require "icon-radix"
 require "./model"
 require "./runner"
 require "./profile"
+require "./language_picker"
 
 module NanoporeGUI
   class Window
@@ -19,8 +24,8 @@ module NanoporeGUI
     @checks = {} of String => UIng::Checkbox
     @editable = [] of UIng::Control
     @log_view = UIng::MultilineEntry.new(false, true)
-    @status = UIng::Label.new("Ready")
-    @file = UIng::Label.new("Unsaved configuration")
+    @status = UIng::Label.new(NanoporeGUI.t("Ready"))
+    @file = UIng::Label.new(NanoporeGUI.t("Unsaved configuration"))
     getter toolbar = UIng::Toolbar.new
     getter actions = {} of Symbol => UIng::ToolbarItem
     @path : String?
@@ -36,11 +41,12 @@ module NanoporeGUI
     def initialize(@executable : String, working_directory : String)
       @document = Profile.initial
       @window = UIng::Window.new(Profile.title, 880, 700, margined: true)
-      @mode = UIng::Combobox.new(Profile.modes)
+      @mode = UIng::Combobox.new(Profile.modes.map { |message| NanoporeGUI.t(message) })
       @replay = Profile.replay? ? UIng::Entry.new : nil
       @mode.selected = 0
       @directory.text = working_directory
       root = UIng::Box.new(:vertical, padded: true)
+      root.append(LanguagePicker.new(@window).view)
       root.append(@file)
       root.append(directory_row)
       root.append(build_tabs, stretchy: true)
@@ -78,7 +84,7 @@ module NanoporeGUI
       end
       if @last_status != @runner.status
         @last_status = @runner.status
-        @status.text = @last_status
+        @status.text = Translations.display_status(@last_status)
       end
       if @closing && !busy && !@closed
         @window.destroy
@@ -127,7 +133,7 @@ module NanoporeGUI
     end
 
     private def button(label : String, parent : UIng::Box, &block : ->)
-      control = UIng::Button.new(label)
+      control = UIng::Button.new(NanoporeGUI.t(label))
       control.on_clicked { guarded { block.call }; nil }
       parent.append(control)
       @editable << control
@@ -135,8 +141,8 @@ module NanoporeGUI
     end
 
     private def toolbar_button(action : Symbol, label : String, icon : CrImage::Image, &block : ->)
-      item = @toolbar.append_button(label, icon)
-      item.tooltip = label
+      item = @toolbar.append_button(NanoporeGUI.t(label), icon)
+      item.tooltip = NanoporeGUI.t(label)
       item.on_clicked { guarded { block.call }; nil }
       @actions[action] = item
       item
@@ -149,7 +155,7 @@ module NanoporeGUI
         @path = nil
         fill_fields
         @editor.text = @document.text
-        @file.text = "Unsaved configuration"
+        @file.text = NanoporeGUI.t("Unsaved configuration")
       end
       toolbar_button(:open, "Open…", Icon::Radix::OpenInNewWindow) do
         if path = @window.open_file
@@ -180,7 +186,7 @@ module NanoporeGUI
 
     private def directory_row
       row = UIng::Box.new(:horizontal, padded: true)
-      row.append(UIng::Label.new("Working directory"))
+      row.append(UIng::Label.new(NanoporeGUI.t("Working directory")))
       row.append(@directory, stretchy: true)
       @editable << @directory
       button("Browse…", row) do
@@ -195,7 +201,7 @@ module NanoporeGUI
       form = UIng::Form.new(padded: true)
       Profile.fields.each do |field|
         if field.kind == :bool
-          check = UIng::Checkbox.new(field.label)
+          check = UIng::Checkbox.new(NanoporeGUI.t(field.label))
           @checks[field.key] = check
           form.append("", check)
         else
@@ -208,16 +214,16 @@ module NanoporeGUI
               path = field.picker == :save ? @window.save_file : @window.open_file
               entry.text = path if path
             end
-            form.append(field.label, row)
+            form.append(NanoporeGUI.t(field.label), row)
           else
-            form.append(field.label, entry)
+            form.append(NanoporeGUI.t(field.label), entry)
           end
         end
       end
       @editable << form
-      @tabs.append("Settings", form, margined: true)
-      @tabs.append("JSON (all settings)", @editor, margined: true)
-      @tabs.append("Log (last 64 KiB)", @log_view, margined: true)
+      @tabs.append(NanoporeGUI.t("Settings"), form, margined: true)
+      @tabs.append(NanoporeGUI.t("JSON (all settings)"), @editor, margined: true)
+      @tabs.append(NanoporeGUI.t("Log (last 64 KiB)"), @log_view, margined: true)
       @tabs
     end
 
@@ -225,7 +231,7 @@ module NanoporeGUI
       box = UIng::Box.new(:vertical, padded: true)
       if replay = @replay
         row = UIng::Box.new(:horizontal, padded: true)
-        row.append(UIng::Label.new("Sequence replay JSONL"))
+        row.append(UIng::Label.new(NanoporeGUI.t("Sequence replay JSONL")))
         replay.text = "examples/replay.jsonl"
         row.append(replay, stretchy: true)
         @editable << replay
@@ -292,7 +298,7 @@ module NanoporeGUI
         true
       rescue error
         @tabs.selected = @last_tab
-        @window.msg_box_error("Invalid configuration", error.message || error.to_s)
+        @window.msg_box_error(NanoporeGUI.t("Invalid configuration"), error.message || error.to_s)
         false
       ensure
         @switching = false

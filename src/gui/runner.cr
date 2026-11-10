@@ -1,4 +1,5 @@
 require "file/tempfile"
+require "./i18n"
 
 module NanoporeGUI
   # Process output can be unbounded during sequencing; retain only a small tail.
@@ -31,8 +32,8 @@ module NanoporeGUI
     end
 
     def start(executable : String, args : Array(String), config : String, directory : String)
-      raise "A process is already running" if busy?
-      raise "Working directory does not exist: #{directory}" unless Dir.exists?(directory)
+      raise NanoporeGUI.t("A process is already running") if busy?
+      raise NanoporeGUI.t("Working directory does not exist: %{path}", path: directory) unless Dir.exists?(directory)
       @exit_code = nil
       @log = LogBuffer.new
       snapshot = File.tempfile("nanopore-gui-", ".json")
