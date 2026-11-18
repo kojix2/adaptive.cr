@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/AlignmentClass" data-name="adaptive::alignmentclass">
+      <a href="../Adaptive/AlignmentClass.html">AlignmentClass</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallResponse" data-name="adaptive::basecallresponse">
+      <a href="../Adaptive/BasecallResponse.html">BasecallResponse</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
       <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
       
@@ -152,6 +162,11 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/NativeSignalTiming" data-name="adaptive::nativesignaltiming">
+      <a href="../Adaptive/NativeSignalTiming.html">NativeSignalTiming</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
       <a href="../Adaptive/Pending.html">Pending</a>
       
@@ -182,13 +197,33 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SampleInterval" data-name="adaptive::sampleinterval">
+      <a href="../Adaptive/SampleInterval.html">SampleInterval</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
       <a href="../Adaptive/SequenceMapper.html">SequenceMapper</a>
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SignalContext" data-name="adaptive::signalcontext">
+      <a href="../Adaptive/SignalContext.html">SignalContext</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalFormat" data-name="adaptive::signalformat">
+      <a href="../Adaptive/SignalFormat.html">SignalFormat</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
       <a href="../Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalPrefix" data-name="adaptive::signalprefix">
+      <a href="../Adaptive/SignalPrefix.html">SignalPrefix</a>
       
     </li>
   
@@ -324,7 +359,7 @@ fixtures and older adapters must never acquire invented quality values.</p>
   </h2>
   
     
-      <a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L6" target="_blank">
+      <a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L45" target="_blank">
         adaptive/basecall.cr
       </a>
     
@@ -347,7 +382,7 @@ fixtures and older adapters must never acquire invented quality values.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28sequence%3AString%2Cquality%3AString%7CNil%3Dnil%2Cread_id%3AString%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(sequence : String, quality : String | Nil = <span class="n">nil</span>, read_id : String | Nil = <span class="n">nil</span>)</a>
+        <a href="#new%28sequence%3AString%2Cquality%3AString%7CNil%3Dnil%2Cread_id%3AString%7CNil%3Dnil%2Csignal_span%3ASampleInterval%7CNil%3Dnil%2Cnative_timing%3ANativeSignalTiming%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(sequence : String, quality : String | Nil = <span class="n">nil</span>, read_id : String | Nil = <span class="n">nil</span>, signal_span : SampleInterval | Nil = <span class="n">nil</span>, native_timing : NativeSignalTiming | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -380,12 +415,22 @@ fixtures and older adapters must never acquire invented quality values.</p>
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#after_initialize%3ANil-instance-method" class="signature"><strong>#after_initialize</strong> : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#clone-instance-method" class="signature"><strong>#clone</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with%28sequence_sequence%3D%40sequence%2Cquality_quality%3D%40quality%2Cread_id_read_id%3D%40read_id%29-instance-method" class="signature"><strong>#copy_with</strong>(sequence _sequence = @sequence, quality _quality = @quality, read_id _read_id = @read_id)</a>
+        <a href="#copy_with%28sequence_sequence%3D%40sequence%2Cquality_quality%3D%40quality%2Cread_id_read_id%3D%40read_id%2Csignal_span_signal_span%3D%40signal_span%2Cnative_timing_native_timing%3D%40native_timing%29-instance-method" class="signature"><strong>#copy_with</strong>(sequence _sequence = @sequence, quality _quality = @quality, read_id _read_id = @read_id, signal_span _signal_span = @signal_span, native_timing _native_timing = @native_timing)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#native_timing%3ANativeSignalTiming%7CNil-instance-method" class="signature"><strong>#native_timing</strong> : NativeSignalTiming | Nil</a>
         
       </li>
     
@@ -401,6 +446,11 @@ fixtures and older adapters must never acquire invented quality values.</p>
     
       <li class="entry-summary">
         <a href="#sequence%3AString-instance-method" class="signature"><strong>#sequence</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#signal_span%3ASampleInterval%7CNil-instance-method" class="signature"><strong>#signal_span</strong> : SampleInterval | Nil</a>
         
       </li>
     
@@ -479,18 +529,18 @@ fixtures and older adapters must never acquire invented quality values.</p>
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(sequence:String,quality:String|Nil=nil,read_id:String|Nil=nil)-class-method">
+    <div class="entry-detail" id="new(sequence:String,quality:String|Nil=nil,read_id:String|Nil=nil,signal_span:SampleInterval|Nil=nil,native_timing:NativeSignalTiming|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(sequence : String, quality : String | Nil = <span class="n">nil</span>, read_id : String | Nil = <span class="n">nil</span>)
+        def self.<strong>new</strong>(sequence : String, quality : String | Nil = <span class="n">nil</span>, read_id : String | Nil = <span class="n">nil</span>, signal_span : <a href="../Adaptive/SampleInterval.html">SampleInterval</a> | Nil = <span class="n">nil</span>, native_timing : <a href="../Adaptive/NativeSignalTiming.html">NativeSignalTiming</a> | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28sequence%3AString%2Cquality%3AString%7CNil%3Dnil%2Cread_id%3AString%7CNil%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28sequence%3AString%2Cquality%3AString%7CNil%3Dnil%2Cread_id%3AString%7CNil%3Dnil%2Csignal_span%3ASampleInterval%7CNil%3Dnil%2Cnative_timing%3ANativeSignalTiming%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -506,7 +556,7 @@ fixtures and older adapters must never acquire invented quality values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -522,7 +572,7 @@ fixtures and older adapters must never acquire invented quality values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -543,6 +593,22 @@ fixtures and older adapters must never acquire invented quality values.</p>
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="after_initialize:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>after_initialize</strong> : Nil
+
+        <a class="method-permalink" href="#after_initialize%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L61" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="clone-instance-method">
       <div class="signature">
         
@@ -554,23 +620,37 @@ fixtures and older adapters must never acquire invented quality values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="copy_with(sequence_sequence=@sequence,quality_quality=@quality,read_id_read_id=@read_id)-instance-method">
+    <div class="entry-detail" id="copy_with(sequence_sequence=@sequence,quality_quality=@quality,read_id_read_id=@read_id,signal_span_signal_span=@signal_span,native_timing_native_timing=@native_timing)-instance-method">
       <div class="signature">
         
-        def <strong>copy_with</strong>(sequence _sequence = @sequence, quality _quality = @quality, read_id _read_id = @read_id)
+        def <strong>copy_with</strong>(sequence _sequence = @sequence, quality _quality = @quality, read_id _read_id = @read_id, signal_span _signal_span = @signal_span, native_timing _native_timing = @native_timing)
 
-        <a class="method-permalink" href="#copy_with%28sequence_sequence%3D%40sequence%2Cquality_quality%3D%40quality%2Cread_id_read_id%3D%40read_id%29-instance-method">#</a>
+        <a class="method-permalink" href="#copy_with%28sequence_sequence%3D%40sequence%2Cquality_quality%3D%40quality%2Cread_id_read_id%3D%40read_id%2Csignal_span_signal_span%3D%40signal_span%2Cnative_timing_native_timing%3D%40native_timing%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L45" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="native_timing:NativeSignalTiming|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>native_timing</strong> : <a href="../Adaptive/NativeSignalTiming.html">NativeSignalTiming</a> | Nil
+
+        <a class="method-permalink" href="#native_timing%3ANativeSignalTiming%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
         
       </div>
     </div>
@@ -617,6 +697,20 @@ fixtures and older adapters must never acquire invented quality values.</p>
       </div>
     </div>
   
+    <div class="entry-detail" id="signal_span:SampleInterval|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>signal_span</strong> : <a href="../Adaptive/SampleInterval.html">SampleInterval</a> | Nil
+
+        <a class="method-permalink" href="#signal_span%3ASampleInterval%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="validate!:Nil-instance-method">
       <div class="signature">
         
@@ -628,7 +722,7 @@ fixtures and older adapters must never acquire invented quality values.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>

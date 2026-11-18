@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/AlignmentClass" data-name="adaptive::alignmentclass">
+      <a href="../Adaptive/AlignmentClass.html">AlignmentClass</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallResponse" data-name="adaptive::basecallresponse">
+      <a href="../Adaptive/BasecallResponse.html">BasecallResponse</a>
+      
+    </li>
+  
   <li class=" current" data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
       <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
       
@@ -152,6 +162,11 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/NativeSignalTiming" data-name="adaptive::nativesignaltiming">
+      <a href="../Adaptive/NativeSignalTiming.html">NativeSignalTiming</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
       <a href="../Adaptive/Pending.html">Pending</a>
       
@@ -182,13 +197,33 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SampleInterval" data-name="adaptive::sampleinterval">
+      <a href="../Adaptive/SampleInterval.html">SampleInterval</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
       <a href="../Adaptive/SequenceMapper.html">SequenceMapper</a>
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SignalContext" data-name="adaptive::signalcontext">
+      <a href="../Adaptive/SignalContext.html">SignalContext</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalFormat" data-name="adaptive::signalformat">
+      <a href="../Adaptive/SignalFormat.html">SignalFormat</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
       <a href="../Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalPrefix" data-name="adaptive::signalprefix">
+      <a href="../Adaptive/SignalPrefix.html">SignalPrefix</a>
       
     </li>
   
@@ -312,7 +347,7 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L18" target="_blank">
+      <a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L76" target="_blank">
         adaptive/basecall.cr
       </a>
     
@@ -335,7 +370,12 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28read_id%3AString%2Csegments%3AArray%28BasecallSegment%29%29-class-method" class="signature"><strong>.new</strong>(read_id : String, segments : Array(BasecallSegment))</a>
+        <a href="#from_bridge_response%28result%3ABasecallResponse%2Cread_id%3AString%2Crequest_id%3AString%2C%2A%2Cinput_samples%3AInt32%7CNil%3Dnil%2Csignal_context%3ASignalContext%7CNil%3Dnil%29%3Aself-class-method" class="signature"><strong>.from_bridge_response</strong>(result : BasecallResponse, read_id : String, request_id : String, *, input_samples : Int32 | Nil = <span class="n">nil</span>, signal_context : SignalContext | Nil = <span class="n">nil</span>) : <span class="k">self</span></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28read_id%3AString%2Csegments%3AArray%28BasecallSegment%29%2Cinput_samples%3AInt32%7CNil%3Dnil%2Csignal_context%3ASignalContext%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(read_id : String, segments : Array(BasecallSegment), input_samples : Int32 | Nil = <span class="n">nil</span>, signal_context : SignalContext | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -368,12 +408,32 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
+        <a href="#after_initialize%3ANil-instance-method" class="signature"><strong>#after_initialize</strong> : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#clone-instance-method" class="signature"><strong>#clone</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with%28read_id_read_id%3D%40read_id%2Csegments_segments%3D%40segments%29-instance-method" class="signature"><strong>#copy_with</strong>(read_id _read_id = @read_id, segments _segments = @segments)</a>
+        <a href="#copy_with%28read_id_read_id%3D%40read_id%2Csegments_segments%3D%40segments%2Cinput_samples_input_samples%3D%40input_samples%2Csignal_context_signal_context%3D%40signal_context%29-instance-method" class="signature"><strong>#copy_with</strong>(read_id _read_id = @read_id, segments _segments = @segments, input_samples _input_samples = @input_samples, signal_context _signal_context = @signal_context)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_sequence%28%26%3AString-%3E%29%3ANil-instance-method" class="signature"><strong>#each_sequence</strong>(& : String -> ) : Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#input_samples%3AInt32%7CNil-instance-method" class="signature"><strong>#input_samples</strong> : Int32 | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#matches_sequences%3F%28sequences%3AArray%28String%29%29%3ABool-instance-method" class="signature"><strong>#matches_sequences?</strong>(sequences : Array(String)) : Bool</a>
         
       </li>
     
@@ -383,12 +443,19 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#segments%3AArray%28BasecallSegment%29-instance-method" class="signature"><strong>#segments</strong> : Array(BasecallSegment)</a>
+        <a href="#segments%3ASlice%28BasecallSegment%29-instance-method" class="signature"><strong>#segments</strong> : Slice(BasecallSegment)</a>
+        
+          <div class="summary"><p>Callers cannot reorder/replace the canonical segments through this view.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#sequences%3AArray%28String%29-instance-method" class="signature"><strong>#sequences</strong> : Array(String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#signal_context%3ASignalContext%7CNil-instance-method" class="signature"><strong>#signal_context</strong> : SignalContext | Nil</a>
         
       </li>
     
@@ -467,18 +534,34 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(read_id:String,segments:Array(BasecallSegment))-class-method">
+    <div class="entry-detail" id="from_bridge_response(result:BasecallResponse,read_id:String,request_id:String,*,input_samples:Int32|Nil=nil,signal_context:SignalContext|Nil=nil):self-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(read_id : String, segments : Array(<a href="../Adaptive/BasecallSegment.html">BasecallSegment</a>))
+        def self.<strong>from_bridge_response</strong>(result : <a href="../Adaptive/BasecallResponse.html">BasecallResponse</a>, read_id : String, request_id : String, *, input_samples : Int32 | Nil = <span class="n">nil</span>, signal_context : <a href="../Adaptive/SignalContext.html">SignalContext</a> | Nil = <span class="n">nil</span>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#new%28read_id%3AString%2Csegments%3AArray%28BasecallSegment%29%29-class-method">#</a>
+        <a class="method-permalink" href="#from_bridge_response%28result%3ABasecallResponse%2Cread_id%3AString%2Crequest_id%3AString%2C%2A%2Cinput_samples%3AInt32%7CNil%3Dnil%2Csignal_context%3ASignalContext%7CNil%3Dnil%29%3Aself-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(read_id:String,segments:Array(BasecallSegment),input_samples:Int32|Nil=nil,signal_context:SignalContext|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(read_id : String, segments : Array(<a href="../Adaptive/BasecallSegment.html">BasecallSegment</a>), input_samples : Int32 | Nil = <span class="n">nil</span>, signal_context : <a href="../Adaptive/SignalContext.html">SignalContext</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28read_id%3AString%2Csegments%3AArray%28BasecallSegment%29%2Cinput_samples%3AInt32%7CNil%3Dnil%2Csignal_context%3ASignalContext%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -494,7 +577,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -510,7 +593,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L78" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -531,6 +614,22 @@
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="after_initialize:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>after_initialize</strong> : Nil
+
+        <a class="method-permalink" href="#after_initialize%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L128" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="clone-instance-method">
       <div class="signature">
         
@@ -542,23 +641,69 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="copy_with(read_id_read_id=@read_id,segments_segments=@segments)-instance-method">
+    <div class="entry-detail" id="copy_with(read_id_read_id=@read_id,segments_segments=@segments,input_samples_input_samples=@input_samples,signal_context_signal_context=@signal_context)-instance-method">
       <div class="signature">
         
-        def <strong>copy_with</strong>(read_id _read_id = @read_id, segments _segments = @segments)
+        def <strong>copy_with</strong>(read_id _read_id = @read_id, segments _segments = @segments, input_samples _input_samples = @input_samples, signal_context _signal_context = @signal_context)
 
-        <a class="method-permalink" href="#copy_with%28read_id_read_id%3D%40read_id%2Csegments_segments%3D%40segments%29-instance-method">#</a>
+        <a class="method-permalink" href="#copy_with%28read_id_read_id%3D%40read_id%2Csegments_segments%3D%40segments%2Cinput_samples_input_samples%3D%40input_samples%2Csignal_context_signal_context%3D%40signal_context%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L76" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_sequence(&amp;:String-&gt;):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each_sequence</strong>(& : String -> ) : Nil
+
+        <a class="method-permalink" href="#each_sequence%28%26%3AString-%3E%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L108" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="input_samples:Int32|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>input_samples</strong> : Int32 | Nil
+
+        <a class="method-permalink" href="#input_samples%3AInt32%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="matches_sequences?(sequences:Array(String)):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>matches_sequences?</strong>(sequences : Array(String)) : Bool
+
+        <a class="method-permalink" href="#matches_sequences%3F%28sequences%3AArray%28String%29%29%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -577,16 +722,23 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="segments:Array(BasecallSegment)-instance-method">
+    <div class="entry-detail" id="segments:Slice(BasecallSegment)-instance-method">
       <div class="signature">
         
-        def <strong>segments</strong> : Array(<a href="../Adaptive/BasecallSegment.html">BasecallSegment</a>)
+        def <strong>segments</strong> : Slice(<a href="../Adaptive/BasecallSegment.html">BasecallSegment</a>)
 
-        <a class="method-permalink" href="#segments%3AArray%28BasecallSegment%29-instance-method">#</a>
+        <a class="method-permalink" href="#segments%3ASlice%28BasecallSegment%29-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Callers cannot reorder/replace the canonical segments through this view.</p>
+        </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -602,7 +754,21 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L104" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="signal_context:SignalContext|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>signal_context</strong> : <a href="../Adaptive/SignalContext.html">SignalContext</a> | Nil
+
+        <a class="method-permalink" href="#signal_context%3ASignalContext%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
         
       </div>
     </div>
@@ -618,7 +784,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/basecall.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/basecall.cr#L116" target="_blank">View source</a>]
         
       </div>
     </div>

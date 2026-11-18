@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/AlignmentClass" data-name="adaptive::alignmentclass">
+      <a href="../Adaptive/AlignmentClass.html">AlignmentClass</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallResponse" data-name="adaptive::basecallresponse">
+      <a href="../Adaptive/BasecallResponse.html">BasecallResponse</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
       <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
       
@@ -152,6 +162,11 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/NativeSignalTiming" data-name="adaptive::nativesignaltiming">
+      <a href="../Adaptive/NativeSignalTiming.html">NativeSignalTiming</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
       <a href="../Adaptive/Pending.html">Pending</a>
       
@@ -182,13 +197,33 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SampleInterval" data-name="adaptive::sampleinterval">
+      <a href="../Adaptive/SampleInterval.html">SampleInterval</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
       <a href="../Adaptive/SequenceMapper.html">SequenceMapper</a>
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SignalContext" data-name="adaptive::signalcontext">
+      <a href="../Adaptive/SignalContext.html">SignalContext</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalFormat" data-name="adaptive::signalformat">
+      <a href="../Adaptive/SignalFormat.html">SignalFormat</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
       <a href="../Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalPrefix" data-name="adaptive::signalprefix">
+      <a href="../Adaptive/SignalPrefix.html">SignalPrefix</a>
       
     </li>
   
@@ -298,7 +333,7 @@
   </h2>
   
     
-      <a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/types.cr#L66" target="_blank">
+      <a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L222" target="_blank">
         adaptive/types.cr
       </a>
     
@@ -321,7 +356,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28channel%3AInt32%2Cread_id%3AString%2Cgeneration%3AUInt64%2Csignal%3ABytes%2Coffset%3AFloat64%2Cscale%3AFloat64%2Csample_rate%3AFloat64%2Cstart_sample%3AUInt64%2Cexpires_at%3ATime%3A%3AInstant%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, read_id : String, generation : UInt64, signal : Bytes, offset : Float64, scale : Float64, sample_rate : Float64, start_sample : UInt64, expires_at : Time::Instant | Nil = <span class="n">nil</span>)</a>
+        <a href="#new%28channel%3AInt32%2Cread_id%3AString%2Cgeneration%3AUInt64%2Csignal%3ABytes%7CSignalPrefix%2Coffset%3AFloat64%2Cscale%3AFloat64%2Csample_rate%3AFloat64%2Cstart_sample%3AUInt64%2Cexpires_at%3ATime%3A%3AInstant%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, read_id : String, generation : UInt64, signal : Bytes | SignalPrefix, offset : Float64, scale : Float64, sample_rate : Float64, start_sample : UInt64, expires_at : Time::Instant | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Compatibility constructor; all signal interpretation travels as one context internally rather than as unrelated scalar arguments.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28channel%3AInt32%2Cread_id%3AString%2Cgeneration%3AUInt64%2Csignal%3ABytes%7CSignalPrefix%2Ccontext%3ASignalContext%2Cexpires_at%3ATime%3A%3AInstant%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(channel : Int32, read_id : String, generation : UInt64, signal : Bytes | SignalPrefix, context : SignalContext, expires_at : Time::Instant | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -354,7 +396,12 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Cgeneration_generation%3D%40generation%2Csignal_signal%3D%40signal%2Coffset_offset%3D%40offset%2Cscale_scale%3D%40scale%2Csample_rate_sample_rate%3D%40sample_rate%2Cstart_sample_start_sample%3D%40start_sample%2Cexpires_at_expires_at%3D%40expires_at%29-instance-method" class="signature"><strong>#copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, generation _generation = @generation, signal _signal = @signal, offset _offset = @offset, scale _scale = @scale, sample_rate _sample_rate = @sample_rate, start_sample _start_sample = @start_sample, expires_at _expires_at = @expires_at)</a>
+        <a href="#context%3ASignalContext-instance-method" class="signature"><strong>#context</strong> : SignalContext</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Cgeneration_generation%3D%40generation%2Csignal_signal%3D%40signal%2Ccontext_context%3D%40context%2Cexpires_at_expires_at%3D%40expires_at%29-instance-method" class="signature"><strong>#copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, generation _generation = @generation, signal _signal = @signal, context _context = @context, expires_at _expires_at = @expires_at)</a>
         
       </li>
     
@@ -364,12 +411,27 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#format%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#format</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#format%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#format</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#generation%3AUInt64-instance-method" class="signature"><strong>#generation</strong> : UInt64</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#offset%3AFloat64-instance-method" class="signature"><strong>#offset</strong> : Float64</a>
+        <a href="#offset%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#offset</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#offset%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#offset</strong>(*args, **options, &)</a>
         
       </li>
     
@@ -379,22 +441,47 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#sample_rate%3AFloat64-instance-method" class="signature"><strong>#sample_rate</strong> : Float64</a>
+        <a href="#sample_rate%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#sample_rate</strong>(*args, **options)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#scale%3AFloat64-instance-method" class="signature"><strong>#scale</strong> : Float64</a>
+        <a href="#sample_rate%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#sample_rate</strong>(*args, **options, &)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#signal%3ABytes-instance-method" class="signature"><strong>#signal</strong> : Bytes</a>
+        <a href="#samples%3AInt32-instance-method" class="signature"><strong>#samples</strong> : Int32</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#start_sample%3AUInt64-instance-method" class="signature"><strong>#start_sample</strong> : UInt64</a>
+        <a href="#scale%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#scale</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scale%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#scale</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#signal%3ABytes%7CSignalPrefix-instance-method" class="signature"><strong>#signal</strong> : Bytes | SignalPrefix</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#start_sample%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#start_sample</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#start_sample%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#start_sample</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write_signal%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#write_signal</strong>(io : IO) : Nil</a>
         
       </li>
     
@@ -455,18 +542,40 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(channel:Int32,read_id:String,generation:UInt64,signal:Bytes,offset:Float64,scale:Float64,sample_rate:Float64,start_sample:UInt64,expires_at:Time::Instant|Nil=nil)-class-method">
+    <div class="entry-detail" id="new(channel:Int32,read_id:String,generation:UInt64,signal:Bytes|SignalPrefix,offset:Float64,scale:Float64,sample_rate:Float64,start_sample:UInt64,expires_at:Time::Instant|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(channel : Int32, read_id : String, generation : UInt64, signal : Bytes, offset : Float64, scale : Float64, sample_rate : Float64, start_sample : UInt64, expires_at : Time::Instant | Nil = <span class="n">nil</span>)
+        def self.<strong>new</strong>(channel : Int32, read_id : String, generation : UInt64, signal : Bytes | <a href="../Adaptive/SignalPrefix.html">SignalPrefix</a>, offset : Float64, scale : Float64, sample_rate : Float64, start_sample : UInt64, expires_at : Time::Instant | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28channel%3AInt32%2Cread_id%3AString%2Cgeneration%3AUInt64%2Csignal%3ABytes%2Coffset%3AFloat64%2Cscale%3AFloat64%2Csample_rate%3AFloat64%2Cstart_sample%3AUInt64%2Cexpires_at%3ATime%3A%3AInstant%7CNil%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28channel%3AInt32%2Cread_id%3AString%2Cgeneration%3AUInt64%2Csignal%3ABytes%7CSignalPrefix%2Coffset%3AFloat64%2Cscale%3AFloat64%2Csample_rate%3AFloat64%2Cstart_sample%3AUInt64%2Cexpires_at%3ATime%3A%3AInstant%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Compatibility constructor; all signal interpretation travels as one
+context internally rather than as unrelated scalar arguments.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L232" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(channel:Int32,read_id:String,generation:UInt64,signal:Bytes|SignalPrefix,context:SignalContext,expires_at:Time::Instant|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(channel : Int32, read_id : String, generation : UInt64, signal : Bytes | <a href="../Adaptive/SignalPrefix.html">SignalPrefix</a>, context : <a href="../Adaptive/SignalContext.html">SignalContext</a>, expires_at : Time::Instant | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28channel%3AInt32%2Cread_id%3AString%2Cgeneration%3AUInt64%2Csignal%3ABytes%7CSignalPrefix%2Ccontext%3ASignalContext%2Cexpires_at%3ATime%3A%3AInstant%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/types.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L223" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -512,23 +621,37 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/types.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L222" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="copy_with(channel_channel=@channel,read_id_read_id=@read_id,generation_generation=@generation,signal_signal=@signal,offset_offset=@offset,scale_scale=@scale,sample_rate_sample_rate=@sample_rate,start_sample_start_sample=@start_sample,expires_at_expires_at=@expires_at)-instance-method">
+    <div class="entry-detail" id="context:SignalContext-instance-method">
       <div class="signature">
         
-        def <strong>copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, generation _generation = @generation, signal _signal = @signal, offset _offset = @offset, scale _scale = @scale, sample_rate _sample_rate = @sample_rate, start_sample _start_sample = @start_sample, expires_at _expires_at = @expires_at)
+        def <strong>context</strong> : <a href="../Adaptive/SignalContext.html">SignalContext</a>
 
-        <a class="method-permalink" href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Cgeneration_generation%3D%40generation%2Csignal_signal%3D%40signal%2Coffset_offset%3D%40offset%2Cscale_scale%3D%40scale%2Csample_rate_sample_rate%3D%40sample_rate%2Cstart_sample_start_sample%3D%40start_sample%2Cexpires_at_expires_at%3D%40expires_at%29-instance-method">#</a>
+        <a class="method-permalink" href="#context%3ASignalContext-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/types.cr#L66" target="_blank">View source</a>]
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="copy_with(channel_channel=@channel,read_id_read_id=@read_id,generation_generation=@generation,signal_signal=@signal,context_context=@context,expires_at_expires_at=@expires_at)-instance-method">
+      <div class="signature">
+        
+        def <strong>copy_with</strong>(channel _channel = @channel, read_id _read_id = @read_id, generation _generation = @generation, signal _signal = @signal, context _context = @context, expires_at _expires_at = @expires_at)
+
+        <a class="method-permalink" href="#copy_with%28channel_channel%3D%40channel%2Cread_id_read_id%3D%40read_id%2Cgeneration_generation%3D%40generation%2Csignal_signal%3D%40signal%2Ccontext_context%3D%40context%2Cexpires_at_expires_at%3D%40expires_at%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L222" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -547,6 +670,38 @@
       </div>
     </div>
   
+    <div class="entry-detail" id="format(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>format</strong>(*args, **options)
+
+        <a class="method-permalink" href="#format%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="format(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>format</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#format%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="generation:UInt64-instance-method">
       <div class="signature">
         
@@ -561,16 +716,34 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="offset:Float64-instance-method">
+    <div class="entry-detail" id="offset(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>offset</strong> : Float64
+        def <strong>offset</strong>(*args, **options)
 
-        <a class="method-permalink" href="#offset%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#offset%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="offset(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>offset</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#offset%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -589,12 +762,92 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="sample_rate:Float64-instance-method">
+    <div class="entry-detail" id="sample_rate(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>sample_rate</strong> : Float64
+        def <strong>sample_rate</strong>(*args, **options)
 
-        <a class="method-permalink" href="#sample_rate%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#sample_rate%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sample_rate(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>sample_rate</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#sample_rate%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="samples:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>samples</strong> : Int32
+
+        <a class="method-permalink" href="#samples%3AInt32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L240" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scale(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>scale</strong>(*args, **options)
+
+        <a class="method-permalink" href="#scale%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scale(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>scale</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#scale%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="signal:Bytes|SignalPrefix-instance-method">
+      <div class="signature">
+        
+        def <strong>signal</strong> : Bytes | <a href="../Adaptive/SignalPrefix.html">SignalPrefix</a>
+
+        <a class="method-permalink" href="#signal%3ABytes%7CSignalPrefix-instance-method">#</a>
       </div>
       
       <br/>
@@ -603,44 +856,50 @@
       </div>
     </div>
   
-    <div class="entry-detail" id="scale:Float64-instance-method">
+    <div class="entry-detail" id="start_sample(*args,**options)-instance-method">
       <div class="signature">
         
-        def <strong>scale</strong> : Float64
+        def <strong>start_sample</strong>(*args, **options)
 
-        <a class="method-permalink" href="#scale%3AFloat64-instance-method">#</a>
+        <a class="method-permalink" href="#start_sample%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="signal:Bytes-instance-method">
+    <div class="entry-detail" id="start_sample(*args,**options,&amp;)-instance-method">
       <div class="signature">
         
-        def <strong>signal</strong> : Bytes
+        def <strong>start_sample</strong>(*args, **options, &)
 
-        <a class="method-permalink" href="#signal%3ABytes-instance-method">#</a>
+        <a class="method-permalink" href="#start_sample%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
       </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L238" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="start_sample:UInt64-instance-method">
+    <div class="entry-detail" id="write_signal(io:IO):Nil-instance-method">
       <div class="signature">
         
-        def <strong>start_sample</strong> : UInt64
+        def <strong>write_signal</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#start_sample%3AUInt64-instance-method">#</a>
+        <a class="method-permalink" href="#write_signal%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/types.cr#L244" target="_blank">View source</a>]
         
       </div>
     </div>

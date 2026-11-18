@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/AlignmentClass" data-name="adaptive::alignmentclass">
+      <a href="Adaptive/AlignmentClass.html">AlignmentClass</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallResponse" data-name="adaptive::basecallresponse">
+      <a href="Adaptive/BasecallResponse.html">BasecallResponse</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
       <a href="Adaptive/BasecallResult.html">BasecallResult</a>
       
@@ -152,6 +162,11 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/NativeSignalTiming" data-name="adaptive::nativesignaltiming">
+      <a href="Adaptive/NativeSignalTiming.html">NativeSignalTiming</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
       <a href="Adaptive/Pending.html">Pending</a>
       
@@ -182,13 +197,33 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SampleInterval" data-name="adaptive::sampleinterval">
+      <a href="Adaptive/SampleInterval.html">SampleInterval</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
       <a href="Adaptive/SequenceMapper.html">SequenceMapper</a>
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SignalContext" data-name="adaptive::signalcontext">
+      <a href="Adaptive/SignalContext.html">SignalContext</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalFormat" data-name="adaptive::signalformat">
+      <a href="Adaptive/SignalFormat.html">SignalFormat</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
       <a href="Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalPrefix" data-name="adaptive::signalprefix">
+      <a href="Adaptive/SignalPrefix.html">SignalPrefix</a>
       
     </li>
   
@@ -315,8 +350,9 @@ result.display_hit.try(<span class="o">&amp;</span>.mapping.target_start)</code>
 coordinates (zero-based, half-open), MAPQ, primary status, CIGAR and alignment
 fields used by custom policies. Existing <code>Hit.new(segment, minimap2_mapping)</code>
 construction remains supported; <code>hit.mapping</code> now returns <code><a href="Adaptive/Mapping.html">Adaptive::Mapping</a></code>.
-This snapshot preserves primary status only: secondary and supplementary
-alignments are both non-primary and cannot be distinguished through this API.</p>
+<code>Mapping#classification</code> distinguishes primary, secondary and supplementary
+alignments using the native flags. Legacy non-primary records without a
+secondary flag remain <code>Unknown</code>; inversion status is also retained when known.</p>
 <p>The default <code>mapping_mode: &quot;any&quot;</code> preserves live/replay behavior: any confident
 target hit can justify acceptance. <code>mapping_mode: &quot;primary&quot;</code> selects the highest
 MAPQ confident primary hit before checking targets, for sandbox compatibility.
@@ -331,7 +367,10 @@ coordinator. After changing targets or policy settings, call
 <code>mapper.validate!(config)</code> without rebuilding; changing the reference requires
 a new mapper. <code>validate_sequence!</code> checks reference/policy settings independently
 of bridge files and live connection configuration.</p>
-<p>Segments stay separate, including empty segment positions. Metadata is preserved,
+<p>Segments stay separate, including empty segment positions. Basecall segments
+are the canonical sequence source; compatibility sequence arrays are derived.
+Signal format, coordinate frames and provenance are described in the
+<a href="docs/data-model.md">data model</a>. Metadata is preserved,
 and <code>Evidence#source</code> distinguishes <code>Sequence</code> from <code>Basecall</code>; only the live pool
 marks actual bridge output as basecalls. Pass the existing read's memory and
 experiment into repeated evaluations. Evaluation calls the supplied policy but
@@ -395,7 +434,9 @@ path per run. Ctrl-C or SIGTERM stops the run.</p>
 <p>For signal diagnostics, use <code>scripts/pod5.sh</code> to extract a POD5 prefix; see
 <a href="docs/operations.md">operations</a>. Custom policies are demonstrated in
 <a href="examples/custom.cr">custom.cr</a> and <a href="examples/junction_policy.cr">junction_policy.cr</a>.
-See <a href="src/adaptive/config.cr">Config</a> for all settings.</p>
+See <a href="src/adaptive/config.cr">Config</a> for all settings.
+See <a href="docs/memory.md">memory ownership and benchmarks</a> for signal sharing,
+memory-budget semantics and reproducible allocation measurements.</p>
 <h2><a id="test-and-scope" class="anchor" href="#test-and-scope">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>

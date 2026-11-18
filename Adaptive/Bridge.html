@@ -62,6 +62,16 @@
       
         <ul>
   
+  <li class=" " data-id="adaptive/Adaptive/AlignmentClass" data-name="adaptive::alignmentclass">
+      <a href="../Adaptive/AlignmentClass.html">AlignmentClass</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/BasecallResponse" data-name="adaptive::basecallresponse">
+      <a href="../Adaptive/BasecallResponse.html">BasecallResponse</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/BasecallResult" data-name="adaptive::basecallresult">
       <a href="../Adaptive/BasecallResult.html">BasecallResult</a>
       
@@ -152,6 +162,11 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/NativeSignalTiming" data-name="adaptive::nativesignaltiming">
+      <a href="../Adaptive/NativeSignalTiming.html">NativeSignalTiming</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/Pending" data-name="adaptive::pending">
       <a href="../Adaptive/Pending.html">Pending</a>
       
@@ -182,13 +197,33 @@
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SampleInterval" data-name="adaptive::sampleinterval">
+      <a href="../Adaptive/SampleInterval.html">SampleInterval</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SequenceMapper" data-name="adaptive::sequencemapper">
       <a href="../Adaptive/SequenceMapper.html">SequenceMapper</a>
       
     </li>
   
+  <li class=" " data-id="adaptive/Adaptive/SignalContext" data-name="adaptive::signalcontext">
+      <a href="../Adaptive/SignalContext.html">SignalContext</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalFormat" data-name="adaptive::signalformat">
+      <a href="../Adaptive/SignalFormat.html">SignalFormat</a>
+      
+    </li>
+  
   <li class=" " data-id="adaptive/Adaptive/SignalMetadata" data-name="adaptive::signalmetadata">
       <a href="../Adaptive/SignalMetadata.html">SignalMetadata</a>
+      
+    </li>
+  
+  <li class=" " data-id="adaptive/Adaptive/SignalPrefix" data-name="adaptive::signalprefix">
+      <a href="../Adaptive/SignalPrefix.html">SignalPrefix</a>
       
     </li>
   
@@ -310,7 +345,7 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
   </h2>
   
     
-      <a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/bridge.cr#L7" target="_blank">
+      <a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/bridge.cr#L7" target="_blank">
         adaptive/bridge.cr
       </a>
     
@@ -341,6 +376,28 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
 
 
   
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#read_response%28output%3AIO%2Cmax_response_bytes%3AInt32%2Ctype%3AT.class%29%3ATforallT-class-method" class="signature"><strong>.read_response</strong>(output : IO, max_response_bytes : Int32, type : <span class="t">T</span>.<span class="k">class</span>) : T forall T</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read_response%28output%3AIO%2Cmax_response_bytes%3AInt32%29%3AJSON%3A%3AAny-class-method" class="signature"><strong>.read_response</strong>(output : IO, max_response_bytes : Int32) : JSON::Any</a>
+        
+      </li>
+    
+  </ul>
+
 
   
 
@@ -432,7 +489,7 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/bridge.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/bridge.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -440,6 +497,48 @@ one JSON header; the response is length-prefixed JSON. No shell execution.</p>
 
 
   
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="read_response(output:IO,max_response_bytes:Int32,type:T.class):TforallT-class-method">
+      <div class="signature">
+        
+        def self.<strong>read_response</strong>(output : IO, max_response_bytes : Int32, type : <span class="t">T</span>.<span class="k">class</span>) : T forall T
+
+        <a class="method-permalink" href="#read_response%28output%3AIO%2Cmax_response_bytes%3AInt32%2Ctype%3AT.class%29%3ATforallT-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/bridge.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read_response(output:IO,max_response_bytes:Int32):JSON::Any-class-method">
+      <div class="signature">
+        
+        def self.<strong>read_response</strong>(output : IO, max_response_bytes : Int32) : JSON::Any
+
+        <a class="method-permalink" href="#read_response%28output%3AIO%2Cmax_response_bytes%3AInt32%29%3AJSON%3A%3AAny-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/bridge.cr#L79" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
 
   
 
@@ -470,7 +569,7 @@ call remains a sequence-only compatibility view for existing clients.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/bridge.cr#L56" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/bridge.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -486,7 +585,7 @@ call remains a sequence-only compatibility view for existing clients.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/bridge.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/bridge.cr#L53" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -502,7 +601,7 @@ call remains a sequence-only compatibility view for existing clients.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/bridge.cr#L90" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/bridge.cr#L96" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -518,7 +617,7 @@ call remains a sequence-only compatibility view for existing clients.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/kojix2/adaptive.cr/blob/71f6be351ffcf43ef94be0b1ec11f6c0069be3f8/src/adaptive/bridge.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/kojix2/adaptive.cr/blob/17ea4ddf1c24048120dbcc9f834d9325f068e5be/src/adaptive/bridge.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
