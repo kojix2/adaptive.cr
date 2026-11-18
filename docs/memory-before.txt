@@ -1,0 +1,4 @@
+{"benchmark":"quality_validation_100kb","iterations":100,"allocated_bytes":10007376,"bytes_per_iteration":100073.76,"elapsed_ms":14.130041,"checksum":10000000}
+{"benchmark":"representative_hit_64","iterations":10000,"allocated_bytes":220958816,"bytes_per_iteration":22095.8816,"elapsed_ms":24.915334,"checksum":600000}
+{"benchmark":"bridge_response_300kb","iterations":100,"allocated_bytes":159651872,"bytes_per_iteration":1596518.72,"elapsed_ms":316.563875,"checksum":10000000}
+{"benchmark":"rejected_submit_40kb","iterations":1000,"allocated_bytes":40016000,"bytes_per_iteration":40016.0,"elapsed_ms":2.135875,"checksum":40000000}

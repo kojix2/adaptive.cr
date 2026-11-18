@@ -1,0 +1,7 @@
+{"benchmark":"quality_validation_100kb","iterations":100,"allocated_bytes":48,"bytes_per_iteration":0.48,"elapsed_ms":13.153042,"checksum":10000000}
+{"benchmark":"representative_hit_64","iterations":10000,"allocated_bytes":0,"bytes_per_iteration":0.0,"elapsed_ms":0.931625,"checksum":600000}
+{"benchmark":"bridge_response_300kb","iterations":100,"allocated_bytes":60175072,"bytes_per_iteration":601750.72,"elapsed_ms":163.737042,"checksum":10000000}
+{"benchmark":"bridge_response_segments_only_200kb","iterations":100,"allocated_bytes":40147904,"bytes_per_iteration":401479.04,"elapsed_ms":114.409333,"checksum":10000000}
+{"benchmark":"legacy_signal_prefix_10x4kb","iterations":1000,"allocated_bytes":347390384,"bytes_per_iteration":347390.384,"elapsed_ms":41.107,"checksum":220000000}
+{"benchmark":"shared_signal_prefix_10x4kb","iterations":1000,"allocated_bytes":478896,"bytes_per_iteration":478.896,"elapsed_ms":0.076166,"checksum":220000000}
+{"benchmark":"rejected_submit_40kb","iterations":1000,"allocated_bytes":0,"bytes_per_iteration":0.0,"elapsed_ms":0.031209,"checksum":40000000}

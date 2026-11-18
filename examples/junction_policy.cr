@@ -4,7 +4,9 @@ require "../src/adaptive/policy"
 class JunctionPolicy < Adaptive::Policy
   def decide(read : Adaptive::Evidence, experiment : Adaptive::Experiment, memory : Hash(String, String)) : Adaptive::Decision
     memory["evaluations"] = ((memory["evaluations"]? || "0").to_i + 1).to_s
-    # Split basecalls are separate molecules; never join their evidence.
+    # Separate basecall segments do not establish one continuous junction.
+    # Compare alignments within a segment; splitting alone says nothing about
+    # whether the original signal contains one or several physical molecules.
     read.hits.group_by(&.segment).each_value do |hits|
       confident = hits.select { |hit| hit.mapping.mapq >= 20 && hit.mapping.block_len >= 100 }
       host = confident.select { |hit| hit.mapping.target_name == "host" }

@@ -21,6 +21,10 @@ def validate_request(request, max_signal_bytes=MAX_SIGNAL_BYTES):
     size = request.get("bytes")
     if type(size) is not int or not 0 < size <= max_signal_bytes or size % 2:
         raise ValueError("invalid signal size")
+    if request.get("signal_format", "adc_int16_le") != "adc_int16_le":
+        raise ValueError("unsupported signal format")
+    if "segments_only" in request and type(request["segments_only"]) is not bool:
+        raise ValueError("invalid segments_only")
     for field in ("offset", "scale", "sample_rate"):
         value = request.get(field)
         if type(value) not in (int, float) or not math.isfinite(value):
@@ -44,7 +48,8 @@ def emit(value, max_bytes=MAX_RESPONSE_BYTES):
     data = json.dumps(value).encode()
     if len(data) > max_bytes:
         raise ValueError("response too large")
-    sys.stdout.buffer.write(struct.pack("<I", len(data)) + data)
+    sys.stdout.buffer.write(struct.pack("<I", len(data)))
+    sys.stdout.buffer.write(data)
     sys.stdout.buffer.flush()
 
 
@@ -73,7 +78,8 @@ def basecall_segments(client, request, signal, timeout):
                         if result["metadata"]["read_id"] == request["id"]
                         or result["metadata"].get("parent_read_id") == request["id"]]
             if matching:
-                # Preserve split molecules as separate sequences, never concatenate.
+                # In pinned 7.13.6 each batch contains all splits of one input.
+                # These are separate segments, not proof of separate molecules.
                 return [segment_data(result) for result in matching]
         time.sleep(0.002)
     raise TimeoutError("Dorado result deadline exceeded")
@@ -87,10 +93,25 @@ def segment_data(result):
     if quality is not None and (not isinstance(quality, str) or len(quality) != len(sequence)
                                 or any(not 33 <= ord(value) <= 126 for value in quality)):
         raise ValueError("invalid basecall quality")
-    read_id = result["metadata"]["read_id"]
-    if not isinstance(read_id, str):
+    metadata = result["metadata"]
+    # The official helper exports strand_id as the child and read_id as its
+    # parent. Legacy adapters/fixtures may provide only read_id.
+    read_id = metadata.get("strand_id", metadata["read_id"])
+    if not isinstance(read_id, str) or not read_id:
         raise ValueError("invalid segment read id")
-    return dict(sequence=sequence, quality=quality, read_id=read_id)
+    segment = dict(sequence=sequence, quality=quality, read_id=read_id)
+    timing = {}
+    for field in ("start_time", "duration", "trimmed_samples", "trimmed_duration"):
+        if metadata.get(field) is not None:
+            value = metadata[field]
+            if type(value) is not int or not 0 <= value < 2**64:
+                raise ValueError(f"invalid native signal timing: {field}")
+            timing[field] = value
+    if timing:
+        segment["native_timing"] = timing
+    # Preserve native timing without guessing how trimming and splitting map
+    # it to a parent-relative interval. Unknown signal_span stays absent.
+    return segment
 
 
 def basecall(client, request, signal, timeout):
@@ -117,6 +138,7 @@ def main():
     client = None
     try:
         info = {"protocol": 1, "backend": "fixture", "python": platform.python_version(),
+                "signal_format": "adc_int16_le",
                 "max_signal_bytes": args.max_signal_bytes,
                 "max_response_bytes": args.max_response_bytes}
         if args.test_sequence is None:
@@ -147,8 +169,10 @@ def main():
                 raise EOFError("truncated signal")
             try:
                 segments = [dict(sequence=args.test_sequence, quality=None, read_id=request["id"])] if client is None else basecall_segments(client, request, signal, args.timeout)
-                emit({"id": request["id"], "sequences": [segment["sequence"] for segment in segments],
-                      "segments": segments}, args.max_response_bytes)
+                response = {"id": request["id"], "segments": segments}
+                if not request.get("segments_only", False):
+                    response["sequences"] = [segment["sequence"] for segment in segments]
+                emit(response, args.max_response_bytes)
             except Exception as error:
                 emit({"id": request["id"], "error": str(error)}, args.max_response_bytes)
                 return  # recycle connection after errors; no stale pending replies

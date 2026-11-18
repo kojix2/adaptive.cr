@@ -1,0 +1,11 @@
+{"mode": "accept", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 2.065}
+{"mode": "reject", "channels": 16, "decisions": 80, "acks": 80, "unacknowledged": 0, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 2.07}
+{"mode": "quota", "channels": 16, "decisions": 77, "acks": 76, "unacknowledged": 1, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 2.072}
+{"mode": "observe", "channels": 16, "decisions": 16, "acks": 0, "unacknowledged": 0, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 2.066}
+{"mode": "tls", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 2.07}
+{"mode": "deadline", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "unsent": 0, "deadline_fallbacks": 16, "elapsed_s": 2.121}
+{"mode": "worker_error", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 2.052}
+{"mode": "shutdown", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 0.172}
+{"mode": "disconnect", "channels": 16, "decisions": 16, "acks": 16, "unacknowledged": 0, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 0.171}
+{"mode": "stream_end", "channels": 16, "decisions": 16, "acks": 0, "unacknowledged": 16, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 3.597}
+{"mode": "quota", "channels": 512, "decisions": 2309, "acks": 2233, "unacknowledged": 76, "unsent": 0, "deadline_fallbacks": 0, "elapsed_s": 2.117}

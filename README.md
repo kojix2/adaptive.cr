@@ -58,8 +58,9 @@ result.display_hit.try(&.mapping.target_start)
 coordinates (zero-based, half-open), MAPQ, primary status, CIGAR and alignment
 fields used by custom policies. Existing `Hit.new(segment, minimap2_mapping)`
 construction remains supported; `hit.mapping` now returns `Adaptive::Mapping`.
-This snapshot preserves primary status only: secondary and supplementary
-alignments are both non-primary and cannot be distinguished through this API.
+`Mapping#classification` distinguishes primary, secondary and supplementary
+alignments using the native flags. Legacy non-primary records without a
+secondary flag remain `Unknown`; inversion status is also retained when known.
 
 The default `mapping_mode: "any"` preserves live/replay behavior: any confident
 target hit can justify acceptance. `mapping_mode: "primary"` selects the highest
@@ -77,7 +78,10 @@ coordinator. After changing targets or policy settings, call
 a new mapper. `validate_sequence!` checks reference/policy settings independently
 of bridge files and live connection configuration.
 
-Segments stay separate, including empty segment positions. Metadata is preserved,
+Segments stay separate, including empty segment positions. Basecall segments
+are the canonical sequence source; compatibility sequence arrays are derived.
+Signal format, coordinate frames and provenance are described in the
+[data model](docs/data-model.md). Metadata is preserved,
 and `Evidence#source` distinguishes `Sequence` from `Basecall`; only the live pool
 marks actual bridge output as basecalls. Pass the existing read's memory and
 experiment into repeated evaluations. Evaluation calls the supplied policy but
@@ -152,6 +156,8 @@ For signal diagnostics, use `scripts/pod5.sh` to extract a POD5 prefix; see
 [operations](docs/operations.md). Custom policies are demonstrated in
 [custom.cr](examples/custom.cr) and [junction_policy.cr](examples/junction_policy.cr).
 See [Config](src/adaptive/config.cr) for all settings.
+See [memory ownership and benchmarks](docs/memory.md) for signal sharing,
+memory-budget semantics and reproducible allocation measurements.
 
 ## Test and scope
 

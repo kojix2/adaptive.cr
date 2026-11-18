@@ -73,7 +73,9 @@ class BridgeTest(unittest.TestCase):
         bridge.validate_request(request)
         for field, value in [('scale', 0), ('scale', -1), ('sample_rate', math.inf),
                              ('offset', math.nan), ('bytes', True), ('bytes', 3),
-                             ('start_sample', -1), ('start_sample', 2**64), ('id', '')]:
+                             ('start_sample', -1), ('start_sample', 2**64), ('id', ''),
+                             ('segments_only', 'true'), ('segments_only', 1),
+                             ('signal_format', 'float32'), ('signal_format', 'adc_int16_be')]:
             with self.subTest(field=field, value=value), self.assertRaises(ValueError):
                 bridge.validate_request(dict(request, **{field: value}))
 
@@ -94,6 +96,19 @@ class BridgeTest(unittest.TestCase):
         self.assertEqual(values[1]['sequences'], [''])
         self.assertEqual(values[1]['segments'], [dict(sequence='', quality=None, read_id='current')])
 
+    def test_segments_only_avoids_duplicating_sequences_on_the_wire(self):
+        command = [sys.executable, str(ROOT / 'scripts/dorado_bridge.py'), '--address', 'test',
+                   '--model', 'test', '--test-sequence', 'ACGT']
+        request = dict(self.request, bytes=len(self.signal), segments_only=True)
+        response = subprocess.run(command, input=json.dumps(request).encode()+b'\n'+self.signal,
+                                  capture_output=True, check=True).stdout
+        handshake_size, = struct.unpack('<I', response[:4])
+        response = response[4+handshake_size:]
+        size, = struct.unpack('<I', response[:4])
+        value = json.loads(response[4:4+size])
+        self.assertEqual(value['segments'], [dict(sequence='ACGT', quality=None, read_id='current')])
+        self.assertNotIn('sequences', value)
+
     def test_segments_keep_quality_and_parent_correlation(self):
         first = result('current', b'acg')
         first['datasets']['qstring'] = b'III'
@@ -107,6 +122,25 @@ class BridgeTest(unittest.TestCase):
             first['datasets']['qstring'] = quality
             with self.assertRaisesRegex(ValueError, 'quality'):
                 bridge.segment_data(first)
+
+    def test_official_parent_and_child_ids_and_native_timing_are_preserved(self):
+        first = result('current', 'ACG')
+        first['metadata'].update(strand_id='child-1', start_time=1234, duration=500,
+                                 trimmed_samples=20, trimmed_duration=450)
+        second = result('current', 'TTA')
+        second['metadata']['strand_id'] = 'child-2'
+        segments = bridge.basecall_segments(Client([[[first, second]]]), self.request, self.signal, 1)
+        self.assertEqual([segment['read_id'] for segment in segments], ['child-1', 'child-2'])
+        self.assertEqual(segments[0]['native_timing'], dict(start_time=1234, duration=500,
+                                                         trimmed_samples=20, trimmed_duration=450))
+        self.assertNotIn('native_timing', segments[1])
+        self.assertTrue(all('signal_span' not in segment for segment in segments))
+        for field in ('start_time', 'duration', 'trimmed_samples', 'trimmed_duration'):
+            for value in (-1, True, 1.5, 2**64):
+                with self.subTest(field=field, value=value), self.assertRaisesRegex(ValueError, 'timing'):
+                    broken = result('current', 'ACG')
+                    broken['metadata'][field] = value
+                    bridge.segment_data(broken)
 
     def test_explicit_full_read_limit_keeps_the_default_prefix_limit(self):
         size = 500002

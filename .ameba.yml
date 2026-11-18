@@ -2,6 +2,7 @@ Globs:
   - src/**/*.cr
   - spec/**/*.cr
   - examples/**/*.cr
+  - benchmarks/**/*.cr
 
 # JSON-backed model fields use consistent noun accessors (replay, circular, etc.).
 Naming/QueryBoolMethods:

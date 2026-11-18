@@ -31,7 +31,7 @@ module Adaptive
       sequences = bridge.call(job)
       raise "basecaller returned no bases for diagnostic signal" if sequences.all?(&.empty?)
       puts({status: "ok", check: "basecall", backend: bridge.info,
-            samples: job.signal.size // 2, sequences: sequences}.to_json)
+            samples: job.samples, sequences: sequences}.to_json)
     else
       puts({status: "ok", check: "connection", backend: bridge.info}.to_json)
     end

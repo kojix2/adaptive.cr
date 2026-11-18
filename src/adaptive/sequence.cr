@@ -29,14 +29,27 @@ module Adaptive
       raise "invalid evidence metadata" if channel < 1 || read_id.empty? || samples < 0
       if basecalls
         basecalls.validate!
-        raise ArgumentError.new("basecalls do not match evidence") unless basecalls.read_id == read_id && basecalls.sequences == sequences
+        raise ArgumentError.new("basecalls do not match evidence") unless basecalls.read_id == read_id && basecalls.matches_sequences?(sequences)
       end
       hits = [] of Hit
       sequences.each_with_index do |sequence, segment|
         next if sequence.empty?
         @aligner.map(sequence).each { |mapping| hits << Hit.new(segment, mapping) }
       end
-      Evidence.new(channel, read_id, samples, sequences.dup, hits, source, basecalls)
+      Evidence.new(channel, read_id, samples, sequences, hits, source, basecalls)
+    end
+
+    # Basecall segments are the sole sequence source on the live path.
+    def map(basecalls : BasecallResult, *, channel : Int32, read_id : String = basecalls.read_id, samples : Int32? = nil,
+            source : EvidenceSource = EvidenceSource::Basecall) : Evidence
+      basecalls.validate!
+      raise ArgumentError.new("basecalls do not match evidence") unless basecalls.read_id == read_id
+      hits = [] of Hit
+      basecalls.segments.each_with_index do |segment, index|
+        next if segment.sequence.empty?
+        @aligner.map(segment.sequence).each { |mapping| hits << Hit.new(index, mapping) }
+      end
+      Evidence.new(channel, read_id, samples || basecalls.input_samples || 0, hits, source, basecalls)
     end
 
     def evaluate(sequences : Array(String), policy : Policy, experiment : Experiment, memory : Hash(String, String), *,

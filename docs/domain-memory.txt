@@ -1,0 +1,8 @@
+{"benchmark":"quality_validation_100kb","iterations":100,"allocated_bytes":48,"bytes_per_iteration":0.48,"elapsed_ms":13.465208,"checksum":10000000}
+{"benchmark":"canonical_evidence_base_count","iterations":10000,"allocated_bytes":0,"bytes_per_iteration":0.0,"elapsed_ms":0.012625,"checksum":1000000000}
+{"benchmark":"representative_hit_64","iterations":10000,"allocated_bytes":0,"bytes_per_iteration":0.0,"elapsed_ms":0.935875,"checksum":600000}
+{"benchmark":"bridge_response_300kb","iterations":100,"allocated_bytes":60155232,"bytes_per_iteration":601552.32,"elapsed_ms":182.796958,"checksum":10000000}
+{"benchmark":"bridge_response_segments_only_200kb","iterations":100,"allocated_bytes":40126976,"bytes_per_iteration":401269.76,"elapsed_ms":131.025208,"checksum":10000000}
+{"benchmark":"legacy_signal_prefix_10x4kb","iterations":1000,"allocated_bytes":347390368,"bytes_per_iteration":347390.368,"elapsed_ms":27.170542,"checksum":220000000}
+{"benchmark":"shared_signal_prefix_10x4kb","iterations":1000,"allocated_bytes":480720,"bytes_per_iteration":480.72,"elapsed_ms":0.087208,"checksum":220000000}
+{"benchmark":"rejected_submit_40kb","iterations":1000,"allocated_bytes":0,"bytes_per_iteration":0.0,"elapsed_ms":0.032708,"checksum":40000000}

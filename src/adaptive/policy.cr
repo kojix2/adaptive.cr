@@ -19,7 +19,7 @@ module Adaptive
 
     def decide(read : Evidence, experiment : Experiment, memory : Hash(String, String)) : Decision
       return Decision.new(Choice::Accept, "accept_all") if @config.policy == "all"
-      return Decision.new(Choice::Continue, "short_sequence") if read.sequences.sum(&.size) < @config.min_bases
+      return Decision.new(Choice::Continue, "short_sequence") if read.base_count < @config.min_bases
       group = nil
       hit : Hit? = nil
       case @config.policy
@@ -32,7 +32,12 @@ module Adaptive
         group = hit.mapping.target_name if hit && @config.targets.includes?(hit.mapping.target_name)
       when "motif"
         reverse = @config.motif.reverse.tr("ACGT", "TGCA")
-        group = "motif" if read.sequences.any? { |sequence| sequence.includes?(@config.motif) || sequence.includes?(reverse) }
+        read.each_sequence do |sequence|
+          if sequence.includes?(@config.motif) || sequence.includes?(reverse)
+            group = "motif"
+            break
+          end
+        end
       end
       return Decision.new(Choice::Accept, "target", group, @config.quota, hit: @config.policy == "contig" ? hit : nil) if group
       return Decision.new(Choice::Accept, "background") if background?(read.read_id)

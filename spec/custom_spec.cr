@@ -1,7 +1,7 @@
 require "spec"
 require "../examples/junction_policy"
 
-it "finds a candidate junction only within one molecule" do
+it "finds a candidate junction only within one basecall segment" do
   index = Minimap2::Aligner.new("examples/reference.fa", preset: "map-ont", cigar: true)
   host = index.seq("host", 100, 900).should_not be_nil
   virus = index.seq("virus", 100, 900).should_not be_nil

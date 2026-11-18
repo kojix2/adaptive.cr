@@ -25,6 +25,7 @@ module Adaptive
         connection = Minknow::ConnectionConfig.new(host: @config.host, port: @config.port,
           tls: @config.tls, ca_certificate_path: @config.ca_file, auto_local_auth: false)
         channel = connection.channel
+        validate_signal_format(connection, channel)
         offsets, scales, rate = calibration(connection, channel)
         ctx = connection.client_context
         call = Minknow::DataService.new(channel, ctx).live_reads
@@ -34,7 +35,7 @@ module Adaptive
         log.emit("start", version: VERSION, observe: @config.observe, workers: @config.workers,
           backend: @config.fixture_sequence ? "fixture" : "dorado", model: @config.dorado_model,
           backend_info: pool.backend_info, reference: @config.reference, policy: @config.policy,
-          sample_rate: rate, deadline_ms: @config.deadline_ms)
+          signal_format: SignalFormat::AdcInt16LE.wire_name, sample_rate: rate, deadline_ms: @config.deadline_ms)
         session = LiveSession.new(@config, @policy, log, pool, call, offsets, scales, rate)
         engine = session.engine
         outcome = session.run(stop)
@@ -62,6 +63,19 @@ module Adaptive
           end
         end
       end
+    end
+
+    def self.validate_signal_format(response : MinknowApi::Data::GetDataTypesResponse) : SignalFormat
+      description = response.uncalibrated_signal || raise ArgumentError.new("missing ADC signal format")
+      SignalFormat.from_description(signed: description.type_.raw == 0,
+        bytes: description.size, big_endian: description.big_endian)
+    end
+
+    private def validate_signal_format(connection, channel) : Nil
+      ctx = connection.client_context
+      ctx.deadline = Time.utc + 10.seconds
+      data = MinknowApi::Data::DataService::Client.new(channel)
+      self.class.validate_signal_format(data.get_data_types(MinknowApi::Data::GetDataTypesRequest.new, ctx))
     end
 
     private def calibration(connection, channel)

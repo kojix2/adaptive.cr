@@ -4,7 +4,7 @@ cd "$(dirname "$0")/.."
 for script in scripts/*.sh; do
   bash -n "$script"
 done
-crystal tool format --check src spec examples
+crystal tool format --check src spec examples benchmarks
 bin/ameba --no-color
 sh lib/pod5/scripts/with_native.sh crystal spec
 python3 -m unittest discover -s tests -p 'test_*.py' -v

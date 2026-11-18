@@ -47,7 +47,10 @@ module Adaptive
             event.action_responses.each { |ack| @engine.acknowledge(ack.action_id, ack.response.raw) }
             event.channels.each do |number, read|
               break unless active?
-              @engine.ingest(number.to_i, read.id, read.start_sample, read.chunk_start_sample, read.chunk_length, read.raw_data)
+              # Proto::Wire::Reader#read_bytes creates an independent allocation.
+              # Transfer it without copying; no code mutates raw_data afterward.
+              @engine.ingest(number.to_i, read.id, read.start_sample, read.chunk_start_sample, read.chunk_length, read.raw_data,
+                take_ownership: true)
             end
           else
             return "stream_end"

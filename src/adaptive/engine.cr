@@ -9,25 +9,33 @@ module Adaptive
     getter states = {} of Int32 => ReadState
     getter buffered_bytes = 0_i64
     getter inflight_bytes = 0_i64
+    @orphaned_bytes = 0_i64
     getter unsent_actions = 0
     @stopped = false
     @generation = 0_u64
     @counter = 0_u64
     @pending = {} of String => Pending
-    @active_jobs = Set(Tuple(Int32, UInt64)).new
+    @active_jobs = {} of Tuple(Int32, UInt64) => Int32
 
     def initialize(@config : Config, @policy : Policy, @log : EventLog,
                    @submit : Job -> Bool, @send : Int32, String, Decision, String -> Bool,
                    @offsets : Array(Float64), @scales : Array(Float64), @sample_rate : Float64)
     end
 
-    def ingest(channel : Int32, id : String, start : UInt64, chunk_start : UInt64, count : UInt64, data : Bytes) : Nil
+    # Unique retained signal payload, excluding chunk metadata, transport,
+    # mapping and Python allocations. inflight_bytes includes shared prefixes
+    # and must not be added to buffered_bytes to calculate physical storage.
+    def retained_signal_bytes : Int64
+      @buffered_bytes + @orphaned_bytes
+    end
+
+    def ingest(channel : Int32, id : String, start : UInt64, chunk_start : UInt64, count : UInt64, data : Bytes, *, take_ownership : Bool = false) : Nil
       return if @stopped
       raise "unexpected channel" unless (@config.first_channel..@config.last_channel).includes?(channel)
       raise "invalid signal payload" unless count <= 250000 && data.size.to_u64 == count * 2
       state = @states[channel]?
       unless state && state.id == id
-        @buffered_bytes -= state.signal.size if state
+        release_signal(channel, state) if state
         @generation += 1
         state = ReadState.new(id, @generation, start)
         @states[channel] = state
@@ -37,11 +45,11 @@ module Adaptive
         finish_read(channel, state, Decision.new(Choice::Accept, "signal_gap_or_overlap"))
         return
       end
-      if state.samples.to_u64 + count > @config.max_samples || @buffered_bytes + @inflight_bytes + data.size > @config.max_buffer_bytes
+      if state.samples.to_u64 + count > @config.max_samples || retained_signal_bytes + data.size > @config.max_buffer_bytes
         finish_read(channel, state, Decision.new(Choice::Accept, "signal_budget"))
         return
       end
-      state.signal.write(data)
+      state.signal = state.signal.append(data, take_ownership: take_ownership)
       state.end_sample += count
       @buffered_bytes += data.size
     end
@@ -59,15 +67,14 @@ module Adaptive
         end
         next if state.busy || state.samples < @config.min_samples
         next if state.evaluated > 0 && state.samples - state.evaluated < @config.step_samples
-        next if @buffered_bytes + @inflight_bytes + state.signal.size > @config.max_buffer_bytes
         next if @active_jobs.size >= @config.workers * 2
         index = channel - @config.first_channel
-        job = Job.new(channel, state.id, state.generation, state.signal.to_slice.dup,
+        job = Job.new(channel, state.id, state.generation, state.signal,
           @offsets[index], @scales[index], @sample_rate, state.start_sample, state.created + @config.deadline_ms.milliseconds)
         if @submit.call(job)
           state.busy = true
           @inflight_bytes += job.signal.size
-          @active_jobs.add({channel, state.generation})
+          @active_jobs[{channel, state.generation}] = job.signal.size
         end
       end
     end
@@ -76,10 +83,11 @@ module Adaptive
       return if @stopped
       check_ack_deadline
       job = result.job
-      return unless @active_jobs.delete({job.channel, job.generation})
-      @inflight_bytes -= job.signal.size
+      return unless bytes = @active_jobs.delete({job.channel, job.generation})
+      @inflight_bytes -= bytes
       state = @states[job.channel]?
       if !state || state.generation != job.generation || state.id != job.read_id || state.terminal
+        @orphaned_bytes -= bytes
         @log.emit("stale_result", channel: job.channel, read_id: job.read_id)
         return
       end
@@ -103,7 +111,7 @@ module Adaptive
         decision = Decision.new(Choice::Accept, "decision_deadline")
       end
       @log.emit("evaluation", read_id: job.read_id, channel: job.channel, samples: evidence.samples,
-        bases: evidence.sequences.sum(&.size), hits: evidence.hits.size, worker_ms: result.elapsed_ms,
+        bases: evidence.base_count, hits: evidence.hits.size, worker_ms: result.elapsed_ms,
         policy_ms: (Time.instant - started).total_milliseconds, choice: decision.choice.to_s, reason: decision.reason)
       if decision.choice.continue?
         if state.samples >= @config.max_samples
@@ -146,8 +154,7 @@ module Adaptive
       end
       state.terminal = true
       samples = state.samples
-      @buffered_bytes -= state.signal.size
-      state.signal = IO::Memory.new
+      release_signal(channel, state)
       @counter += 1
       action_id = "adaptive-#{@counter}"
       @log.emit("decision", action_id: action_id, read_id: state.id, channel: channel,
@@ -168,6 +175,13 @@ module Adaptive
           stop
         end
       end
+    end
+
+    private def release_signal(channel : Int32, state : ReadState) : Nil
+      return if state.signal.size == 0
+      @buffered_bytes -= state.signal.size
+      @orphaned_bytes += @active_jobs[{channel, state.generation}]? || 0
+      state.signal = SignalPrefix.new
     end
 
     private def check_ack_deadline : Nil

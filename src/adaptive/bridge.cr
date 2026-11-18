@@ -37,6 +37,9 @@ module Adaptive
         @info = receive
         raise @info["error"].as_s if @info["error"]?
         raise "unexpected bridge handshake" unless @info["protocol"].as_i == 1
+        if format = @info["signal_format"]?
+          raise "unsupported bridge signal format" unless format.as_s == SignalFormat::AdcInt16LE.wire_name
+        end
         backend = @info["backend"].as_s
         raise "test basecaller prohibited" if backend == "fixture" && !config.allow_test_bridge
         raise "unexpected basecaller backend" unless backend == "dorado" || (backend == "fixture" && config.allow_test_bridge)
@@ -59,32 +62,35 @@ module Adaptive
       end
       request_id = UUID.random.to_s
       header = {id: request_id, bytes: job.signal.size, offset: job.offset, scale: job.scale,
-                sample_rate: job.sample_rate, start_sample: job.start_sample}.to_json
+                sample_rate: job.sample_rate, start_sample: job.start_sample,
+                signal_format: job.format.wire_name, segments_only: true}.to_json
       @input.puts(header)
-      @input.write(job.signal)
+      job.write_signal(@input)
       @input.flush
-      result = receive
-      raise "basecaller correlation mismatch" unless result["id"].as_s == request_id
-      raise result["error"].as_s if result["error"]?
-      segments = if values = result["segments"]?
-                   values.as_a.map { |value| BasecallSegment.from_json(value.to_json) }
-                 else
-                   result["sequences"].as_a.map { |value| BasecallSegment.new(value.as_s) }
-                 end
-      basecalls = BasecallResult.new(job.read_id, segments)
-      basecalls.validate!
-      if values = result["sequences"]?
-        raise "basecaller segment mismatch" unless values.as_a.map(&.as_s) == basecalls.sequences
-      end
-      basecalls
+      response = self.class.read_response(@output, @max_response_bytes, BasecallResponse)
+      BasecallResult.from_bridge_response(response, job.read_id, request_id,
+        input_samples: job.samples, signal_context: job.context)
     end
 
     private def receive : JSON::Any
-      size = @output.read_bytes(UInt32, IO::ByteFormat::LittleEndian)
-      raise "bridge response too large" if size > @max_response_bytes
-      bytes = Bytes.new(size)
-      @output.read_fully(bytes)
-      JSON.parse(String.new(bytes))
+      self.class.read_response(@output, @max_response_bytes)
+    end
+
+    def self.read_response(output : IO, max_response_bytes : Int32) : JSON::Any
+      read_response(output, max_response_bytes, JSON::Any)
+    end
+
+    def self.read_response(output : IO, max_response_bytes : Int32, type : T.class) : T forall T
+      size = output.read_bytes(UInt32, IO::ByteFormat::LittleEndian)
+      raise "bridge response too large" if size > max_response_bytes
+      json = String.new(size) do |buffer|
+        output.read_fully(Slice.new(buffer, size.to_i))
+        {size.to_i, 0}
+      end
+      pull = JSON::PullParser.new(json)
+      response = type.new(pull)
+      raise "trailing bridge response data" unless pull.kind.eof?
+      response
     end
 
     def close : Nil

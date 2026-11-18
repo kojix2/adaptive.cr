@@ -47,6 +47,87 @@ private def answer(job)
 end
 
 describe Adaptive::Engine do
+  it "counts shared prefixes once while receiving later chunks" do
+    harness(Adaptive::Decision.new(Adaptive::Choice::Continue, "more")) do |engine, config, jobs, _|
+      config.max_buffer_bytes = 400
+      feed(engine)
+      engine.advance
+      engine.inflight_bytes.should eq(200)
+      engine.retained_signal_bytes.should eq(200)
+      feed(engine, from: 100_u64)
+      engine.retained_signal_bytes.should eq(400)
+      jobs.first.signal.to_slice.should eq(Bytes.new(200))
+      engine.complete(answer(jobs.first))
+      engine.advance
+      jobs.size.should eq(2)
+      jobs.last.signal.size.should eq(400)
+      engine.retained_signal_bytes.should eq(400)
+    end
+  end
+
+  it "keeps only an orphaned job prefix charged through read replacements" do
+    harness do |engine, config, jobs, _|
+      config.max_buffer_bytes = 600
+      feed(engine)
+      engine.advance
+      feed(engine, from: 100_u64)
+      feed(engine, id: "successor")
+      engine.retained_signal_bytes.should eq(400)
+      feed(engine, id: "third")
+      engine.retained_signal_bytes.should eq(400)
+      engine.complete(answer(jobs.first))
+      engine.retained_signal_bytes.should eq(200)
+      engine.complete(answer(jobs.first))
+      engine.retained_signal_bytes.should eq(200)
+      engine.inflight_bytes.should eq(0)
+    end
+  end
+
+  it "retains a timed-out job until its late result and does not charge it twice" do
+    harness do |engine, config, jobs, _|
+      feed(engine)
+      engine.advance
+      config.deadline_ms = 1
+      sleep 3.milliseconds
+      engine.advance
+      engine.buffered_bytes.should eq(0)
+      engine.retained_signal_bytes.should eq(200)
+      feed(engine, id: "successor")
+      engine.retained_signal_bytes.should eq(400)
+      engine.complete(answer(jobs.first))
+      engine.retained_signal_bytes.should eq(200)
+    end
+  end
+
+  it "includes orphaned jobs when enforcing the signal budget" do
+    harness do |engine, config, jobs, sent|
+      config.max_buffer_bytes = 300
+      feed(engine)
+      engine.advance
+      feed(engine, id: "successor")
+      sent.last[2].reason.should eq("signal_budget")
+      engine.retained_signal_bytes.should eq(200)
+      engine.complete(answer(jobs.first))
+      engine.retained_signal_bytes.should eq(0)
+    end
+  end
+
+  it "isolates borrowed ingest buffers and transfers explicitly owned buffers" do
+    harness do |engine, _, jobs, _|
+      borrowed = Bytes.new(200, 7_u8)
+      engine.ingest(1, "read", 0_u64, 0_u64, 100_u64, borrowed)
+      borrowed.fill(9_u8)
+      engine.advance
+      jobs.first.signal.to_slice.should eq(Bytes.new(200, 7_u8))
+      owned = Bytes.new(200, 5_u8)
+      engine.ingest(2, "other", 0_u64, 0_u64, 100_u64, owned, take_ownership: true)
+      engine.advance
+      jobs.last.signal.as(Adaptive::SignalPrefix).each_chunk do |chunk|
+        chunk.to_unsafe.should eq(owned.to_unsafe)
+      end
+    end
+  end
+
   it "preserves a molecule when a custom policy crosses the deadline" do
     harness(policy: SlowRejectPolicy.new) do |engine, config, jobs, sent|
       config.deadline_ms = 100
