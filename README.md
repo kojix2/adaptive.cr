@@ -58,8 +58,8 @@ result.display_hit.try(&.mapping.target_start)
 coordinates (zero-based, half-open), MAPQ, primary status, CIGAR and alignment
 fields used by custom policies. Existing `Hit.new(segment, minimap2_mapping)`
 construction remains supported; `hit.mapping` now returns `Adaptive::Mapping`.
-The binding exposes primary status only: secondary and supplementary alignments
-are both non-primary and cannot be distinguished through this API.
+This snapshot preserves primary status only: secondary and supplementary
+alignments are both non-primary and cannot be distinguished through this API.
 
 The default `mapping_mode: "any"` preserves live/replay behavior: any confident
 target hit can justify acceptance. `mapping_mode: "primary"` selects the highest

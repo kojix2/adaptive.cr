@@ -15,16 +15,13 @@ module Adaptive
     Reverse
   end
 
-  # A value snapshot; callers never need minimap2's types or native pointers.
-  # Non-primary includes both secondary and supplementary alignments: the
-  # binding does not expose enough information to distinguish those two.
   record Mapping,
     target_name : String, mapq : UInt32 = 0_u32,
     target_start : Int32 = 0, target_end : Int32 = 0, target_len : Int32 = 0,
     query_start : Int32 = 0, query_end : Int32 = 0, strand : Strand = Strand::Forward,
     match_len : Int32 = 0, block_len : Int32 = 0, is_primary : Bool = true,
     cigar : Array(Tuple(UInt32, UInt8)) = [] of Tuple(UInt32, UInt8),
-    cigar_str : String = "", nm : Int32 = 0,
+    cigar_str : String = "", nm : Int32? = nil,
     md : String? = nil, cs : String? = nil, ds : String? = nil do
     include JSON::Serializable
 
@@ -42,7 +39,6 @@ module Adaptive
   record Hit, segment : Int32, mapping : Mapping do
     include JSON::Serializable
 
-    # Compatibility for existing custom policies that construct evidence.
     def initialize(@segment : Int32, mapping : Minimap2::Mapping)
       @mapping = Mapping.from_minimap2(mapping)
     end

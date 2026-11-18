@@ -29,7 +29,6 @@ describe Adaptive::BuiltinPolicy do
     sandbox = policy_decide(policy_config("primary"), read)
     sandbox.choice.should eq(Adaptive::Choice::Reject)
     sandbox.hit.should eq(host)
-    # Secondary and supplementary are both non-primary in the binding.
     policy_decide(policy_config("primary"), policy_read([target])).choice.should eq(Adaptive::Choice::Continue)
     policy_decide(policy_config, policy_read([target])).choice.should eq(Adaptive::Choice::Accept)
   end
